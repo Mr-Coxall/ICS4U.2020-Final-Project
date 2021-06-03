@@ -1,3 +1,10 @@
+#!/user/bin/env python3
+
+# Created by: Jaeyoon (Jay) Lee
+# Created on: Jun 2021
+# This program simulates a virus spreading.
+
+
 import pygame
 import sys
 
