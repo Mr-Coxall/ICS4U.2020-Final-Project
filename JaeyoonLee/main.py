@@ -6,6 +6,7 @@
 
 
 import sys
+
 import pygame
 
 MAX_WIDTH = 1400
