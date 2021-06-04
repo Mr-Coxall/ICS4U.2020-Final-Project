@@ -8,13 +8,14 @@
 import pygame
 import sys
 
-MAX_WIDTH = 1200
+MAX_WIDTH = 1400
 MAX_HEIGHT = 800
 FPS = 60
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (219, 20, 20)
 GREY = (100, 100, 100)
+
 
 def main():
     pygame.init()
@@ -39,5 +40,6 @@ def main():
         pygame.display.update()
         fps.tick(FPS)
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     main()
