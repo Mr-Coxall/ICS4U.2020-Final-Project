@@ -5,10 +5,11 @@
 # This program simulates a virus spreading.
 
 
-import pygame
 import sys
 
-MAX_WIDTH = 1200
+import pygame
+
+MAX_WIDTH = 1400
 MAX_HEIGHT = 800
 FPS = 60
 BLACK = (0, 0, 0)
@@ -16,9 +17,10 @@ WHITE = (255, 255, 255)
 RED = (219, 20, 20)
 GREY = (100, 100, 100)
 
+
 def main():
     pygame.init()
-    pygame.display.set_caption('Virus Simulator')
+    pygame.display.set_caption("Virus Simulator")
     fps = pygame.time.Clock()
     screen = pygame.display.set_mode((MAX_WIDTH, MAX_HEIGHT))
 
@@ -39,5 +41,6 @@ def main():
         pygame.display.update()
         fps.tick(FPS)
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     main()
