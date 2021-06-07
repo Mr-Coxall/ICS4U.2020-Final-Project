@@ -27,16 +27,13 @@ class Manager:
             if personIndex < len(self.healthPeople):
                 person = self.healthPeople[personIndex]
             else:
-                person = self.infectedPeople[
-                    personIndex - len(self.healthPeople)
-                ]
+                person = self.infectedPeople[personIndex - len(self.healthPeople)]
             person.draw(screen)
             person.move()
             if random.randint(1, constants.FPS) == constants.FPS:
                 person.setDirection(random.uniform(0, 2 * math.pi))
             if self.hitWall(
-                person.getX(), person.getY(),
-                person.getDirection(), constants.RADIUS
+                person.getX(), person.getY(), person.getDirection(), constants.RADIUS
             ):
                 person.setDirection(person.getDirection() + math.pi)
 

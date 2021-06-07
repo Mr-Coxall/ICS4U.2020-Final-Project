@@ -16,8 +16,7 @@ def main():
     pygame.init()
     pygame.display.set_caption("Virus Simulator")
     fps = pygame.time.Clock()
-    screen = pygame.display.set_mode((constants.MAX_WIDTH,
-                                      constants.MAX_HEIGHT))
+    screen = pygame.display.set_mode((constants.MAX_WIDTH, constants.MAX_HEIGHT))
 
     manager = Manager()
 
