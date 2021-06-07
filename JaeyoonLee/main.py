@@ -7,25 +7,22 @@
 
 import sys
 
+import constants
 import pygame
-
-MAX_WIDTH = 1400
-MAX_HEIGHT = 800
-FPS = 60
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-RED = (219, 20, 20)
-GREY = (100, 100, 100)
+from Manager import Manager
 
 
 def main():
     pygame.init()
     pygame.display.set_caption("Virus Simulator")
     fps = pygame.time.Clock()
-    screen = pygame.display.set_mode((MAX_WIDTH, MAX_HEIGHT))
+    screen = pygame.display.set_mode((constants.MAX_WIDTH,
+                                      constants.MAX_HEIGHT))
+
+    manager = Manager()
 
     while True:
-        screen.fill(GREY)
+        screen.fill(constants.GREY)
 
         # event check
         for event in pygame.event.get():
@@ -33,13 +30,35 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-        pygame.draw.circle(screen, RED, [600, 400], 10)
+        manager.movePerson(screen)
+        manager.checkInfected()
 
-        # font = pygame.font.SysFont('notosanscjkkrblack', 50)
-        # text = font.render("Hello, World!", True, WHITE)
-        # screen.blit(text, (5, 10))
+        displayText(
+            screen,
+            "Healthy: " + str(manager.getNumberOfHealthPeople()),
+            (5, 5),
+            constants.GREEN,
+        )
+        displayText(
+            screen,
+            "Infectious: " + str(manager.getNumberOfInfectedPeople()),
+            (5, 35),
+            constants.RED,
+        )
+        displayText(
+            screen,
+            "Death: " + str(manager.getNumberOfDeadPeople()),
+            (5, 65),
+            constants.BLACK,
+        )
         pygame.display.update()
-        fps.tick(FPS)
+        fps.tick(constants.FPS)
+
+
+def displayText(screen, strText, position, colour):
+    font = pygame.font.SysFont("notosanscjkkrblack", constants.FONT_SIZE)
+    text = font.render(strText, True, colour)
+    screen.blit(text, position)
 
 
 if __name__ == "__main__":
