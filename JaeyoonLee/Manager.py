@@ -12,13 +12,14 @@ import constants
 from Person import Infectious, Person
 
 
-class Manager():
+class Manager:
     def __init__(self):
-        self.healthPeople = self.generatePeople(constants.N_PEOPLE - 1,
-                                                [100, 1300], [100, 700],
-                                                constants.WHITE)
-        self.infectedPeople = self.generatePeople(1, [650, 750], [350, 450],
-                                                  constants.RED, infected=True)
+        self.healthPeople = self.generatePeople(
+            constants.N_PEOPLE - 1, [100, 1300], [100, 700], constants.WHITE
+        )
+        self.infectedPeople = self.generatePeople(
+            1, [650, 750], [350, 450], constants.RED, infected=True
+        )
         self.deadPeople = []
 
     def movePerson(self, screen):
@@ -26,30 +27,38 @@ class Manager():
             if personIndex < len(self.healthPeople):
                 person = self.healthPeople[personIndex]
             else:
-                person = self.infectedPeople[personIndex -
-                                             len(self.healthPeople)]
+                person = self.infectedPeople[
+                    personIndex - len(self.healthPeople)
+                ]
             person.draw(screen)
             person.move()
             if random.randint(1, constants.FPS) == constants.FPS:
                 person.setDirection(random.uniform(0, 2 * math.pi))
-            if self.hitWall(person.getX(), person.getY(),
-                            person.getDirection(), constants.RADIUS):
+            if self.hitWall(
+                person.getX(), person.getY(),
+                person.getDirection(), constants.RADIUS
+            ):
                 person.setDirection(person.getDirection() + math.pi)
 
     def checkInfected(self):
         for infectious in self.infectedPeople:
             healthCount = 0
             for health in self.healthPeople:
-                distance = math.sqrt((infectious.getX() - health.getX())**2
-                                     + (infectious.getY() - health.getY())**2)
+                distance = math.sqrt(
+                    (infectious.getX() - health.getX()) ** 2
+                    + (infectious.getY() - health.getY()) ** 2
+                )
                 if distance < constants.RADIUS * 2:
                     # Collide
-                    newInfectious = Infectious(health.getX(), health.getY(),
-                                               health.getVelocity(),
-                                               health.getDirection(),
-                                               constants.RED,
-                                               infectious.getInfectionRate(),
-                                               infectious.getDeathRate())
+                    newInfectious = Infectious(
+                        health.getX(),
+                        health.getY(),
+                        health.getVelocity(),
+                        health.getDirection(),
+                        constants.RED,
+                        infectious.getInfectionRate(),
+                        infectious.getDeathRate(),
+                    )
                     self.infectedPeople.append(newInfectious)
                     del self.healthPeople[healthCount]
 
@@ -61,18 +70,19 @@ class Manager():
     def mutateVirus(self):
         pass
 
-    def generatePeople(self, N_People, creationDomain, creationRange, colour,
-                       infected=False):
+    def generatePeople(
+        self, N_People, creationDomain, creationRange, colour, infected=False
+    ):
         people = []
         for _ in range(N_People):
             x = random.randint(creationDomain[0], creationDomain[1])
             y = random.randint(creationRange[0], creationRange[1])
             if not infected:
-                person = Person(x, y, 1, random.uniform(-math.pi, math.pi),
-                                colour)
+                person = Person(x, y, 1, random.uniform(-math.pi, math.pi), colour)
             else:
-                person = Infectious(x, y, 1, random.uniform(-math.pi, math.pi),
-                                    colour, 10, 10)
+                person = Infectious(
+                    x, y, 1, random.uniform(-math.pi, math.pi), colour, 10, 10
+                )
             people.append(person)
         return people
 

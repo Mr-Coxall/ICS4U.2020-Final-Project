@@ -27,8 +27,7 @@ class Person:
 
     def draw(self, screen):
         pygame.draw.circle(
-            screen, self.__colour, [int(self.__x), int(self.__y)],
-            constants.RADIUS
+            screen, self.__colour, [int(self.__x), int(self.__y)], constants.RADIUS
         )
 
     def getX(self):
@@ -54,8 +53,7 @@ class Person:
 
 
 class Infectious(Person):
-    def __init__(self, x, y, velocity, direction, colour, infectionRate,
-                 deathRate):
+    def __init__(self, x, y, velocity, direction, colour, infectionRate, deathRate):
         self.infectionRate = infectionRate
         self.deathRate = deathRate
         super().__init__(x, y, velocity, direction, colour)
