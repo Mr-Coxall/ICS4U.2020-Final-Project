@@ -74,11 +74,14 @@ class Manager:
         for _ in range(N_People):
             x = random.randint(creationDomain[0], creationDomain[1])
             y = random.randint(creationRange[0], creationRange[1])
+            velocity = 8
             if not infected:
-                person = Person(x, y, 1, random.uniform(-math.pi, math.pi), colour)
+                person = Person(
+                    x, y, velocity, random.uniform(-math.pi, math.pi), colour
+                )
             else:
                 person = Infectious(
-                    x, y, 1, random.uniform(-math.pi, math.pi), colour, 10, 10
+                    x, y, velocity, random.uniform(-math.pi, math.pi), colour, 10, 10
                 )
             people.append(person)
         return people

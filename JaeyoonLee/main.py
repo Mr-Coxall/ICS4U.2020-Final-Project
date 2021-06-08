@@ -12,12 +12,34 @@ import pygame
 from Manager import Manager
 
 
-def main():
-    pygame.init()
-    pygame.display.set_caption("Virus Simulator")
-    fps = pygame.time.Clock()
-    screen = pygame.display.set_mode((constants.MAX_WIDTH, constants.MAX_HEIGHT))
+def splashScreen(fps, screen):
+    start_ticks = pygame.time.get_ticks()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
 
+        background = pygame.image.load(
+            "C:\JaeyoonLee\ICS4U\FinalProject\ICS4U.2020-Final-Project\JaeyoonLee\images\\virusSimulator_mainMemu.png"
+        )
+        background = pygame.transform.scale(
+            background, (constants.MAX_WIDTH, constants.MAX_HEIGHT)
+        )
+        screen.blit(background, (0, 0))
+        font = pygame.font.SysFont("notosanscjkkrblack", 60)
+        text = font.render("Splash Screen", True, constants.WHITE)
+        centerX = (constants.MAX_WIDTH - text.get_rect().width) // 2
+        centerY = (constants.MAX_HEIGHT - text.get_rect().height) // 2
+        screen.blit(text, (centerX, centerY))
+        pygame.display.update()
+        fps.tick(constants.FPS)
+        count = (pygame.time.get_ticks() - start_ticks) / 1000
+        if count > constants.SPLASH_TIME:  # break after 3 seconds
+            break
+
+
+def simulateScreen(fps, screen):
     manager = Manager()
 
     while True:
@@ -52,6 +74,16 @@ def main():
         )
         pygame.display.update()
         fps.tick(constants.FPS)
+
+
+def main():
+    pygame.init()
+    pygame.display.set_caption("Virus Simulator")
+    fps = pygame.time.Clock()
+    screen = pygame.display.set_mode((constants.MAX_WIDTH, constants.MAX_HEIGHT))
+
+    splashScreen(fps, screen)
+    simulateScreen(fps, screen)
 
 
 def displayText(screen, strText, position, colour):
