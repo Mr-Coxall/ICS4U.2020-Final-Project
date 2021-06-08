@@ -21,7 +21,8 @@ def splashScreen(fps, screen):
                 sys.exit()
 
         background = pygame.image.load(
-            "C:\\JaeyoonLee\\ICS4U\\FinalProject\\ICS4U.2020-Final-Project\\JaeyoonLee\\images\\virusSimulator_mainMemu.png"
+            "C:\\JaeyoonLee\\ICS4U\\FinalProject\\ICS4U.2020-Final-Project"
+            + "\\JaeyoonLee\\images\\virusSimulator_mainMemu.png"
         )
         background = pygame.transform.scale(
             background, (constants.MAX_WIDTH, constants.MAX_HEIGHT)
