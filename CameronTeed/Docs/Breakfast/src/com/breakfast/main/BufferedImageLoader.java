@@ -18,7 +18,11 @@ public class BufferedImageLoader {
   /** */
   private BufferedImage image;
 
-  /** */
+  /**
+   *
+   * @param path
+   * return image
+   */
   public BufferedImage loadImage(final String path) {
     try {
       image = ImageIO.read(getClass().getResource(path));

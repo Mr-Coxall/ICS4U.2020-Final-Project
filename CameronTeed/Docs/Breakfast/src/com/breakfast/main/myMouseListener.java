@@ -21,17 +21,24 @@ final class myMouseListener implements MouseListener {
   private static boolean keyPressed1 = false;
   /** */
   private static boolean keyPressed2 = false;
+  /** */
+  private final int param1 = 8;
+  /** */
+  private final int param2 = 13;
+  /** */
+  private final int param3 = 174;
+  /** */
+  private final int param4 = 284;
+  /** */
+  private final int param5 = 384;
+  /** */
+  private final int param6 = 100;
+  /** */
+  private final int param7 = 90;
 
   @Override
   public void mouseClicked(final MouseEvent e) {
-    int param1 = 8;
-    int param2 = 13;
-    int param3 = 174;
-    int param4 = 284;
-    int param5 = 384;
-    int param6 = 100;
-    int param7 = 90;
-   
+
     Rectangle bounds = new Rectangle(param1, param3, param6, param6);
     Rectangle bounds1 = new Rectangle(param2, param4, param7, param7);
     Rectangle bounds2 = new Rectangle(param2, param5, param6, param6);
@@ -74,26 +81,50 @@ final class myMouseListener implements MouseListener {
 
   }
 
+  /**
+  * 
+  * @return keyPressed1
+  */
   public static boolean isKeyPressed() {
     return keyPressed;
   }
 
+  /**
+  *
+  * @param keyPressed
+  */
   public void setKeyPressed(final boolean keyPressed) {
     myMouseListener.keyPressed = keyPressed;
   }
 
+  /**
+  *
+  * @return keyPressed1
+  */
   public static boolean isKeyPressed1() {
     return keyPressed1;
   }
 
+  /**
+   *
+   * @param keyPressed1
+   */
   public void setKeyPressed1(final boolean keyPressed1) {
     myMouseListener.keyPressed1 = keyPressed1;
   }
 
+  /**
+  *
+  * @return keyPressed2
+  */
   public static boolean isKeyPressed2() {
     return keyPressed2;
   }
-
+ 
+  /**
+  *
+  * @param keyPressed2
+  */
   public void setKeyPressed2(final boolean keyPressed2) {
     myMouseListener.keyPressed2 = keyPressed2;
   }

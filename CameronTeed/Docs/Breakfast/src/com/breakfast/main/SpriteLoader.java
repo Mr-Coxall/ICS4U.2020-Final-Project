@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage;
 
 /** */
 public class SpriteLoader {
-  /** */
 
   /** */
   private BufferedImage sprite;
@@ -25,8 +24,12 @@ public class SpriteLoader {
     this.sprite = ss;
   }
 
-  /** 
+  /**
    *
+   * @param col
+   * @param row
+   * @param width
+   * @param height
    * @return img
    */
   public BufferedImage grabImage(final int col, final int row,

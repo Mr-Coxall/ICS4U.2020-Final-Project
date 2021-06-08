@@ -61,7 +61,7 @@ final class Assets {
    */
   private final int imageEgg = 75;
 
-  public Assets() {
+  Assets() {
 
   }
 
@@ -78,7 +78,7 @@ final class Assets {
     bacon = ss.grabImage(col, row3, imageBacon, imageBacon);
     egg = bs.grabImage(col, row1, imageW, imageEgg);
   }
- 
+
   /**
    * Getter for a sprite.
    * @return spatula

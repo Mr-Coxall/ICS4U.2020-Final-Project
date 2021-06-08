@@ -25,14 +25,19 @@ public class Backgrounds extends Canvas {
   private BufferedImage image2 = null;
   /** */
   private BufferedImage image3 = null;
+  /** */
   private final int height;
   /** */
   private final int width;
 
-  /** */
-  public Backgrounds(int width, int heigth) {
+  /** 
+   *
+   * @param width
+   * @param height
+   */
+  public Backgrounds(final int width, final int heigth) {
     try {
-      image =
+	image =
           ImageIO.read(
               new File(
                   "C:/Users/super/git/ICS4U.2020-Final-Project/CameronTeed/"
@@ -45,7 +50,10 @@ public class Backgrounds extends Canvas {
     this.height = heigth;
   }
 
-  /** */
+  /** 
+   *
+   * @param g
+   */
   public void loadBackground(final Graphics g) {
     g.drawImage(image, 0, 0, this.width, this.height, null);
     g.drawImage(image, 0, 0, null);

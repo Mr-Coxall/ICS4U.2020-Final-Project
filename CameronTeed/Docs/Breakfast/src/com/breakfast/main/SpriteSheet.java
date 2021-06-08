@@ -15,12 +15,14 @@ import javax.imageio.ImageIO;
 /** */
 public class SpriteSheet {
 
-  /** */
   // private String path;
   // private int width;
   // private int height;
 
-  /** */
+  /**
+   *
+   * @param path
+   */
   public SpriteSheet(final String path) {
     BufferedImage image = null;
     try {
