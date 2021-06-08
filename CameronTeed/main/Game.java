@@ -32,17 +32,17 @@ public class Game extends Canvas implements Runnable {
   private Backgrounds scenes = new Backgrounds(WIDTH, HEIGHT);
   /** Initializes the background. */
   private Assets assets = new Assets();
-  /** Initializes the background. */
+  /** Initializes the tick speed. */
   private final long tickSpeed = 100000;
-  /** Initializes the background. */
+  /** Initializes the frames. */
   private final double frames2 = 60.0;
-  /** Initializes the background. */
+  /** Initializes the timer. */
   private final double timerCalc = 1000;
-  /** Initializes the background. */
+  /** Initializes the x coord. */
   private final int offsetCursory = 200;
-  /** Initializes the background. */
+  /** Initializes the y coord. */
   private final int offsetCursorx = 440;
-  /** Initializes the background. */
+  /** Initializes the amount of threads. */
   private final int threads = 3;
 
 
@@ -83,6 +83,7 @@ public class Game extends Canvas implements Runnable {
     double delta = 0;
     long timer = System.currentTimeMillis();
     int frames = 0;
+    // Calls the init function to load the sprites
     init();
     while (running) {
       render();
@@ -93,12 +94,13 @@ public class Game extends Canvas implements Runnable {
         tick();
         delta--;
       }
-      if (running) render(); {
+      if (running) {
+	 render();
 	 frames++;
       }
       if (System.currentTimeMillis() - timer > timerCalc) {
-        timer += timerCalc;
-        System.out.println("FPS: " + frames);
+	 timer += timerCalc;
+         System.out.println("FPS: " + frames);
       }
     }
     stop();
@@ -115,21 +117,26 @@ public class Game extends Canvas implements Runnable {
    */
   public void rePaint(final Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
+    // Gets the location of the users cursor to render the following sprites
     PointerInfo a = MouseInfo.getPointerInfo();
     Point b = a.getLocation();
     int y = (int) b.getY();
     int x = (int) b.getX();
 
+    // Checks if user clicked on the hitbox for the egg and loads it
     if (myMouseListener.isKeyPressed()) {
       g2d.drawImage(assets.getImage2(), x - offsetCursorx,
 	      	    y - offsetCursory, null);
     } else if (myMouseListener.isKeyPressed1()) {
+      // Checks if user clicked on the hitbox for the spoon and loads it
       g2d.drawImage(assets.getImage4(), x - offsetCursorx,
 	      	    y - offsetCursory, null);
     } else if (myMouseListener.isKeyPressed2()) {
+      // Checks if user clicked on the hitbox for the bacon and loads it
       g2d.drawImage(assets.getImage3(), x - offsetCursorx,
 	      	    y - offsetCursory, null);
     } else {
+      // Checks if user clicked on the hitbox for the spatula and loads it
       g2d.drawImage(assets.getImage(), x - offsetCursorx,
 	      	    y - offsetCursory, null);
     }
@@ -144,9 +151,9 @@ public class Game extends Canvas implements Runnable {
     }
 
     Graphics g = bs.getDrawGraphics();
-    // scenes.splashScreen(g);
-    // scenes.mainMenu(g);
+    // Renders the background
     scenes.loadBackground(g);
+    // Renders the cursors
     rePaint(g);
     g.dispose();
     bs.show();

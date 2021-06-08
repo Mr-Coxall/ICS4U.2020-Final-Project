@@ -9,17 +9,19 @@ package com.breakfast.main;
  */
 import java.awt.image.BufferedImage;
 
-/** */
+/** Method loads the sprite sheet. */
 public class SpriteLoader {
 
-  /** */
+  /** Initializing the sprite. */
   private BufferedImage sprite;
-  /** */
+  /** Initializing the size of the sprites. */
   private final int top = 75;
-  /** */
+  /** Initializing the size of the sprites. */
   private final int bot = 73;
 
   /**
+   * Constructor.
+   *
    * @param ss
    */
   public SpriteLoader(final BufferedImage ss) {
@@ -27,6 +29,7 @@ public class SpriteLoader {
   }
 
   /**
+   * Grabs the image from the sprite sheet.
    *
    * @param col
    * @param row

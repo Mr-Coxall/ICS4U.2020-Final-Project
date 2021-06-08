@@ -12,13 +12,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-/** */
+/** Buffered image loader class. */
 public class BufferedImageLoader {
 
-  /** */
+  /** Initializes the buffered image. */
   private BufferedImage image;
 
   /**
+   * Loads the buffered image.
    *
    * @param path
    * @return image

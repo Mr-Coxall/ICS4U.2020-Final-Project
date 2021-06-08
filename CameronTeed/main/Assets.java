@@ -69,10 +69,12 @@ final class Assets {
    * This method initializes the sprites.
    */
   public void init() {
+    // This loads the sprites using the buffered image loader
     BufferedImageLoader loader = new BufferedImageLoader();
     SpriteLoader ss = new SpriteLoader(loader.loadImage("/pancakes.png"));
     SpriteLoader bs = new SpriteLoader(loader.loadImage("/eggs.png"));
 
+    // This gets the specific image from the sprite sheet
     spatula = ss.grabImage(col, row1, imageW, imageH);
     spoon = ss.grabImage(col, row2, imageW, imageH);
     bacon = ss.grabImage(col, row3, imageBacon, imageBacon);

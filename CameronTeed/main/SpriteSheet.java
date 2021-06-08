@@ -15,11 +15,8 @@ import javax.imageio.ImageIO;
 /** */
 public class SpriteSheet {
 
-  // private String path;
-  // private int width;
-  // private int height;
-
   /**
+   * Loads the sprite sheet.
    *
    * @param path
    */
@@ -34,9 +31,5 @@ public class SpriteSheet {
     if (image == null) {
       return;
     }
-
-    // this.path = path;
-    // this.width = image.getWidth();
-    // this.height = image.getHeight();
   }
 }

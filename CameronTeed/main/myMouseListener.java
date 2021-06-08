@@ -15,33 +15,35 @@ import java.awt.event.MouseListener;
 /** */
 final class myMouseListener implements MouseListener {
 
-  /** */
+  /** Initializes the variable that stores the key state. */
   private static boolean keyPressed = false;
-  /** */
+  /** Initializes the variable that stores the key state. */
   private static boolean keyPressed1 = false;
-  /** */
+  /** Initializes the variable that stores the key state. */
   private static boolean keyPressed2 = false;
-  /** */
+  /** Initializes the x coordinent. */
   private final int param1 = 8;
-  /** */
+  /** Initializes the x coordinent. */
   private final int param2 = 13;
-  /** */
+  /** Initializes the y coordinent. */
   private final int param3 = 174;
-  /** */
+  /** Initializes the y coordinent. */
   private final int param4 = 284;
-  /** */
+  /** Initializes the y coordinent. */
   private final int param5 = 384;
-  /** */
+  /** Initializes the size. */
   private final int param6 = 100;
-  /** */
+  /** Initializes the size. */
   private final int param7 = 90;
 
   @Override
   public void mouseClicked(final MouseEvent e) {
 
+    // Creates the hit boxes for the eggs, bacon, and pancake mix
     Rectangle bounds = new Rectangle(param1, param3, param6, param6);
     Rectangle bounds1 = new Rectangle(param2, param4, param7, param7);
     Rectangle bounds2 = new Rectangle(param2, param5, param6, param6);
+    // Checks if the user clicked the hitboxes and returns true
     if (bounds.contains(e.getX(), e.getY())) {
       setKeyPressed(true);
       setKeyPressed2(false);
@@ -82,6 +84,7 @@ final class myMouseListener implements MouseListener {
   }
 
   /**
+  * Getter.
   *
   * @return keyPressed1
   */
@@ -90,14 +93,16 @@ final class myMouseListener implements MouseListener {
   }
 
   /**
+  * Setter.
   *
-  * @param keyPressed
+  * @param keyPressed1
   */
   public void setKeyPressed(final boolean keyPressed1) {
     myMouseListener.keyPressed = keyPressed1;
   }
 
   /**
+  * Getter.
   *
   * @return keyPressed1
   */
@@ -106,14 +111,16 @@ final class myMouseListener implements MouseListener {
   }
 
   /**
+   * Setter.
    *
-   * @param keyPressed1
+   * @param keyPressed
    */
   public void setKeyPressed1(final boolean keyPressed) {
     myMouseListener.keyPressed1 = keyPressed;
   }
 
   /**
+  * Getter.
   *
   * @return keyPressed2
   */
@@ -122,8 +129,9 @@ final class myMouseListener implements MouseListener {
   }
 
   /**
+  * Setter.
   *
-  * @param keyPressed2
+  * @param keyPressed
   */
   public void setKeyPressed2(final boolean keyPressed) {
     myMouseListener.keyPressed2 = keyPressed;

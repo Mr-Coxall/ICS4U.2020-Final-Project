@@ -17,29 +17,30 @@ import javax.imageio.ImageIO;
 /** */
 public class Backgrounds extends Canvas {
 
-  /** */
+  /** Creates serial id. */
   private static final long serialVersionUID = 1L;
-  /** */
+  /** Initializing the buffered image. */
   private BufferedImage image = null;
-  /** */
+  /** Initializing the buffered image. */
   private BufferedImage image2 = null;
-  /** */
+  /** Initializing the buffered image. */
   private BufferedImage image3 = null;
-  /** */
+  /** Initializing the buffered image. */
   private final int height;
-  /** */
+  /** Initializing the buffered image. */
   private final int width;
 
   /**
+   * This method loads the background.
    *
    * @param width
    * @param height
    */
   public Backgrounds(final int width, final int height) {
     try {
-	image = ImageIO.read( new File(
-                "C:/Users/super/git/ICS4U.2020-Final-Project/CameronTeed/"
-                	  	 + "Breakfast/Background/background.png"));
+	image = ImageIO.read(new File(
+		"C:/Users/super/git/ICS4U.2020-Final-Project/CameronTeed/"
+				+ "Breakfast/Background/background.png"));
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -49,6 +50,7 @@ public class Backgrounds extends Canvas {
   }
 
   /**
+   * This method renders the background.
    *
    * @param g
    */
