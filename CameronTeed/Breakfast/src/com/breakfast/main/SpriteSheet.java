@@ -12,13 +12,16 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/** */
 public class SpriteSheet {
 
-  public String path;
-  public int width;
-  public int height;
+  /** */
+  // private String path;
+  // private int width;
+  // private int height;
 
-  public SpriteSheet(String path) {
+  /** */
+  public SpriteSheet(final String path) {
     BufferedImage image = null;
     try {
       image = ImageIO.read(SpriteSheet.class.getResourceAsStream(path));
@@ -30,8 +33,8 @@ public class SpriteSheet {
       return;
     }
 
-    this.path = path;
-    this.width = image.getWidth();
-    this.height = image.getHeight();
+    // this.path = path;
+    // this.width = image.getWidth();
+    // this.height = image.getHeight();
   }
 }

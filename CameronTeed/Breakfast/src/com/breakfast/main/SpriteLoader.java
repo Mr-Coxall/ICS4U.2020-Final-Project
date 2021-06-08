@@ -9,16 +9,30 @@ package com.breakfast.main;
  */
 import java.awt.image.BufferedImage;
 
+/** */
 public class SpriteLoader {
+  /** */
 
+  /** */
   private BufferedImage sprite;
+  /** */
+  private final int top = 75;
+  /** */
+  private final int bot = 73;
 
-  public SpriteLoader(BufferedImage ss) {
+  /** */
+  public SpriteLoader(final BufferedImage ss) {
     this.sprite = ss;
   }
 
-  public BufferedImage grabImage(int col, int row, int width, int height) {
-    BufferedImage img = sprite.getSubimage((row * 75) - 73, (col * 75) - 73, width, height);
+  /** 
+   *
+   * @return img
+   */
+  public BufferedImage grabImage(final int col, final int row,
+	  			 final int width, final int height) {
+    BufferedImage img = sprite.getSubimage((row * top) - bot,
+	    				   (col * top) - bot, width, height);
     return img;
   }
 }

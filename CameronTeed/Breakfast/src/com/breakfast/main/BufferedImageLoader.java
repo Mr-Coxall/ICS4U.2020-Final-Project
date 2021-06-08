@@ -12,11 +12,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/** */
 public class BufferedImageLoader {
 
-  BufferedImage image;
+  /** */
+  private BufferedImage image;
 
-  public BufferedImage loadImage(String path) {
+  /** */
+  public BufferedImage loadImage(final String path) {
     try {
       image = ImageIO.read(getClass().getResource(path));
     } catch (IOException e) {

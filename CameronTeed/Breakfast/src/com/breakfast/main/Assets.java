@@ -61,8 +61,8 @@ final class Assets {
    */
   private final int imageEgg = 75;
 
-  public Assets(){
-      
+  public Assets() {
+
   }
 
   /**
@@ -78,10 +78,10 @@ final class Assets {
     bacon = ss.grabImage(col, row3, imageBacon, imageBacon);
     egg = bs.grabImage(col, row1, imageW, imageEgg);
   }
-  
+ 
   /**
    * Getter for a sprite.
-   * @return
+   * @return spatula
    */
   public BufferedImage getImage() {
       return spatula;
@@ -89,7 +89,7 @@ final class Assets {
 
   /**
    * Getter for a sprite.
-   * @return
+   * @return spoon
    */
   public BufferedImage getImage2() {
       return spoon;
@@ -97,7 +97,7 @@ final class Assets {
 
   /**
    * Getter for a sprite.
-   * @return
+   * @return bacon
    */
   public BufferedImage getImage3() {
       return bacon;
@@ -105,7 +105,7 @@ final class Assets {
 
   /**
    * Getter for a sprite.
-   * @return
+   * @return egg
    */
   public BufferedImage getImage4() {
       return egg;

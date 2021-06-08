@@ -1,11 +1,5 @@
 package com.breakfast.main;
 
-import java.awt.Canvas;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 /**
  * This class loads the sprites.
  *
@@ -13,6 +7,11 @@ import java.io.IOException;
  * @version 1.0
  * @since 2021-05-26
  */
+import java.awt.Canvas;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /** */
@@ -20,25 +19,35 @@ public class Backgrounds extends Canvas {
 
   /** */
   private static final long serialVersionUID = 1L;
+  /** */
+  private BufferedImage image = null;
+  /** */
+  private BufferedImage image2 = null;
+  /** */
+  private BufferedImage image3 = null;
+  private final int height;
+  /** */
+  private final int width;
 
-  BufferedImage image, image2, image3 = null;
-  private int HEIGHT;
-  private int WIDTH;
-
-  public Backgrounds(int WIDTH, int HEIGHT) {
+  /** */
+  public Backgrounds(int width, int heigth) {
     try {
       image =
           ImageIO.read(
               new File(
-                  "C:/Users/super/git/ICS4U.2020-Final-Project/CameronTeed/Breakfast/Background/background.png"));
+                  "C:/Users/super/git/ICS4U.2020-Final-Project/CameronTeed/"
+                	  	  + "Breakfast/Background/background.png"));
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+    this.width = width;
+    this.height = heigth;
   }
 
-  public void loadBackground(Graphics g) {
-    g.drawImage(image, 0, 0, this.WIDTH, this.HEIGHT, null);
+  /** */
+  public void loadBackground(final Graphics g) {
+    g.drawImage(image, 0, 0, this.width, this.height, null);
     g.drawImage(image, 0, 0, null);
   }
 }

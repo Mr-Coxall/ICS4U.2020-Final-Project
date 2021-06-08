@@ -14,7 +14,6 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 /** Game class. */
 public class Game extends Canvas implements Runnable {
@@ -22,26 +21,38 @@ public class Game extends Canvas implements Runnable {
   /** SerialVersion UID (Will need for later). */
   private static final long serialVersionUID = 5102725995743094780L;
   /** The size of the GUI. */
-  public static final int WIDTH = 740;
+  private static final int WIDTH = 740;
   /** Initializes the height. */
-  public static final int HEIGHT = 580;
-  /** Initializes the sprites. */
-  public static BufferedImage spriteSheet;
+  private static final int HEIGHT = 580;
   /** Initializes the threads. */
   private Thread thread;
   /** Tells the programs its not yet running. */
   private boolean running = false;
   /** Initializes the background. */
   private Backgrounds scenes = new Backgrounds(WIDTH, HEIGHT);
+  /** Initializes the background. */
+  private Assets assets = new Assets();
+  /** Initializes the background. */
+  private final long tickSpeed = 100000;
+  /** Initializes the background. */
+  private final double frames = 60.0;
+  /** Initializes the background. */
+  private final double timerCalc = 1000;
+  /** Initializes the background. */
+  private final int offsetCursory = 200;
+  /** Initializes the background. */
+  private final int offsetCursorx = 440;
+  
 
   /** Constructor. */
   public Game() {
     this.addMouseListener(new myMouseListener());
-    new Window(WIDTH, HEIGHT, "Hello, World!", this);
+    new Window(WIDTH, HEIGHT, "Breakfast: The Game", this);
   }
 
+  /** initializing. */
   public void init() {
-    Assets.init();
+    assets.init();
   }
 
   /** Starts the GUI. */
@@ -65,8 +76,8 @@ public class Game extends Canvas implements Runnable {
   @Override
   public void run() {
     long lastTime = System.nanoTime();
-    double amountOfTicks = 60.0;
-    double ns = 100000 / amountOfTicks;
+    double amountOfTicks = frames;
+    double ns = tickSpeed / amountOfTicks;
     double delta = 0;
     long timer = System.currentTimeMillis();
     int frames = 0;
@@ -80,12 +91,11 @@ public class Game extends Canvas implements Runnable {
         tick();
         delta--;
       }
-      if (running)
-        render();
+      if (running) render();
       frames++;
 
-      if (System.currentTimeMillis() - timer > 1000) {
-        timer += 1000;
+      if (System.currentTimeMillis() - timer > timerCalc) {
+        timer += timerCalc;
         System.out.println("FPS: " + frames);
       }
     }
@@ -94,10 +104,14 @@ public class Game extends Canvas implements Runnable {
 
   /** This method will set the tick speed. */
   public void tick() {
+
   }
 
-  /** This method pains some graphics. */
-  public void rePaint(Graphics g) {
+  /** This method pains some graphics.
+   *
+   * @param g
+   */
+  public void rePaint(final Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
     PointerInfo a = MouseInfo.getPointerInfo();
     Point b = a.getLocation();
@@ -105,13 +119,17 @@ public class Game extends Canvas implements Runnable {
     int x = (int) b.getX();
 
     if (myMouseListener.isKeyPressed()) {
-      g2d.drawImage(Assets.spoon, x - 440, y - 200, null);
+      g2d.drawImage(assets.getImage2(), x - offsetCursorx, y -
+	      				 offsetCursory, null);
     } else if (myMouseListener.isKeyPressed1()) {
-      g2d.drawImage(Assets.egg, x - 440, y - 200, null);
+      g2d.drawImage(assets.getImage4(), x - offsetCursorx, y -
+	      				 offsetCursory, null);
     } else if (myMouseListener.isKeyPressed2()) {
-      g2d.drawImage(Assets.bacon, x - 440, y - 200, null);
+      g2d.drawImage(assets.getImage3(), x - offsetCursorx, y -
+	      				 offsetCursory, null);
     } else {
-      g2d.drawImage(Assets.spatula, x - 440, y - 200, null);
+      g2d.drawImage(assets.getImage(), x - offsetCursorx, y -
+	      				 offsetCursory, null);
     }
   }
 
@@ -124,7 +142,6 @@ public class Game extends Canvas implements Runnable {
     }
 
     Graphics g = bs.getDrawGraphics();
-    g.clearRect(1, 1, 740, 555);
     // scenes.splashScreen(g);
     // scenes.mainMenu(g);
     scenes.loadBackground(g);
@@ -136,8 +153,9 @@ public class Game extends Canvas implements Runnable {
   /**
    * Main function.
    *
+   * @param args
    */
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     new Game();
   }
 }
