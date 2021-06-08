@@ -82,7 +82,7 @@ final class myMouseListener implements MouseListener {
   }
 
   /**
-  * 
+  *
   * @return keyPressed1
   */
   public static boolean isKeyPressed() {
@@ -93,8 +93,8 @@ final class myMouseListener implements MouseListener {
   *
   * @param keyPressed
   */
-  public void setKeyPressed(final boolean keyPressed) {
-    myMouseListener.keyPressed = keyPressed;
+  public void setKeyPressed(final boolean keyPressed1) {
+    myMouseListener.keyPressed = keyPressed1;
   }
 
   /**
@@ -109,8 +109,8 @@ final class myMouseListener implements MouseListener {
    *
    * @param keyPressed1
    */
-  public void setKeyPressed1(final boolean keyPressed1) {
-    myMouseListener.keyPressed1 = keyPressed1;
+  public void setKeyPressed1(final boolean keyPressed) {
+    myMouseListener.keyPressed1 = keyPressed;
   }
 
   /**
@@ -120,12 +120,12 @@ final class myMouseListener implements MouseListener {
   public static boolean isKeyPressed2() {
     return keyPressed2;
   }
- 
+
   /**
   *
   * @param keyPressed2
   */
-  public void setKeyPressed2(final boolean keyPressed2) {
-    myMouseListener.keyPressed2 = keyPressed2;
+  public void setKeyPressed2(final boolean keyPressed) {
+    myMouseListener.keyPressed2 = keyPressed;
   }
 }

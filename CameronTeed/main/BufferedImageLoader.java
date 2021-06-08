@@ -21,7 +21,7 @@ public class BufferedImageLoader {
   /**
    *
    * @param path
-   * return image
+   * @return image
    */
   public BufferedImage loadImage(final String path) {
     try {

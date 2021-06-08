@@ -1,6 +1,6 @@
 package com.breakfast.main;
 
-/**
+/*
  * This class loads the sprites.
  *
  * @author Cameron Teed
@@ -30,27 +30,25 @@ public class Backgrounds extends Canvas {
   /** */
   private final int width;
 
-  /** 
+  /**
    *
    * @param width
    * @param height
    */
-  public Backgrounds(final int width, final int heigth) {
+  public Backgrounds(final int width, final int height) {
     try {
-	image =
-          ImageIO.read(
-              new File(
-                  "C:/Users/super/git/ICS4U.2020-Final-Project/CameronTeed/"
-                	  	  + "Breakfast/Background/background.png"));
+	image = ImageIO.read( new File(
+                "C:/Users/super/git/ICS4U.2020-Final-Project/CameronTeed/"
+                	  	 + "Breakfast/Background/background.png"));
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
     this.width = width;
-    this.height = heigth;
+    this.height = height;
   }
 
-  /** 
+  /**
    *
    * @param g
    */

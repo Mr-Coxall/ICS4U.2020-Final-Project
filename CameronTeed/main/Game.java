@@ -35,14 +35,16 @@ public class Game extends Canvas implements Runnable {
   /** Initializes the background. */
   private final long tickSpeed = 100000;
   /** Initializes the background. */
-  private final double frames = 60.0;
+  private final double frames2 = 60.0;
   /** Initializes the background. */
   private final double timerCalc = 1000;
   /** Initializes the background. */
   private final int offsetCursory = 200;
   /** Initializes the background. */
   private final int offsetCursorx = 440;
-  
+  /** Initializes the background. */
+  private final int threads = 3;
+
 
   /** Constructor. */
   public Game() {
@@ -76,7 +78,7 @@ public class Game extends Canvas implements Runnable {
   @Override
   public void run() {
     long lastTime = System.nanoTime();
-    double amountOfTicks = frames;
+    double amountOfTicks = frames2;
     double ns = tickSpeed / amountOfTicks;
     double delta = 0;
     long timer = System.currentTimeMillis();
@@ -91,9 +93,9 @@ public class Game extends Canvas implements Runnable {
         tick();
         delta--;
       }
-      if (running) render();
-      frames++;
-
+      if (running) render(); {
+	 frames++;
+      }
       if (System.currentTimeMillis() - timer > timerCalc) {
         timer += timerCalc;
         System.out.println("FPS: " + frames);
@@ -119,17 +121,17 @@ public class Game extends Canvas implements Runnable {
     int x = (int) b.getX();
 
     if (myMouseListener.isKeyPressed()) {
-      g2d.drawImage(assets.getImage2(), x - offsetCursorx, y -
-	      				 offsetCursory, null);
+      g2d.drawImage(assets.getImage2(), x - offsetCursorx,
+	      	    y - offsetCursory, null);
     } else if (myMouseListener.isKeyPressed1()) {
-      g2d.drawImage(assets.getImage4(), x - offsetCursorx, y -
-	      				 offsetCursory, null);
+      g2d.drawImage(assets.getImage4(), x - offsetCursorx,
+	      	    y - offsetCursory, null);
     } else if (myMouseListener.isKeyPressed2()) {
-      g2d.drawImage(assets.getImage3(), x - offsetCursorx, y -
-	      				 offsetCursory, null);
+      g2d.drawImage(assets.getImage3(), x - offsetCursorx,
+	      	    y - offsetCursory, null);
     } else {
-      g2d.drawImage(assets.getImage(), x - offsetCursorx, y -
-	      				 offsetCursory, null);
+      g2d.drawImage(assets.getImage(), x - offsetCursorx,
+	      	    y - offsetCursory, null);
     }
   }
 
@@ -137,7 +139,7 @@ public class Game extends Canvas implements Runnable {
   public void render() {
     BufferStrategy bs = this.getBufferStrategy();
     if (bs == null) {
-      this.createBufferStrategy(3);
+      this.createBufferStrategy(threads);
       return;
     }
 

@@ -19,7 +19,9 @@ public class SpriteLoader {
   /** */
   private final int bot = 73;
 
-  /** */
+  /**
+   * @param ss
+   */
   public SpriteLoader(final BufferedImage ss) {
     this.sprite = ss;
   }
