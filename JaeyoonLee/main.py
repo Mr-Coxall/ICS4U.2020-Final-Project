@@ -16,19 +16,26 @@ from Manager import Manager
 
 def splashScreen(fps, screen):
     start_ticks = pygame.time.get_ticks()
-    backgroundFilePath = os.path.join(sourceFileDir, "images\\virusSimulator_splash.png")
+    backgroundFilePath = os.path.join(
+        sourceFileDir, "images\\virusSimulator_splash.png"
+    )
 
     # background image
     background = resizeImage(
         pygame.image.load(backgroundFilePath),
-        (constants.MAX_WIDTH, constants.MAX_HEIGHT)
+        (constants.MAX_WIDTH, constants.MAX_HEIGHT),
     )
     screen.blit(background, (0, 0))
 
     # splash screen title
-    displayText(screen, "Splash Screen", 60,
-                    (constants.CENTER_X, constants.CENTER_Y),
-                    constants.WHITE, centre=True)
+    displayText(
+        screen,
+        "Splash Screen",
+        60,
+        (constants.CENTER_X, constants.CENTER_Y),
+        constants.WHITE,
+        centre=True,
+    )
 
     while True:
         for event in pygame.event.get():
@@ -45,23 +52,41 @@ def splashScreen(fps, screen):
 
 
 def menuScreen(fps, screen):
-    backgroundFilePath = os.path.join(sourceFileDir, "images\\virusSimulator_mainMemu.png")
+    backgroundFilePath = os.path.join(
+        sourceFileDir, "images\\virusSimulator_mainMemu.png"
+    )
 
     buttons = []
     buttonText = ["Start", "Option", "Help", "Quit"]
     for index in range(4):
-        buttons.append(Button(constants.CENTER_X - 100, constants.CENTER_Y + (60 * index),
-                              200, 50, constants.WHITE, buttonText[index], constants.RED))
+        buttons.append(
+            Button(
+                constants.CENTER_X - 100,
+                constants.CENTER_Y + (60 * index),
+                200,
+                50,
+                constants.WHITE,
+                buttonText[index],
+                constants.RED,
+            )
+        )
 
     # background image
-    background = resizeImage(pygame.image.load(backgroundFilePath),
-                            (constants.MAX_WIDTH, constants.MAX_HEIGHT))
+    background = resizeImage(
+        pygame.image.load(backgroundFilePath),
+        (constants.MAX_WIDTH, constants.MAX_HEIGHT),
+    )
     screen.blit(background, (0, 0))
 
     # main menu screen title
-    displayText(screen, "Virus Simulator", 100,
-                    (constants.CENTER_X, constants.CENTER_Y - 100),
-                    constants.WHITE, centre=True)
+    displayText(
+        screen,
+        "Virus Simulator",
+        100,
+        (constants.CENTER_X, constants.CENTER_Y - 100),
+        constants.WHITE,
+        centre=True,
+    )
 
     while True:
         buttonActive = [False for _ in range(4)]
@@ -103,7 +128,6 @@ def simulateScreen(fps, screen):
         path = os.path.join(sourceFileDir, "images\\" + imageNames[index] + ".png")
         image = pygame.image.load(path)
         timeImages.append(image)
-        # screen.blit(image, (5 + (32 * index), 84))
 
     speed = 1
 
@@ -127,7 +151,6 @@ def simulateScreen(fps, screen):
                         elif idx == 2 and speed < 8:  # max time speed: x8
                             speed *= 2
                         manager.setSpeed(speed)
-                        print(speed)
 
         manager.movePerson(screen)
         manager.checkInfected()
@@ -136,7 +159,9 @@ def simulateScreen(fps, screen):
         infectious = manager.getNumberOfInfectedPeople()
         death = manager.getNumberOfDeadPeople()
         displayText(screen, "Healthy: " + str(health), 30, (5, 5), constants.GREEN)
-        displayText(screen, "Infectious: " + str(infectious), 30, (5, 35), constants.RED)
+        displayText(
+            screen, "Infectious: " + str(infectious), 30, (5, 35), constants.RED
+        )
         displayText(screen, "Death: " + str(death), 30, (5, 65), constants.BLACK)
 
         for index in range(len(timeImages)):
@@ -160,7 +185,7 @@ def displayText(screen, strText, fontSize, position, colour, centre=False):
     font = getFont(fontSize)
     text = font.render(strText, True, colour)
     if centre:
-        screen.blit(text, text.get_rect(center = position))
+        screen.blit(text, text.get_rect(center=position))
     else:
         screen.blit(text, position)
 

@@ -49,23 +49,23 @@ class Button:
         self.__colour = colour
 
 
-class SelectionBox(Button):
-    def __init__(self, x, y, fontSize, colour, textColour, optionList, selectedColour, selected=0):
-        super().__init__(x, y, fontSize, colour, optionList[0], textColour)
-        self.optionList = optionList
-        self.selectedColour = selectedColour
-        self.selected = selected
-        self.draw_menu = False
-        self.menu_active = False
+# class SelectionBox(Button):
+#     def __init__(self, x, y, width, height, colour, textColour, optionList, selectedColour, selected=0):
+#         super().__init__(x, y, width, height, colour, optionList[0], textColour)
+#         self.optionList = optionList
+#         self.selectedColour = selectedColour
+#         self.selected = selected
+#         self.draw_menu = False
+#         self.menu_active = False
 
-    def update(self):
-        pass
+#     def update(self):
+#         pass
 
-    def getOptionList(self):
-        return self.optionList
+#     def getOptionList(self):
+#         return self.optionList
 
-    def getSelectedColour(self):
-        return self.selectedColour
+#     def getSelectedColour(self):
+#         return self.selectedColour
 
-    def getSelected(self):
-        return self.selected
+#     def getSelected(self):
+#         return self.selected

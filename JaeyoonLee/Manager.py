@@ -23,11 +23,8 @@ class Manager:
         self.deadPeople = []
 
     def movePerson(self, screen):
-        for personIndex in range(constants.N_PEOPLE - len(self.deadPeople)):
-            if personIndex < len(self.healthPeople):
-                person = self.healthPeople[personIndex]
-            else:
-                person = self.infectedPeople[personIndex - len(self.healthPeople)]
+        for personIndex in range(self.getNumberOfLivingPeople()):
+            person = self.separatePeople(personIndex)
             person.draw(screen)
             if person.getVelocity() != 0:
                 person.move()
@@ -67,13 +64,9 @@ class Manager:
         pass
 
     def setSpeed(self, speed):
-        if speed >= 0:
-            for personIndex in range(constants.N_PEOPLE - len(self.deadPeople)):
-                if personIndex < len(self.healthPeople):
-                    person = self.healthPeople[personIndex]
-                else:
-                    person = self.infectedPeople[personIndex - len(self.healthPeople)]
-                person.setVelocity(int(speed))
+        for personIndex in range(self.getNumberOfLivingPeople()):
+            person = self.separatePeople(personIndex)
+            person.setVelocity(abs(int(speed)))
 
     def generatePeople(
         self, N_People, creationDomain, creationRange, colour, infected=False
@@ -94,6 +87,12 @@ class Manager:
             people.append(person)
         return people
 
+    def separatePeople(self, personIndex):
+        if personIndex < len(self.healthPeople):
+            return self.healthPeople[personIndex]
+        else:
+            return self.infectedPeople[personIndex - len(self.healthPeople)]
+    
     def neg_or_pos(self, n):
         if random.randint(0, 1) == 0:
             n *= -1
@@ -131,3 +130,6 @@ class Manager:
 
     def getNumberOfDeadPeople(self):
         return len(self.deadPeople)
+
+    def getNumberOfLivingPeople(self):
+        return constants.N_PEOPLE - len(self.deadPeople)

@@ -47,7 +47,7 @@ class Person:
 
     def setVelocity(self, velocity):
         self.__velocity = velocity
-    
+
     def setDirection(self, direction):
         self.__direction = direction
 
