@@ -29,13 +29,12 @@ class Manager:
             else:
                 person = self.infectedPeople[personIndex - len(self.healthPeople)]
             person.draw(screen)
-            person.move()
-            if random.randint(1, constants.FPS) == constants.FPS:
-                person.setDirection(random.uniform(0, 2 * math.pi))
-            if self.hitWall(
-                person.getX(), person.getY(), person.getDirection(), constants.RADIUS
-            ):
-                person.setDirection(person.getDirection() + math.pi)
+            if person.getVelocity() != 0:
+                person.move()
+                if random.randint(1, constants.FPS) == constants.FPS:
+                    person.setDirection(random.uniform(0, 2 * math.pi))
+                if self.hitWall(person.getX(), person.getY(), person.getDirection(), constants.RADIUS):
+                    person.setDirection(person.getDirection() + math.pi)
 
     def checkInfected(self):
         for infectious in self.infectedPeople:
@@ -67,6 +66,15 @@ class Manager:
     def mutateVirus(self):
         pass
 
+    def setSpeed(self, speed):
+        if speed >= 0:
+            for personIndex in range(constants.N_PEOPLE - len(self.deadPeople)):
+                if personIndex < len(self.healthPeople):
+                    person = self.healthPeople[personIndex]
+                else:
+                    person = self.infectedPeople[personIndex - len(self.healthPeople)]
+                person.setVelocity(int(speed))
+
     def generatePeople(
         self, N_People, creationDomain, creationRange, colour, infected=False
     ):
@@ -74,7 +82,7 @@ class Manager:
         for _ in range(N_People):
             x = random.randint(creationDomain[0], creationDomain[1])
             y = random.randint(creationRange[0], creationRange[1])
-            velocity = 8
+            velocity = 1
             if not infected:
                 person = Person(
                     x, y, velocity, random.uniform(-math.pi, math.pi), colour
