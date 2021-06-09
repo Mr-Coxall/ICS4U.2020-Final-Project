@@ -72,7 +72,7 @@ final class Assets {
    * Initializing variable.
    */
   private static BufferedImage pancake1;
-  
+
 
   Assets() {
 
@@ -130,7 +130,7 @@ final class Assets {
   public BufferedImage getImage4() {
       return egg;
   }
- 
+
   /**
    * Getter for a sprite.
    * @return egg1

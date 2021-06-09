@@ -24,69 +24,72 @@ final class HitBoxes {
     /** Initializes the size. */
     private final int param6 = 75;
 
-
     /**
-     * 
+     * Checks if the user clicked the egg hitbox.
+     *
      * @param x
      * @param y
-     * @return
+     * @return boolean
      */
-    public boolean isClicked(double x, double y) {
+    public boolean isClicked(final double x, final double y) {
         Rectangle eggBound = new Rectangle(param1, param2, param6, param6);
         if (eggBound.contains(x, y) && MyMouseListener.getState2()) {
             // System.out.println("click");
-            return(true);
+            return true;
       }
        // System.out.println(x + "," + y);
-       return(false);
+       return false;
     }
 
     /**
-     * 
+     * Checks if the user clicked the egg hitbox.
+     *
      * @param x
      * @param y
-     * @return
+     * @return boolean
      */
-    public boolean isClicked2(double x, double y) {
+    public boolean isClicked2(final double x, final double y) {
         Rectangle eggBound = new Rectangle(param1, param3, param6, param6);
         if (eggBound.contains(x, y) && MyMouseListener.getState2()) {
             // System.out.println("click");
-            return(true);
+            return true;
       }
         // System.out.println(x + "," + y);
-       return(false);
+       return false;
     }
 
     /**
-     * 
+     * Checks if the user clicked the egg hitbox.
+     *
      * @param x
      * @param y
-     * @return
+     * @return boolean
      */
-    public boolean isClicked3(double x, double y) {
+    public boolean isClicked3(final double x, final double y) {
         Rectangle eggBound = new Rectangle(param1, param4, param6, param6);
         if (eggBound.contains(x, y) && MyMouseListener.getState2()) {
             // System.out.println("click");
-            return(true);
+            return true;
       }
         // System.out.println(x + "," + y);
-       return(false);
+       return false;
     }
 
     /**
-     * 
+     * Checks if the user clicked the egg hitbox.
+     *
      * @param x
      * @param y
-     * @return
+     * @return boolean
      */
-    public boolean isClicked4(double x, double y) {
+    public boolean isClicked4(final double x, final double y) {
         Rectangle eggBound = new Rectangle(param1, param5, param6, param6);
         if (eggBound.contains(x, y) && MyMouseListener.getState2()) {
             // System.out.println("click");
-            return(true);
+            return true;
       }
         // System.out.println(x + "," + y);
-       return(false);
+       return false;
     }
 
 }

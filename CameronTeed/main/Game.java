@@ -137,7 +137,7 @@ public class Game extends Canvas implements Runnable {
   public void renderEgg(final Graphics g) {
       if (renderEgg) {
           g.drawImage(assets.getImage5(), eggX, eggY, null);
-      } 
+      }
       if (renderEgg2) {
           g.drawImage(assets.getImage5(), eggX, eggY2, null);
       }
@@ -148,7 +148,7 @@ public class Game extends Canvas implements Runnable {
           g.drawImage(assets.getImage5(), eggX, eggY4, null);
       }
   }
-  
+
   /** This method pains some graphics.
    *
    * @param g
@@ -170,14 +170,13 @@ public class Game extends Canvas implements Runnable {
       g2d.drawImage(assets.getImage4(), x - offsetCursorx,
               y - offsetCursory, null);
       if (boxes.isClicked(x, y)) {
-          renderEgg = true;
+        renderEgg = true;
       } else if (boxes.isClicked2(x, y)) {
-          renderEgg2 = true;
+        renderEgg2 = true;
       } else if (boxes.isClicked3(x, y)) {
-          renderEgg3 = true;
-      }
-      else if (boxes.isClicked4(x, y)) {
-          renderEgg4 = true;
+        renderEgg3 = true;
+      } else if (boxes.isClicked4(x, y)) {
+        renderEgg4 = true;
       }
     } else if (MyMouseListener.isKeyPressed2()) {
       // Checks if user clicked on the hitbox for the bacon and loads it
@@ -188,7 +187,7 @@ public class Game extends Canvas implements Runnable {
       g2d.drawImage(assets.getImage(), x - offsetCursorx,
               y - offsetCursory, null);
     }
-    
+
   }
 
   /** This method renders the graphics. */
