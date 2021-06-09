@@ -35,11 +35,11 @@ final class MyMouseListener implements MouseListener {
   private final int param6 = 100;
   /** Initializes the size. */
   private final int param7 = 90;
-  
-  public MyMouseListener() {
-    MyMouseListener.keyPressed = false;
-    MyMouseListener.keyPressed1 = false;
-    MyMouseListener.keyPressed2 = false;
+
+  MyMouseListener() {
+    this.keyPressed = false;
+    this.keyPressed1 = false;
+    this.keyPressed2 = false;
   }
 
   @Override
@@ -95,16 +95,16 @@ final class MyMouseListener implements MouseListener {
   * @return keyPressed1
   */
   public static boolean isKeyPressed() {
-    return MyMouseListener.keyPressed;
+    return keyPressed;
   }
 
   /**
   * Setter.
   *
-  * @param keyPressed1
+  * @param keyState
   */
-  public void setKeyPressed(final boolean keyPressed1) {
-    MyMouseListener.keyPressed = keyPressed1;
+  public void setKeyPressed(final boolean keyState) {
+    keyPressed = keyState;
   }
 
   /**
@@ -113,16 +113,16 @@ final class MyMouseListener implements MouseListener {
   * @return keyPressed1
   */
   public static boolean isKeyPressed1() {
-    return MyMouseListener.keyPressed1;
+    return keyPressed1;
   }
 
   /**
    * Setter.
    *
-   * @param keyPressed
+   * @param keyState1
    */
-  public void setKeyPressed1(final boolean keyPressed) {
-    MyMouseListener.keyPressed1 = keyPressed;
+  public void setKeyPressed1(final boolean keyState1) {
+    keyPressed1 = keyState1;
   }
 
   /**
@@ -131,15 +131,15 @@ final class MyMouseListener implements MouseListener {
   * @return keyPressed2
   */
   public static boolean isKeyPressed2() {
-    return MyMouseListener.keyPressed2;
+    return keyPressed2;
   }
 
   /**
   * Setter.
   *
-  * @param keyPressed
+  * @param keyState2
   */
-  public void setKeyPressed2(final boolean keyPressed) {
-    MyMouseListener.keyPressed2 = keyPressed;
+  public void setKeyPressed2(final boolean keyState2) {
+    keyPressed2 = keyState2;
   }
 }

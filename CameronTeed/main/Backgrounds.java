@@ -29,8 +29,6 @@ public class Backgrounds extends Canvas {
   /**
    * This method loads the background.
    *
-   * @param width
-   * @param height
    */
   public Backgrounds() {
     try {
