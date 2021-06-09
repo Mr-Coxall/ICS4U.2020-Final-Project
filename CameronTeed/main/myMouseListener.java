@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /** */
-final class myMouseListener implements MouseListener {
+final class MyMouseListener implements MouseListener {
 
   /** Initializes the variable that stores the key state. */
   private static boolean keyPressed = false;
@@ -89,7 +89,7 @@ final class myMouseListener implements MouseListener {
   * @return keyPressed1
   */
   public static boolean isKeyPressed() {
-    return keyPressed;
+    return MyMouseListener.keyPressed;
   }
 
   /**
@@ -98,7 +98,7 @@ final class myMouseListener implements MouseListener {
   * @param keyPressed1
   */
   public void setKeyPressed(final boolean keyPressed1) {
-    myMouseListener.keyPressed = keyPressed1;
+    MyMouseListener.keyPressed = keyPressed1;
   }
 
   /**
@@ -107,7 +107,7 @@ final class myMouseListener implements MouseListener {
   * @return keyPressed1
   */
   public static boolean isKeyPressed1() {
-    return keyPressed1;
+    return MyMouseListener.keyPressed1;
   }
 
   /**
@@ -116,7 +116,7 @@ final class myMouseListener implements MouseListener {
    * @param keyPressed
    */
   public void setKeyPressed1(final boolean keyPressed) {
-    myMouseListener.keyPressed1 = keyPressed;
+    MyMouseListener.keyPressed1 = keyPressed;
   }
 
   /**
@@ -125,7 +125,7 @@ final class myMouseListener implements MouseListener {
   * @return keyPressed2
   */
   public static boolean isKeyPressed2() {
-    return keyPressed2;
+    return MyMouseListener.keyPressed2;
   }
 
   /**
@@ -134,6 +134,6 @@ final class myMouseListener implements MouseListener {
   * @param keyPressed
   */
   public void setKeyPressed2(final boolean keyPressed) {
-    myMouseListener.keyPressed2 = keyPressed;
+    MyMouseListener.keyPressed2 = keyPressed;
   }
 }

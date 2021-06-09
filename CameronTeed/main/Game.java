@@ -48,7 +48,7 @@ public class Game extends Canvas implements Runnable {
 
   /** Constructor. */
   public Game() {
-    this.addMouseListener(new myMouseListener());
+    this.addMouseListener(new MyMouseListener());
     new Window(WIDTH, HEIGHT, "Breakfast: The Game", this);
   }
 
@@ -95,12 +95,12 @@ public class Game extends Canvas implements Runnable {
         delta--;
       }
       if (running) {
-	 render();
-	 frames++;
+        render();
+        frames++;
       }
       if (System.currentTimeMillis() - timer > timerCalc) {
-	 timer += timerCalc;
-         System.out.println("FPS: " + frames);
+        timer += timerCalc;
+        System.out.println("FPS: " + frames);
       }
     }
     stop();
@@ -124,21 +124,21 @@ public class Game extends Canvas implements Runnable {
     int x = (int) b.getX();
 
     // Checks if user clicked on the hitbox for the egg and loads it
-    if (myMouseListener.isKeyPressed()) {
+    if (MyMouseListener.isKeyPressed()) {
       g2d.drawImage(assets.getImage2(), x - offsetCursorx,
-	      	    y - offsetCursory, null);
-    } else if (myMouseListener.isKeyPressed1()) {
+              y - offsetCursory, null);
+    } else if (MyMouseListener.isKeyPressed1()) {
       // Checks if user clicked on the hitbox for the spoon and loads it
       g2d.drawImage(assets.getImage4(), x - offsetCursorx,
-	      	    y - offsetCursory, null);
-    } else if (myMouseListener.isKeyPressed2()) {
+              y - offsetCursory, null);
+    } else if (MyMouseListener.isKeyPressed2()) {
       // Checks if user clicked on the hitbox for the bacon and loads it
       g2d.drawImage(assets.getImage3(), x - offsetCursorx,
-	      	    y - offsetCursory, null);
+              y - offsetCursory, null);
     } else {
       // Checks if user clicked on the hitbox for the spatula and loads it
       g2d.drawImage(assets.getImage(), x - offsetCursorx,
-	      	    y - offsetCursory, null);
+              y - offsetCursory, null);
     }
   }
 

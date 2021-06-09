@@ -27,7 +27,7 @@ public class Window extends Canvas {
    * @param game
    */
   public Window(final int width, final int height, final String title,
-	  	final Game game) {
+          final Game game) {
     JFrame frame = new JFrame(title);
 
     frame.setPreferredSize(new Dimension(width, height));

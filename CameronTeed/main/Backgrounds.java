@@ -38,9 +38,8 @@ public class Backgrounds extends Canvas {
    */
   public Backgrounds(final int width, final int height) {
     try {
-	image = ImageIO.read(new File(
-		"C:/Users/super/git/ICS4U.2020-Final-Project/CameronTeed/"
-				+ "Breakfast/Background/background.png"));
+      image = ImageIO.read(new File("C:/Users/super/git/ICS4U.2020-Final-Project/"
+        + "CameronTeed/Breakfast/Background/background.png"));
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -55,7 +54,7 @@ public class Backgrounds extends Canvas {
    * @param g
    */
   public void loadBackground(final Graphics g) {
-    g.drawImage(image, 0, 0, this.width, this.height, null);
+    g.drawImage(image, 0, 0, width, height, null);
     g.drawImage(image, 0, 0, null);
   }
 }

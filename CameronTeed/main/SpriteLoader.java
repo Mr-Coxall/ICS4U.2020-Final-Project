@@ -38,9 +38,9 @@ public class SpriteLoader {
    * @return img
    */
   public BufferedImage grabImage(final int col, final int row,
-	  			 final int width, final int height) {
+          final int width, final int height) {
     BufferedImage img = sprite.getSubimage((row * top) - bot,
-	    				   (col * top) - bot, width, height);
+            (col * top) - bot, width, height);
     return img;
   }
 }
