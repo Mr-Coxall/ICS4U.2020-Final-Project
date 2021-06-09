@@ -40,8 +40,7 @@ class Manager:
 
     def checkInfected(self):
         for infectious in self.infectedPeople:
-            healthCount = 0
-            for health in self.healthPeople:
+            for healthCount, health in enumerate(self.healthPeople):
                 distance = math.sqrt(
                     (infectious.getX() - health.getX()) ** 2
                     + (infectious.getY() - health.getY()) ** 2
@@ -59,8 +58,6 @@ class Manager:
                     )
                     self.infectedPeople.append(newInfectious)
                     del self.healthPeople[healthCount]
-
-                healthCount += 1
 
     def checkDeath(self):
         pass
@@ -104,19 +101,21 @@ class Manager:
         return n
 
     def hitWall(self, pos_x, pos_y, direction, radius):
-        if pos_x - radius < 0:
-            if math.cos(direction) < 0:
-                return True
-        elif pos_x + radius > constants.MAX_WIDTH:
-            if math.cos(direction) > 0:
-                return True
-        if pos_y - radius < 0:
-            if math.sin(direction) < 0:
-                return True
-        elif pos_y + radius > constants.MAX_HEIGHT:
-            if math.sin(direction) > 0:
-                return True
-        return False
+        if (
+            pos_x - radius < 0
+            and math.cos(direction) < 0
+            or pos_x - radius >= 0
+            and pos_x + radius > constants.MAX_WIDTH
+            and math.cos(direction) > 0
+        ):
+            return True
+        return (
+            pos_y - radius < 0
+            and math.sin(direction) < 0
+            or pos_y - radius >= 0
+            and pos_y + radius > constants.MAX_HEIGHT
+            and math.sin(direction) > 0
+        )
 
     def getHealthPeople(self):
         return self.healthPeople

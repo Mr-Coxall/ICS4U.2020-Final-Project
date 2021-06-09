@@ -54,11 +54,8 @@ def menuScreen(fps, screen):
         sourceFileDir, "images\\virusSimulator_mainMemu.png"
     )
 
-    buttons = []
     buttonText = ["Start", "Option", "Help", "Quit"]
-    for index in range(4):
-        buttons.append(
-            Button(
+    buttons = [Button(
                 constants.CENTER_X - 100,
                 constants.CENTER_Y + (60 * index),
                 200,
@@ -66,9 +63,7 @@ def menuScreen(fps, screen):
                 constants.WHITE,
                 buttonText[index],
                 constants.RED,
-            )
-        )
-
+            ) for index in range(4)]
     # background image
     background = resizeImage(
         pygame.image.load(backgroundFilePath),
@@ -120,8 +115,8 @@ def simulateScreen(fps, screen):
 
     timeImages = []
     imageNames = ["pause", "play", "fast"]
-    for index in range(len(imageNames)):
-        path = os.path.join(sourceFileDir, "images\\" + imageNames[index] + ".png")
+    for imageName in imageNames:
+        path = os.path.join(sourceFileDir, "images\\" + imageName + ".png")
         image = pygame.image.load(path)
         timeImages.append(image)
 
