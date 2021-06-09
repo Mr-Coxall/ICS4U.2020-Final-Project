@@ -23,19 +23,20 @@ class Manager:
         self.deadPeople = []
 
     def movePerson(self, screen):
-        for personIndex in range(constants.N_PEOPLE - len(self.deadPeople)):
-            if personIndex < len(self.healthPeople):
-                person = self.healthPeople[personIndex]
-            else:
-                person = self.infectedPeople[personIndex - len(self.healthPeople)]
+        for personIndex in range(self.getNumberOfLivingPeople()):
+            person = self.separatePeople(personIndex)
             person.draw(screen)
-            person.move()
-            if random.randint(1, constants.FPS) == constants.FPS:
-                person.setDirection(random.uniform(0, 2 * math.pi))
-            if self.hitWall(
-                person.getX(), person.getY(), person.getDirection(), constants.RADIUS
-            ):
-                person.setDirection(person.getDirection() + math.pi)
+            if person.getVelocity() != 0:
+                person.move()
+                if random.randint(1, constants.FPS) == constants.FPS:
+                    person.setDirection(random.uniform(0, 2 * math.pi))
+                if self.hitWall(
+                    person.getX(),
+                    person.getY(),
+                    person.getDirection(),
+                    constants.RADIUS,
+                ):
+                    person.setDirection(person.getDirection() + math.pi)
 
     def checkInfected(self):
         for infectious in self.infectedPeople:
@@ -67,6 +68,11 @@ class Manager:
     def mutateVirus(self):
         pass
 
+    def setSpeed(self, speed):
+        for personIndex in range(self.getNumberOfLivingPeople()):
+            person = self.separatePeople(personIndex)
+            person.setVelocity(abs(int(speed)))
+
     def generatePeople(
         self, N_People, creationDomain, creationRange, colour, infected=False
     ):
@@ -74,7 +80,7 @@ class Manager:
         for _ in range(N_People):
             x = random.randint(creationDomain[0], creationDomain[1])
             y = random.randint(creationRange[0], creationRange[1])
-            velocity = 8
+            velocity = 1
             if not infected:
                 person = Person(
                     x, y, velocity, random.uniform(-math.pi, math.pi), colour
@@ -85,6 +91,12 @@ class Manager:
                 )
             people.append(person)
         return people
+
+    def separatePeople(self, personIndex):
+        if personIndex < len(self.healthPeople):
+            return self.healthPeople[personIndex]
+        else:
+            return self.infectedPeople[personIndex - len(self.healthPeople)]
 
     def neg_or_pos(self, n):
         if random.randint(0, 1) == 0:
@@ -123,3 +135,6 @@ class Manager:
 
     def getNumberOfDeadPeople(self):
         return len(self.deadPeople)
+
+    def getNumberOfLivingPeople(self):
+        return constants.N_PEOPLE - len(self.deadPeople)
