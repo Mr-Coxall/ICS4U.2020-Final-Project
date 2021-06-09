@@ -39,9 +39,7 @@ def splashScreen(fps, screen):
 
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+            checkQuit(event)
 
         pygame.display.update()
         fps.tick(constants.FPS)
@@ -92,10 +90,8 @@ def menuScreen(fps, screen):
         buttonActive = [False for _ in range(4)]
         # event check
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == pygame.MOUSEBUTTONUP:
+            checkQuit(event)
+            if event.type == pygame.MOUSEBUTTONUP:
                 mousePosition = pygame.mouse.get_pos()
                 for idx in range(4):
                     button = buttons[idx].getRect()
@@ -136,10 +132,8 @@ def simulateScreen(fps, screen):
 
         # event check
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == pygame.MOUSEBUTTONUP:
+            checkQuit(event)
+            if event.type == pygame.MOUSEBUTTONUP:
                 mousePosition = pygame.mouse.get_pos()
                 for idx in range(len(timeImages)):
                     image = timeImages[idx].get_rect(center=(17 + (32 * idx), 108))
@@ -188,6 +182,12 @@ def displayText(screen, strText, fontSize, position, colour, centre=False):
         screen.blit(text, text.get_rect(center=position))
     else:
         screen.blit(text, position)
+
+
+def checkQuit(event):
+    if event.type == pygame.QUIT:
+        pygame.quit()
+        sys.exit()
 
 
 def resizeImage(image, newSize):

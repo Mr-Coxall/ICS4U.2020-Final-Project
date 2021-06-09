@@ -30,7 +30,12 @@ class Manager:
                 person.move()
                 if random.randint(1, constants.FPS) == constants.FPS:
                     person.setDirection(random.uniform(0, 2 * math.pi))
-                if self.hitWall(person.getX(), person.getY(), person.getDirection(), constants.RADIUS):
+                if self.hitWall(
+                    person.getX(),
+                    person.getY(),
+                    person.getDirection(),
+                    constants.RADIUS,
+                ):
                     person.setDirection(person.getDirection() + math.pi)
 
     def checkInfected(self):
@@ -92,7 +97,7 @@ class Manager:
             return self.healthPeople[personIndex]
         else:
             return self.infectedPeople[personIndex - len(self.healthPeople)]
-    
+
     def neg_or_pos(self, n):
         if random.randint(0, 1) == 0:
             n *= -1

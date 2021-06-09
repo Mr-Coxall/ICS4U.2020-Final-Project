@@ -22,7 +22,7 @@ class Button:
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.__colour, self.__rect)
-        screen.blit(self.__text, self.__text.get_rect(center = self.__rect.center))
+        screen.blit(self.__text, self.__text.get_rect(center=self.__rect.center))
 
     def getX(self):
         return self.__x
