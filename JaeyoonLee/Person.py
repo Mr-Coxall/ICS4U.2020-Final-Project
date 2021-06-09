@@ -45,6 +45,9 @@ class Person:
     def getColour(self):
         return self.__colour
 
+    def setVelocity(self, velocity):
+        self.__velocity = velocity
+
     def setDirection(self, direction):
         self.__direction = direction
 
@@ -54,9 +57,9 @@ class Person:
 
 class Infectious(Person):
     def __init__(self, x, y, velocity, direction, colour, infectionRate, deathRate):
+        super().__init__(x, y, velocity, direction, colour)
         self.infectionRate = infectionRate
         self.deathRate = deathRate
-        super().__init__(x, y, velocity, direction, colour)
 
     def mutate(self):
         pass
