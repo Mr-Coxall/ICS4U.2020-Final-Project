@@ -25,10 +25,6 @@ public class Backgrounds extends Canvas {
   private BufferedImage image2 = null;
   /** Initializing the buffered image. */
   private BufferedImage image3 = null;
-  /** Initializing the buffered image. */
-  private final int height;
-  /** Initializing the buffered image. */
-  private final int width;
 
   /**
    * This method loads the background.
@@ -36,16 +32,14 @@ public class Backgrounds extends Canvas {
    * @param width
    * @param height
    */
-  public Backgrounds(final int width, final int height) {
+  public Backgrounds() {
     try {
-      image = ImageIO.read(new File("C:/Users/super/git/ICS4U.2020-Final-Project/"
-        + "CameronTeed/Breakfast/Background/background.png"));
+      image = ImageIO.read(new File("C:/Users/super/git/ICS4U.2020-Final"
+              + "-Project/CameronTeed/Breakfast/Background/background.png"));
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    this.width = width;
-    this.height = height;
   }
 
   /**
@@ -54,7 +48,6 @@ public class Backgrounds extends Canvas {
    * @param g
    */
   public void loadBackground(final Graphics g) {
-    g.drawImage(image, 0, 0, width, height, null);
     g.drawImage(image, 0, 0, null);
   }
 }

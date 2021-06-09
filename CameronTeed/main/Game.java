@@ -29,7 +29,7 @@ public class Game extends Canvas implements Runnable {
   /** Tells the programs its not yet running. */
   private boolean running = false;
   /** Initializes the background. */
-  private Backgrounds scenes = new Backgrounds(WIDTH, HEIGHT);
+  private Backgrounds scenes = new Backgrounds();
   /** Initializes the background. */
   private Assets assets = new Assets();
   /** Initializes the tick speed. */

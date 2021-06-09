@@ -16,11 +16,11 @@ import java.awt.event.MouseListener;
 final class MyMouseListener implements MouseListener {
 
   /** Initializes the variable that stores the key state. */
-  private static boolean keyPressed = false;
+  private static boolean keyPressed;
   /** Initializes the variable that stores the key state. */
-  private static boolean keyPressed1 = false;
+  private static boolean keyPressed1;
   /** Initializes the variable that stores the key state. */
-  private static boolean keyPressed2 = false;
+  private static boolean keyPressed2;
   /** Initializes the x coordinent. */
   private final int param1 = 8;
   /** Initializes the x coordinent. */
@@ -35,6 +35,12 @@ final class MyMouseListener implements MouseListener {
   private final int param6 = 100;
   /** Initializes the size. */
   private final int param7 = 90;
+  
+  public MyMouseListener() {
+    MyMouseListener.keyPressed = false;
+    MyMouseListener.keyPressed1 = false;
+    MyMouseListener.keyPressed2 = false;
+  }
 
   @Override
   public void mouseClicked(final MouseEvent e) {
