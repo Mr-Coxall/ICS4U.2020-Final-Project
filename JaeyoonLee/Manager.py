@@ -23,8 +23,8 @@ class Manager:
         self.deadPeople = []
 
     def movePerson(self, screen):
-        for personIndex in range(self.getNumberOfLivingPeople()):
-            person = self.separatePeople(personIndex)
+        for personIndex in range(constants.N_PEOPLE):
+            person = self.separatePeople(personIndex, death=True)
             person.draw(screen)
             if person.getVelocity() != 0:
                 person.move()
@@ -40,12 +40,10 @@ class Manager:
 
     def checkInfected(self):
         for infectious in self.infectedPeople:
-            healthCount = 0
-            for health in self.healthPeople:
-                distance = math.sqrt(
-                    (infectious.getX() - health.getX()) ** 2
-                    + (infectious.getY() - health.getY()) ** 2
-                )
+            for healthCount, health in enumerate(self.healthPeople):
+                healthPos = [health.getX(), health.getY()]
+                infectiousPos = [infectious.getX(), infectious.getY()]
+                distance = self.getDistance(healthPos, infectiousPos)
                 if distance < constants.RADIUS * 2:
                     # Collide
                     newInfectious = Infectious(
@@ -60,10 +58,15 @@ class Manager:
                     self.infectedPeople.append(newInfectious)
                     del self.healthPeople[healthCount]
 
-                healthCount += 1
-
     def checkDeath(self):
-        pass
+        for infectionCount, infectious in enumerate(self.infectedPeople):
+            infectionRate = infectious.getInfectionRate() * constants.FPS
+            if random.randint(0, infectionRate) == 0:
+                newDeath = Person(
+                    infectious.getX(), infectious.getY(), 0, 0, constants.BLACK
+                )
+                self.deadPeople.append(newDeath)
+                del self.infectedPeople[infectionCount]
 
     def mutateVirus(self):
         pass
@@ -87,16 +90,20 @@ class Manager:
                 )
             else:
                 person = Infectious(
-                    x, y, velocity, random.uniform(-math.pi, math.pi), colour, 10, 10
+                    x, y, velocity, random.uniform(-math.pi, math.pi), colour, 20, 20
                 )
             people.append(person)
         return people
 
-    def separatePeople(self, personIndex):
+    def separatePeople(self, personIndex, death=False):
         if personIndex < len(self.healthPeople):
             return self.healthPeople[personIndex]
-        else:
-            return self.infectedPeople[personIndex - len(self.healthPeople)]
+        elif death and (personIndex >= self.getNumberOfLivingPeople()):
+            return self.deadPeople[personIndex - self.getNumberOfLivingPeople()]
+        return self.infectedPeople[personIndex - len(self.healthPeople)]
+
+    def getDistance(self, pos1, pos2):
+        return math.sqrt((pos2[0] - pos1[0]) ** 2 + (pos2[1] - pos1[1]) ** 2)
 
     def neg_or_pos(self, n):
         if random.randint(0, 1) == 0:
@@ -104,19 +111,21 @@ class Manager:
         return n
 
     def hitWall(self, pos_x, pos_y, direction, radius):
-        if pos_x - radius < 0:
-            if math.cos(direction) < 0:
-                return True
-        elif pos_x + radius > constants.MAX_WIDTH:
-            if math.cos(direction) > 0:
-                return True
-        if pos_y - radius < 0:
-            if math.sin(direction) < 0:
-                return True
-        elif pos_y + radius > constants.MAX_HEIGHT:
-            if math.sin(direction) > 0:
-                return True
-        return False
+        if (
+            pos_x - radius < 0
+            and math.cos(direction) < 0
+            or pos_x - radius >= 0
+            and pos_x + radius > constants.WIDTH
+            and math.cos(direction) > 0
+        ):
+            return True
+        return (
+            pos_y - radius < 0
+            and math.sin(direction) < 0
+            or pos_y - radius >= 0
+            and pos_y + radius > constants.HEIGHT
+            and math.sin(direction) > 0
+        )
 
     def getHealthPeople(self):
         return self.healthPeople

@@ -5,19 +5,28 @@
 # This class is button class
 
 
-# import constants
+import constants
 import pygame
 
 
 class Button:
-    def __init__(self, x, y, width, height, colour, text, textColour):
+    def __init__(
+        self,
+        x,
+        y,
+        width,
+        height,
+        text,
+        colour=constants.WHITE,
+        textColour=constants.RED,
+    ):
         self.__x = x
         self.__y = y
         self.__width = width
         self.__height = height
         self.__rect = pygame.Rect(x, y, width, height)
         self.__colour = colour
-        self.__font = pygame.font.SysFont("notosanscjkkrblack", height)
+        self.__font = pygame.font.SysFont(constants.FONT, height)
         self.__text = self.__font.render(text, True, textColour)
 
     def draw(self, screen):
@@ -49,23 +58,43 @@ class Button:
         self.__colour = colour
 
 
-# class SelectionBox(Button):
-#     def __init__(self, x, y, width, height, colour, textColour, optionList, selectedColour, selected=0):
-#         super().__init__(x, y, width, height, colour, optionList[0], textColour)
-#         self.optionList = optionList
-#         self.selectedColour = selectedColour
-#         self.selected = selected
-#         self.draw_menu = False
-#         self.menu_active = False
+class SelectionBox(Button):
+    def __init__(
+        self,
+        x,
+        y,
+        width,
+        height,
+        colour,
+        textColour,
+        optionList,
+        selectedColour,
+        selected=0,
+    ):
+        super().__init__(x, y, width, height, colour, optionList[0], textColour)
+        self.__optionList = optionList
+        self.__selectedColour = selectedColour
+        self.__selected = selected
+        self.__menuActive = False
 
-#     def update(self):
-#         pass
+    def update(self):
+        mousePosition = pygame.mouse.get_pos()
+        self.setMenuActive(self.getRect().collidepoint(mousePosition))
 
-#     def getOptionList(self):
-#         return self.optionList
+        if self.__menuActive:
+            pass
 
-#     def getSelectedColour(self):
-#         return self.selectedColour
+    def getOptionList(self):
+        return self.__optionList
 
-#     def getSelected(self):
-#         return self.selected
+    def getSelectedColour(self):
+        return self.__selectedColour
+
+    def getSelected(self):
+        return self.__selected
+
+    def setMenuActive(self, menuActive):
+        self.__menuActive = menuActive
+
+    def setSelected(self, selected):
+        self.__selected = selected
