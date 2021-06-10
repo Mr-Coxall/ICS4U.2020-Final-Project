@@ -9,7 +9,7 @@ package com.breakfast.main;
 import java.awt.Graphics;
 
 /** */
-public class RenderEggs extends HitBoxes{
+public class RenderEggs extends HitBoxes {
 
     /** Initializes the background. */
     private Assets assets = new Assets();

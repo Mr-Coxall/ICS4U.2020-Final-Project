@@ -16,6 +16,10 @@ abstract class HitBoxes {
      *
      * @param x
      * @param y
+     * @param param1
+     * @param param2
+     * @param param3
+     * @param param4
      * @return boolean
      */
     public boolean isClicked(final double x, final double y, final int param1,
