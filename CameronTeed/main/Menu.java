@@ -38,7 +38,7 @@ public class Menu extends HitBoxes {
         if (isClicked(x, y, param1, param2, param3, param4)) {
             System.out.println("Click");
             g.clearRect(0, 0, width, height);
-            Game.State = Game.STATE.GAME;
+            Game.setState(Game.STATE.GAME);
         }
     }
 }

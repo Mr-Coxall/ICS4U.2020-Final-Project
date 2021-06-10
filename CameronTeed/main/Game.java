@@ -47,14 +47,18 @@ public class Game extends Canvas implements Runnable {
   /** Initializes the render bacon. */
   private RenderPancakes renderPancake = new RenderPancakes();
   /** Initializes enum for the game state. */
-  public static enum STATE {
+  public enum STATE {
+      /** Initializes splash screen. */
       SPLASH,
+      /** Initializes menu. */
       MENU,
+      /** Initializes the game. */
       GAME,
+      /** Initializes the end menu. */
       END,
   }
   /** Initializes game state. */
-  public static STATE State = STATE.SPLASH;
+  private static STATE state = STATE.SPLASH;
   /** Initializes the menu. */
   private Menu menu = new Menu();
   /** Initializes the splash screen. */
@@ -161,7 +165,7 @@ public class Game extends Canvas implements Runnable {
     int y = (int) b.getY();
     int x = (int) b.getX();
 
-    if (State == STATE.GAME) {
+    if (getState() == STATE.GAME) {
         // Renders the background
         scenes.loadBackground(g);
         // Renders the cursors
@@ -169,9 +173,9 @@ public class Game extends Canvas implements Runnable {
         renderBacon.putBacon(g);
         renderPancake.putPancake(g);
         rePaint(g);
-    } else if(State == STATE.MENU) {
+    } else if (getState() == STATE.MENU) {
         menu.render(g, x, y);
-    } else if(State == STATE.SPLASH) {
+    } else if (getState() == STATE.SPLASH) {
         splash.render(g);
         if ((System.currentTimeMillis() - timer2) >= splashTime) {
             splash.clearSplash(g);
@@ -181,7 +185,25 @@ public class Game extends Canvas implements Runnable {
     bs.show();
   }
 
-  /**
+ /**
+  * Getter for the State.
+  *
+  * @return state
+  */
+ public static STATE getState() {
+      return state;
+ }
+
+ /**
+  * Setter for the state.
+  *
+  * @param state
+  */
+ public static void setState(STATE state) {
+     Game.state = state;
+ }
+
+/**
    * Main function.
    *
    * @param args

@@ -19,7 +19,7 @@ public class SplashScreen {
     private Backgrounds background = new Backgrounds();
 
     /**
-     * Renders the splash screen
+     * Renders the splash screen.
      *
      * @param g
      */
@@ -34,6 +34,6 @@ public class SplashScreen {
      */
     public void clearSplash(final Graphics g) {
         g.clearRect(0, 0, width, height);
-        Game.State = Game.STATE.MENU;
+        Game.setState(Game.STATE.MENU);
     }
 }
