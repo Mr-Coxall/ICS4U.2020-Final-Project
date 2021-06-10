@@ -52,7 +52,7 @@ public class RenderBacon extends HitBoxes {
     /** Initializes the Y. */
     private final int eggY9 = 435;
     /** Initializes the x coordinent. */
-    private final int param1 = 750;
+    private final int param1 = 720;
     /** Initializes the x coordinent. */
     private final int param2 = 360;
     /** Initializes the y coordinent. */
@@ -70,9 +70,9 @@ public class RenderBacon extends HitBoxes {
     /** Initializes the y coordinent. */
     private final int param9 = 600;
     /** Initializes the size. */
-    private final int param10 = 70;
+    private final int param10 = 100;
     /** Initializes the size. */
-    private final int param11 = 35;
+    private final int param11 = 45;
 
     /**
      * Creates the logic to render the bacon.

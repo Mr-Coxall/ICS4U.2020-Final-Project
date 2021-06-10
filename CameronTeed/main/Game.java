@@ -46,7 +46,23 @@ public class Game extends Canvas implements Runnable {
   private RenderBacon renderBacon = new RenderBacon();
   /** Initializes the render bacon. */
   private RenderPancakes renderPancake = new RenderPancakes();
-
+  /** Initializes enum for the game state. */
+  public static enum STATE {
+      SPLASH,
+      MENU,
+      GAME,
+      END,
+  }
+  /** Initializes game state. */
+  public static STATE State = STATE.SPLASH;
+  /** Initializes the menu. */
+  private Menu menu = new Menu();
+  /** Initializes the splash screen. */
+  private SplashScreen splash = new SplashScreen();
+  /** Initializes the timer. */
+  private long timer2;
+  /** Initializes the timer the splash screen. */
+  private final int splashTime = 1800;
 
   /** Constructor. */
   public Game() {
@@ -85,6 +101,7 @@ public class Game extends Canvas implements Runnable {
     double delta = 0;
     long timer = System.currentTimeMillis();
     int frames = 0;
+    timer2 = System.currentTimeMillis();
     // Calls the init function to load the sprites
     init();
     while (running) {
@@ -139,13 +156,27 @@ public class Game extends Canvas implements Runnable {
     }
 
     Graphics g = bs.getDrawGraphics();
-    // Renders the background
-    scenes.loadBackground(g);
-    // Renders the cursors
-    renderEggs.putEgg(g);
-    renderBacon.putBacon(g);
-    renderPancake.putPancake(g);
-    rePaint(g);
+    PointerInfo a = MouseInfo.getPointerInfo();
+    Point b = a.getLocation();
+    int y = (int) b.getY();
+    int x = (int) b.getX();
+
+    if (State == STATE.GAME) {
+        // Renders the background
+        scenes.loadBackground(g);
+        // Renders the cursors
+        renderEggs.putEgg(g);
+        renderBacon.putBacon(g);
+        renderPancake.putPancake(g);
+        rePaint(g);
+    } else if(State == STATE.MENU) {
+        menu.render(g, x, y);
+    } else if(State == STATE.SPLASH) {
+        splash.render(g);
+        if ((System.currentTimeMillis() - timer2) >= splashTime) {
+            splash.clearSplash(g);
+        }
+    }
     g.dispose();
     bs.show();
   }
