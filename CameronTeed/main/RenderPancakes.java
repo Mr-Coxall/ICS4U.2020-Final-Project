@@ -9,7 +9,7 @@ package com.breakfast.main;
 import java.awt.Graphics;
 
 /** */
-public class RenderEggs extends HitBoxes {
+public class RenderPancakes extends HitBoxes {
 
     /** Initializes the background. */
     private Assets assets = new Assets();
@@ -34,9 +34,9 @@ public class RenderEggs extends HitBoxes {
     /** Initializes the egg. */
     private boolean renderEgg8 = false;
     /** Initializes the X. */
-    private final int eggX = 140;
+    private final int eggX = 415;
     /** Initializes the X. */
-    private final int eggX2 = 215;
+    private final int eggX2 = 510;
     /** Initializes the Y. */
     private final int eggY = 190;
     /** Initializes the Y. */
@@ -46,7 +46,7 @@ public class RenderEggs extends HitBoxes {
     /** Initializes the Y. */
     private final int eggY4 = 415;
     /** Initializes the x coordinent. */
-    private final int param1 = 550;
+    private final int param1 = 845;
     /** Initializes the x coordinent. */
     private final int param2 = 360;
     /** Initializes the y coordinent. */
@@ -58,7 +58,7 @@ public class RenderEggs extends HitBoxes {
     /** Initializes the size. */
     private final int param6 = 75;
     /** Initializes the size. */
-    private final int param7 = 625;
+    private final int param7 = 940;
 
     /**
      * Creates the logic to render the eggs.
@@ -67,10 +67,10 @@ public class RenderEggs extends HitBoxes {
      * @param y
      * @param g2d
      */
-    public void eggLogic(final int x, final int y, final Graphics g2d) {
-        if (MyMouseListener.isKeyPressed1()) {
+    public void pancakeLogic(final int x, final int y, final Graphics g2d) {
+        if (MyMouseListener.isKeyPressed()) {
           // Checks if user clicked on the hitbox for the spoon and loads it
-          g2d.drawImage(assets.getImage4(), x - offsetCursorx,
+          g2d.drawImage(assets.getImage2(), x - offsetCursorx,
                   y - offsetCursory, null);
           if (isClicked(x, y, param1, param2, param6, param6)) {
             renderEgg = true;
@@ -96,30 +96,30 @@ public class RenderEggs extends HitBoxes {
     * This method pains some graphics.
     * @param g
     */
-    public void putEgg(final Graphics g) {
+    public void putPancake(final Graphics g) {
         if (renderEgg) {
-            g.drawImage(assets.getImage5(), eggX, eggY, null);
+            g.drawImage(assets.getImage7(), eggX, eggY, null);
         }
         if (renderEgg2) {
-            g.drawImage(assets.getImage5(), eggX, eggY2, null);
+            g.drawImage(assets.getImage7(), eggX, eggY2, null);
         }
         if (renderEgg3) {
-            g.drawImage(assets.getImage5(), eggX, eggY3, null);
+            g.drawImage(assets.getImage7(), eggX, eggY3, null);
         }
         if (renderEgg4) {
-            g.drawImage(assets.getImage5(), eggX, eggY4, null);
+            g.drawImage(assets.getImage7(), eggX, eggY4, null);
         }
         if (renderEgg5) {
-            g.drawImage(assets.getImage5(), eggX2, eggY, null);
+            g.drawImage(assets.getImage7(), eggX2, eggY, null);
         }
         if (renderEgg6) {
-            g.drawImage(assets.getImage5(), eggX2, eggY2, null);
+            g.drawImage(assets.getImage7(), eggX2, eggY2, null);
         }
         if (renderEgg7) {
-            g.drawImage(assets.getImage5(), eggX2, eggY3, null);
+            g.drawImage(assets.getImage7(), eggX2, eggY3, null);
         }
         if (renderEgg8) {
-            g.drawImage(assets.getImage5(), eggX2, eggY4, null);
+            g.drawImage(assets.getImage7(), eggX2, eggY4, null);
         }
     }
 }

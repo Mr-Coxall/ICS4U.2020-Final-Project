@@ -40,8 +40,12 @@ public class Game extends Canvas implements Runnable {
   private final double timerCalc = 1000;
   /** Initializes the amount of threads. */
   private final int threads = 3;
-  /** Initializes therender eggs. */
+  /** Initializes the render eggs. */
   private RenderEggs renderEggs = new RenderEggs();
+  /** Initializes the render bacon. */
+  private RenderBacon renderBacon = new RenderBacon();
+  /** Initializes the render bacon. */
+  private RenderPancakes renderPancake = new RenderPancakes();
 
 
   /** Constructor. */
@@ -122,6 +126,8 @@ public class Game extends Canvas implements Runnable {
     int x = (int) b.getX();
 
     renderEggs.eggLogic(x, y, g2d);
+    renderBacon.baconLogic(x, y, g2d);
+    renderPancake.pancakeLogic(x, y, g2d);
   }
 
   /** This method renders the graphics. */
@@ -137,6 +143,8 @@ public class Game extends Canvas implements Runnable {
     scenes.loadBackground(g);
     // Renders the cursors
     renderEggs.putEgg(g);
+    renderBacon.putBacon(g);
+    renderPancake.putPancake(g);
     rePaint(g);
     g.dispose();
     bs.show();
