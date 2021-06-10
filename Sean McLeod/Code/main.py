@@ -13,7 +13,7 @@ def main():
     # create screen
     screen = pygame.display.set_mode((800, 600))
     # create image
-    splash_screen = pygame.image.load('Splash.jpg')
+    splash_screen = pygame.image.load("Splash.jpg")
     # Game loop
     running = True
     while running:
@@ -25,5 +25,5 @@ def main():
         pygame.display.update()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
