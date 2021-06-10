@@ -9,12 +9,10 @@ package com.breakfast.main;
 import java.awt.Graphics;
 
 /** */
-public class RenderEggs {
+public class RenderEggs extends HitBoxes{
 
     /** Initializes the background. */
     private Assets assets = new Assets();
-    /** Initializes the egg. */
-    private HitBoxes boxes = new HitBoxes();
     /** Initializes the x coord. */
     private final int offsetCursory = 200;
     /** Initializes the y coord. */
@@ -47,6 +45,20 @@ public class RenderEggs {
     private final int eggY3 = 340;
     /** Initializes the Y. */
     private final int eggY4 = 415;
+    /** Initializes the x coordinent. */
+    private final int param1 = 550;
+    /** Initializes the x coordinent. */
+    private final int param2 = 360;
+    /** Initializes the y coordinent. */
+    private final int param3 = 435;
+    /** Initializes the y coordinent. */
+    private final int param4 = 510;
+    /** Initializes the y coordinent. */
+    private final int param5 = 585;
+    /** Initializes the size. */
+    private final int param6 = 75;
+    /** Initializes the size. */
+    private final int param7 = 625;
 
     /**
      * Creates the logic to render the eggs.
@@ -64,21 +76,21 @@ public class RenderEggs {
           // Checks if user clicked on the hitbox for the spoon and loads it
           g2d.drawImage(assets.getImage4(), x - offsetCursorx,
                   y - offsetCursory, null);
-          if (boxes.isClicked(x, y)) {
+          if (isClicked(x, y, param1, param2, param6, param6)) {
             renderEgg = true;
-          } else if (boxes.isClicked2(x, y)) {
+          } else if (isClicked(x, y, param1, param3, param6, param6)) {
             renderEgg2 = true;
-          } else if (boxes.isClicked3(x, y)) {
+          } else if (isClicked(x, y, param1, param4, param6, param6)) {
             renderEgg3 = true;
-          } else if (boxes.isClicked4(x, y)) {
+          } else if (isClicked(x, y, param1, param5, param6, param6)) {
             renderEgg4 = true;
-          } else if (boxes.isClicked5(x, y)) {
+          } else if (isClicked(x, y, param7, param2, param6, param6)) {
             renderEgg5 = true;
-          } else if (boxes.isClicked6(x, y)) {
+          } else if (isClicked(x, y, param7, param3, param6, param6)) {
             renderEgg6 = true;
-          } else if (boxes.isClicked7(x, y)) {
+          } else if (isClicked(x, y, param7, param4, param6, param6)) {
             renderEgg7 = true;
-          } else if (boxes.isClicked8(x, y)) {
+          } else if (isClicked(x, y, param7, param5, param6, param6)) {
             renderEgg8 = true;
           }
         } else if (MyMouseListener.isKeyPressed2()) {
