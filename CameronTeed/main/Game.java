@@ -38,32 +38,35 @@ public class Game extends Canvas implements Runnable {
   private final double frames2 = 60.0;
   /** Initializes the timer. */
   private final double timerCalc = 1000;
-  /** Initializes the x coord. */
-  private final int offsetCursory = 200;
-  /** Initializes the y coord. */
-  private final int offsetCursorx = 440;
   /** Initializes the amount of threads. */
   private final int threads = 3;
-  /** Initializes the amount of threads. */
-  private HitBoxes boxes = new HitBoxes();
-  /** Initializes the egg. */
-  private boolean renderEgg = false;
-  /** Initializes the egg. */
-  private boolean renderEgg2 = false;
-  /** Initializes the egg. */
-  private boolean renderEgg3 = false;
-  /** Initializes the egg. */
-  private boolean renderEgg4 = false;
-  /** Initializes the X. */
-  private final int eggX = 140;
-  /** Initializes the Y. */
-  private final int eggY = 190;
-  /** Initializes the Y. */
-  private final int eggY2 = 265;
-  /** Initializes the Y. */
-  private final int eggY3 = 340;
-  /** Initializes the Y. */
-  private final int eggY4 = 415;
+  /** Initializes the render eggs. */
+  private RenderEggs renderEggs = new RenderEggs();
+  /** Initializes the render bacon. */
+  private RenderBacon renderBacon = new RenderBacon();
+  /** Initializes the render bacon. */
+  private RenderPancakes renderPancake = new RenderPancakes();
+  /** Initializes enum for the game state. */
+  public enum STATE {
+      /** Initializes splash screen. */
+      SPLASH,
+      /** Initializes menu. */
+      MENU,
+      /** Initializes the game. */
+      GAME,
+      /** Initializes the end menu. */
+      END,
+  }
+  /** Initializes game state. */
+  private static STATE state = STATE.SPLASH;
+  /** Initializes the menu. */
+  private Menu menu = new Menu();
+  /** Initializes the splash screen. */
+  private SplashScreen splash = new SplashScreen();
+  /** Initializes the timer. */
+  private long timer2;
+  /** Initializes the timer the splash screen. */
+  private final int splashTime = 1800;
 
   /** Constructor. */
   public Game() {
@@ -102,6 +105,7 @@ public class Game extends Canvas implements Runnable {
     double delta = 0;
     long timer = System.currentTimeMillis();
     int frames = 0;
+    timer2 = System.currentTimeMillis();
     // Calls the init function to load the sprites
     init();
     while (running) {
@@ -131,25 +135,6 @@ public class Game extends Canvas implements Runnable {
   }
 
   /** This method pains some graphics.
-  *
-  * @param g
-  */
-  public void renderEgg(final Graphics g) {
-      if (renderEgg) {
-          g.drawImage(assets.getImage5(), eggX, eggY, null);
-      }
-      if (renderEgg2) {
-          g.drawImage(assets.getImage5(), eggX, eggY2, null);
-      }
-      if (renderEgg3) {
-          g.drawImage(assets.getImage5(), eggX, eggY3, null);
-      }
-      if (renderEgg4) {
-          g.drawImage(assets.getImage5(), eggX, eggY4, null);
-      }
-  }
-
-  /** This method pains some graphics.
    *
    * @param g
    */
@@ -161,33 +146,9 @@ public class Game extends Canvas implements Runnable {
     int y = (int) b.getY();
     int x = (int) b.getX();
 
-    // Checks if user clicked on the hitbox for the egg and loads it
-    if (MyMouseListener.isKeyPressed()) {
-      g2d.drawImage(assets.getImage2(), x - offsetCursorx,
-              y - offsetCursory, null);
-    } else if (MyMouseListener.isKeyPressed1()) {
-      // Checks if user clicked on the hitbox for the spoon and loads it
-      g2d.drawImage(assets.getImage4(), x - offsetCursorx,
-              y - offsetCursory, null);
-      if (boxes.isClicked(x, y)) {
-        renderEgg = true;
-      } else if (boxes.isClicked2(x, y)) {
-        renderEgg2 = true;
-      } else if (boxes.isClicked3(x, y)) {
-        renderEgg3 = true;
-      } else if (boxes.isClicked4(x, y)) {
-        renderEgg4 = true;
-      }
-    } else if (MyMouseListener.isKeyPressed2()) {
-      // Checks if user clicked on the hitbox for the bacon and loads it
-      g2d.drawImage(assets.getImage3(), x - offsetCursorx,
-              y - offsetCursory, null);
-    } else {
-      // Checks if user clicked on the hitbox for the spatula and loads it
-      g2d.drawImage(assets.getImage(), x - offsetCursorx,
-              y - offsetCursory, null);
-    }
-
+    renderEggs.eggLogic(x, y, g2d);
+    renderBacon.baconLogic(x, y, g2d);
+    renderPancake.pancakeLogic(x, y, g2d);
   }
 
   /** This method renders the graphics. */
@@ -199,16 +160,50 @@ public class Game extends Canvas implements Runnable {
     }
 
     Graphics g = bs.getDrawGraphics();
-    // Renders the background
-    scenes.loadBackground(g);
-    // Renders the cursors
-    rePaint(g);
-    renderEgg(g);
+    PointerInfo a = MouseInfo.getPointerInfo();
+    Point b = a.getLocation();
+    int y = (int) b.getY();
+    int x = (int) b.getX();
+
+    if (getState() == STATE.GAME) {
+        // Renders the background
+        scenes.loadBackground(g);
+        // Renders the cursors
+        renderEggs.putEgg(g);
+        renderBacon.putBacon(g);
+        renderPancake.putPancake(g);
+        rePaint(g);
+    } else if (getState() == STATE.MENU) {
+        menu.render(g, x, y);
+    } else if (getState() == STATE.SPLASH) {
+        splash.render(g);
+        if ((System.currentTimeMillis() - timer2) >= splashTime) {
+            splash.clearSplash(g);
+        }
+    }
     g.dispose();
     bs.show();
   }
 
-  /**
+ /**
+  * Getter for the State.
+  *
+  * @return state
+  */
+ public static STATE getState() {
+      return state;
+ }
+
+ /**
+  * Setter for the state.
+  *
+  * @param state1
+  */
+ public static void setState(final STATE state1) {
+     Game.state = state1;
+ }
+
+/**
    * Main function.
    *
    * @param args
