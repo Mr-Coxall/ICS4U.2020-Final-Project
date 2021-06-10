@@ -44,7 +44,26 @@ public class Game extends Canvas implements Runnable {
   private final int offsetCursorx = 440;
   /** Initializes the amount of threads. */
   private final int threads = 3;
-
+  /** Initializes the amount of threads. */
+  private HitBoxes boxes = new HitBoxes();
+  /** Initializes the egg. */
+  private boolean renderEgg = false;
+  /** Initializes the egg. */
+  private boolean renderEgg2 = false;
+  /** Initializes the egg. */
+  private boolean renderEgg3 = false;
+  /** Initializes the egg. */
+  private boolean renderEgg4 = false;
+  /** Initializes the X. */
+  private final int eggX = 140;
+  /** Initializes the Y. */
+  private final int eggY = 190;
+  /** Initializes the Y. */
+  private final int eggY2 = 265;
+  /** Initializes the Y. */
+  private final int eggY3 = 340;
+  /** Initializes the Y. */
+  private final int eggY4 = 415;
 
   /** Constructor. */
   public Game() {
@@ -112,6 +131,25 @@ public class Game extends Canvas implements Runnable {
   }
 
   /** This method pains some graphics.
+  *
+  * @param g
+  */
+  public void renderEgg(final Graphics g) {
+      if (renderEgg) {
+          g.drawImage(assets.getImage5(), eggX, eggY, null);
+      }
+      if (renderEgg2) {
+          g.drawImage(assets.getImage5(), eggX, eggY2, null);
+      }
+      if (renderEgg3) {
+          g.drawImage(assets.getImage5(), eggX, eggY3, null);
+      }
+      if (renderEgg4) {
+          g.drawImage(assets.getImage5(), eggX, eggY4, null);
+      }
+  }
+
+  /** This method pains some graphics.
    *
    * @param g
    */
@@ -131,6 +169,15 @@ public class Game extends Canvas implements Runnable {
       // Checks if user clicked on the hitbox for the spoon and loads it
       g2d.drawImage(assets.getImage4(), x - offsetCursorx,
               y - offsetCursory, null);
+      if (boxes.isClicked(x, y)) {
+        renderEgg = true;
+      } else if (boxes.isClicked2(x, y)) {
+        renderEgg2 = true;
+      } else if (boxes.isClicked3(x, y)) {
+        renderEgg3 = true;
+      } else if (boxes.isClicked4(x, y)) {
+        renderEgg4 = true;
+      }
     } else if (MyMouseListener.isKeyPressed2()) {
       // Checks if user clicked on the hitbox for the bacon and loads it
       g2d.drawImage(assets.getImage3(), x - offsetCursorx,
@@ -140,6 +187,7 @@ public class Game extends Canvas implements Runnable {
       g2d.drawImage(assets.getImage(), x - offsetCursorx,
               y - offsetCursory, null);
     }
+
   }
 
   /** This method renders the graphics. */
@@ -155,6 +203,7 @@ public class Game extends Canvas implements Runnable {
     scenes.loadBackground(g);
     // Renders the cursors
     rePaint(g);
+    renderEgg(g);
     g.dispose();
     bs.show();
   }

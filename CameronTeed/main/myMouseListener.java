@@ -21,6 +21,12 @@ final class MyMouseListener implements MouseListener {
   private static boolean keyPressed1;
   /** Initializes the variable that stores the key state. */
   private static boolean keyPressed2;
+  /** Initializes the variable that stores the key state. */
+  private static boolean clicked;
+  /** Initializes the variable that stores the key state. */
+  private static boolean clicked2;
+  /** Initializes the variable that stores the key state. */
+  private static boolean clicked3;
   /** Initializes the x coordinent. */
   private final int param1 = 8;
   /** Initializes the x coordinent. */
@@ -37,36 +43,16 @@ final class MyMouseListener implements MouseListener {
   private final int param7 = 90;
 
   MyMouseListener() {
-    this.keyPressed = false;
-    this.keyPressed1 = false;
-    this.keyPressed2 = false;
+    keyPressed = false;
+    keyPressed1 = false;
+    keyPressed2 = false;
+    clicked = false;
+    clicked2 = false;
+    clicked3 = true;
   }
 
   @Override
   public void mouseClicked(final MouseEvent e) {
-
-    // Creates the hit boxes for the eggs, bacon, and pancake mix
-    Rectangle bounds = new Rectangle(param1, param3, param6, param6);
-    Rectangle bounds1 = new Rectangle(param2, param4, param7, param7);
-    Rectangle bounds2 = new Rectangle(param2, param5, param6, param6);
-    // Checks if the user clicked the hitboxes and returns true
-    if (bounds.contains(e.getX(), e.getY())) {
-      setKeyPressed(true);
-      setKeyPressed2(false);
-      setKeyPressed1(false);
-    } else if (bounds1.contains(e.getX(), e.getY())) {
-      setKeyPressed1(true);
-      setKeyPressed(false);
-      setKeyPressed2(false);
-    } else if (bounds2.contains(e.getX(), e.getY())) {
-      setKeyPressed2(true);
-      setKeyPressed1(false);
-      setKeyPressed(false);
-    } else {
-      setKeyPressed(false);
-      setKeyPressed1(false);
-      setKeyPressed2(false);
-    }
   }
 
   @Override
@@ -81,12 +67,39 @@ final class MyMouseListener implements MouseListener {
 
   @Override
   public void mousePressed(final MouseEvent e) {
-
+      setState2(true);
   }
 
   @Override
   public void mouseReleased(final MouseEvent e) {
-
+   // Creates the hit boxes for the eggs, bacon, and pancake mix
+      Rectangle bounds = new Rectangle(param1, param3, param6, param6);
+      Rectangle bounds1 = new Rectangle(param2, param4, param7, param7);
+      Rectangle bounds2 = new Rectangle(param2, param5, param6, param6);
+      // Checks if the user clicked the hitboxes and returns true
+      setState(true);
+      setState2(false);
+      if (bounds.contains(e.getX(), e.getY())) {
+        setKeyPressed(true);
+        setKeyPressed2(false);
+        setKeyPressed1(false);
+        setState3(true);
+      } else if (bounds1.contains(e.getX(), e.getY())) {
+        setKeyPressed1(true);
+        setKeyPressed(false);
+        setKeyPressed2(false);
+        setState3(true);
+      } else if (bounds2.contains(e.getX(), e.getY())) {
+        setKeyPressed2(true);
+        setKeyPressed1(false);
+        setKeyPressed(false);
+        setState3(true);
+      } else {
+        setKeyPressed(false);
+        setKeyPressed1(false);
+        setKeyPressed2(false);
+        setState3(false);
+      }
   }
 
   /**
@@ -142,4 +155,58 @@ final class MyMouseListener implements MouseListener {
   public void setKeyPressed2(final boolean keyState2) {
     keyPressed2 = keyState2;
   }
+
+  /**
+   * Setter.
+   *
+   * @param keyState3
+   */
+   public void setState(final boolean keyState3) {
+     clicked = keyState3;
+   }
+
+   /**
+    * Getter.
+    *
+    * @return clicked
+    */
+    public static boolean getState() {
+      return clicked;
+    }
+
+    /**
+     * Setter.
+     *
+     * @param keyState3
+     */
+     public void setState2(final boolean keyState3) {
+       clicked2 = keyState3;
+     }
+
+     /**
+      * Getter.
+      *
+      * @return clicked2
+      */
+      public static boolean getState2() {
+        return clicked2;
+      }
+
+      /**
+       * Setter.
+       *
+       * @param keyState3
+       */
+       public void setState3(final boolean keyState3) {
+         clicked3 = keyState3;
+       }
+
+       /**
+        * Getter.
+        *
+        * @return clicked3
+        */
+        public static boolean getState3() {
+          return clicked3;
+        }
 }

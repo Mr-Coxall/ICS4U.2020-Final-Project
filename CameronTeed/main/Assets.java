@@ -60,6 +60,19 @@ final class Assets {
    * Initializing variable.
    */
   private final int imageEgg = 75;
+  /**
+   * Initializing variable.
+   */
+  private static BufferedImage egg1;
+  /**
+   * Initializing variable.
+   */
+  private static BufferedImage bacon1;
+  /**
+   * Initializing variable.
+   */
+  private static BufferedImage pancake1;
+
 
   Assets() {
 
@@ -73,12 +86,17 @@ final class Assets {
     BufferedImageLoader loader = new BufferedImageLoader();
     SpriteLoader ss = new SpriteLoader(loader.loadImage("/pancakes.png"));
     SpriteLoader bs = new SpriteLoader(loader.loadImage("/eggs.png"));
+    SpriteLoader fs = new SpriteLoader(loader.loadImage("/bacon.png"));
 
     // This gets the specific image from the sprite sheet
     spatula = ss.grabImage(col, row1, imageW, imageH);
     spoon = ss.grabImage(col, row2, imageW, imageH);
     bacon = ss.grabImage(col, row3, imageBacon, imageBacon);
+
     egg = bs.grabImage(col, row1, imageW, imageEgg);
+    egg1 = bs.grabImage(1, 1, imageBacon, imageBacon);
+
+    pancake1 = fs.grabImage(1, 1, imageW, imageEgg);
   }
 
   /**
@@ -111,5 +129,13 @@ final class Assets {
    */
   public BufferedImage getImage4() {
       return egg;
+  }
+
+  /**
+   * Getter for a sprite.
+   * @return egg1
+   */
+  public BufferedImage getImage5() {
+      return egg1;
   }
 }
