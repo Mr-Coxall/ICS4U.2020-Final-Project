@@ -197,10 +197,10 @@ public class Game extends Canvas implements Runnable {
  /**
   * Setter for the state.
   *
-  * @param state
+  * @param state1
   */
- public static void setState(STATE state) {
-     Game.state = state;
+ public static void setState(final STATE state1) {
+     Game.state = state1;
  }
 
 /**
