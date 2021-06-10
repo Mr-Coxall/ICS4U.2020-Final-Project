@@ -10,7 +10,7 @@ import sys
 
 import constants
 import pygame
-from Button import Button, 
+from Button import Button
 from Manager import Manager
 
 
