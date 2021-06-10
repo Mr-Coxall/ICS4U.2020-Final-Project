@@ -81,9 +81,6 @@ class SelectionBox(Button):
         mousePosition = pygame.mouse.get_pos()
         self.setMenuActive(self.getRect().collidepoint(mousePosition))
 
-        if self.__menuActive:
-            pass
-
     def getOptionList(self):
         return self.__optionList
 
