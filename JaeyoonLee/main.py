@@ -10,7 +10,7 @@ import sys
 
 import constants
 import pygame
-from Button import Button
+from Button import Button, 
 from Manager import Manager
 
 
@@ -94,6 +94,8 @@ def optionScreen():
     backButton = Button(10, 10, 150, 50, "Back")
     backActive = False
 
+    # colourSettings = [SelectionBox(...)]
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -134,11 +136,11 @@ def helpScreen():
     # background image
     backgroundImageBlit("images\\virusSimulator_options.png")
 
-    # help screen title
-    titleText(80, title="About Virus Simulator", adjustment=250)
-
     backButton = Button(10, 10, 150, 50, "Back")
     backActive = False
+
+    # help screen title
+    titleText(80, title="About Virus Simulator", adjustment=250)
 
     while True:
         for event in pygame.event.get():
