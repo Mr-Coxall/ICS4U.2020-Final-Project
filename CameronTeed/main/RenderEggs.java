@@ -55,7 +55,7 @@ public class RenderEggs {
      * @param y
      * @param g2d
      */
-    public void eggLogic(int x, int y, Graphics g2d) {
+    public void eggLogic(final int x, final int y, final Graphics g2d) {
      // Checks if user clicked on the hitbox for the egg and loads it
         if (MyMouseListener.isKeyPressed()) {
           g2d.drawImage(assets.getImage2(), x - offsetCursorx,
@@ -91,7 +91,7 @@ public class RenderEggs {
                   y - offsetCursory, null);
         }
     }
-    
+
     /**
     * This method pains some graphics.
     * @param g

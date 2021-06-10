@@ -40,6 +40,7 @@ public class Game extends Canvas implements Runnable {
   private final double timerCalc = 1000;
   /** Initializes the amount of threads. */
   private final int threads = 3;
+  /** Initializes therender eggs. */
   private RenderEggs renderEggs = new RenderEggs();
 
 
@@ -119,9 +120,8 @@ public class Game extends Canvas implements Runnable {
     Point b = a.getLocation();
     int y = (int) b.getY();
     int x = (int) b.getX();
-    
+
     renderEggs.eggLogic(x, y, g2d);
-    
   }
 
   /** This method renders the graphics. */
