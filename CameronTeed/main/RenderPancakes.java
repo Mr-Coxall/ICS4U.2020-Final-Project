@@ -89,7 +89,7 @@ public class RenderPancakes extends HitBoxes {
           } else if (isClicked(x, y, param7, param5, param6, param6)) {
             renderEgg8 = true;
           }
-       } 
+       }
     }
 
     /**

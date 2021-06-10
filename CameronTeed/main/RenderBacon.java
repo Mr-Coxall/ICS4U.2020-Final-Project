@@ -104,7 +104,8 @@ public class RenderBacon extends HitBoxes {
           } else if (isClicked(x, y, param1, param9, param10, param11)) {
             renderEgg8 = true;
           }
-        } else if(!MyMouseListener.isKeyPressed2() && !MyMouseListener.isKeyPressed1() && !MyMouseListener.isKeyPressed()) {
+        } else if (!MyMouseListener.isKeyPressed2() && !MyMouseListener.isKeyPressed1()
+                    && !MyMouseListener.isKeyPressed()) {
             // Checks if user clicked on the hitbox for the spatula and loads it
             g2d.drawImage(assets.getImage(), x - offsetCursorx,
                     y - offsetCursory, null);
