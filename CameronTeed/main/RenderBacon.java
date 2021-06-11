@@ -89,6 +89,8 @@ public class RenderBacon extends HitBoxes {
     private final int array8 = 8;
     /** Initializes the size. */
     private final long[] timer = new long[array8];
+    /** Initializes the size. */
+    private boolean spatula = false;
 
     /**
      * Creates the logic to render the bacon.
@@ -134,6 +136,7 @@ public class RenderBacon extends HitBoxes {
             // Checks if user clicked on the hitbox for the spatula and loads it
             g2d.drawImage(assets.getImage(), x - offsetCursorx,
                     y - offsetCursory, null);
+            spatula = true;
           }
     }
 
@@ -188,5 +191,9 @@ public class RenderBacon extends HitBoxes {
         } else if (renderEgg8) {
             g.drawImage(assets.getImage6(), eggX, eggY9, null);
         }
+    }
+
+    boolean getSpatula() {
+        return spatula;
     }
 }

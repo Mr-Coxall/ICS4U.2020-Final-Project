@@ -51,29 +51,29 @@ final class MyMouseListener implements MouseListener {
     clicked = false;
     clicked2 = false;
     clicked3 = true;
-    clicked4 = true;
+    clicked4 = false;
   }
 
   @Override
   public void mouseClicked(final MouseEvent e) {
-      System.out.println("out1");
+      // System.out.println("out1");
+      setState4(true);
   }
 
   @Override
   public void mouseEntered(final MouseEvent e) {
-      System.out.println("out2");
+      // out.println("out2");
   }
 
   @Override
   public void mouseExited(final MouseEvent e) {
-      System.out.println("out3");
-      setState4(true);
+      // System.out.println("out3");
   }
 
   @Override
   public void mousePressed(final MouseEvent e) {
       setState2(true);
-      System.out.println("out4");
+      // System.out.println("out4");
   }
 
   @Override
@@ -90,23 +90,26 @@ final class MyMouseListener implements MouseListener {
         setKeyPressed2(false);
         setKeyPressed1(false);
         setState3(true);
+        setState4(false);
       } else if (bounds1.contains(e.getX(), e.getY())) {
         setKeyPressed1(true);
         setKeyPressed(false);
         setKeyPressed2(false);
         setState3(true);
+        setState4(false);
       } else if (bounds2.contains(e.getX(), e.getY())) {
         setKeyPressed2(true);
         setKeyPressed1(false);
         setKeyPressed(false);
         setState3(true);
+        setState4(false);
       } else {
         setKeyPressed(false);
         setKeyPressed1(false);
         setKeyPressed2(false);
         setState3(false);
       }
-      System.out.println("out6");
+      // System.out.println("out6");
   }
 
   /**
