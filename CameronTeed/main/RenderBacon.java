@@ -142,6 +142,7 @@ public class RenderBacon extends HitBoxes {
 
     /**
     * This method pains some graphics.
+    *
     * @param g
     */
     public void putBacon(final Graphics g) {
@@ -193,6 +194,11 @@ public class RenderBacon extends HitBoxes {
         }
     }
 
+    /**
+     * This returns the state of the spatula.
+     *
+     * @return
+     */
     boolean getSpatula() {
         return spatula;
     }
