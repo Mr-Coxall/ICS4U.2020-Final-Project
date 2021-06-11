@@ -93,6 +93,26 @@ public class RenderBacon extends HitBoxes {
     private boolean spatula = false;
     /** Initializes the size. */
     private final boolean[] flipTime = new boolean[array8];
+    /** Initializes the size. */
+    private final boolean[] burnt = new boolean[array8];
+    /** Initializes the size. */
+    private final int burnTime = 30000;
+    /** Initializes the size. */
+    private double burnMult = 1;
+    /** Initializes the size. */
+    private double burnMult1 = 1;
+    /** Initializes the size. */
+    private double burnMult2 = 1;
+    /** Initializes the size. */
+    private double burnMult3 = 1;
+    /** Initializes the size. */
+    private double burnMult4 = 1;
+    /** Initializes the size. */
+    private double burnMult5 = 1;
+    /** Initializes the size. */
+    private double burnMult6 = 1;
+    /** Initializes the size. */
+    private double burnMult7 = 1;
 
     /**
      * Creates the logic to render the bacon.
@@ -145,12 +165,19 @@ public class RenderBacon extends HitBoxes {
 
     /**
      * This method pains some graphics.
+     *
      * @param g
      * @param x
      * @param y
      */
      public void putBacon(final Graphics g, final int x, final int y) {
-         if (renderEgg && System.currentTimeMillis() - timer[0] >= cookTime) {
+         if (renderEgg && System.currentTimeMillis() - timer[0] >= burnTime
+                                                                 * burnMult) {
+             burnt[0] = true;
+             g.drawImage(assets.getImage15(), eggX, eggY, null);
+         } else if (renderEgg && System.currentTimeMillis() - timer[0]
+                                                         >= cookTime) {
+             this.burnMult = 1;
              if (MyMouseListener.getState2() && getSpatula()
                      && isClicked2(x, y, param1, param2, param10, param11)) {
                  this.flipTime[0] = true;
@@ -160,7 +187,13 @@ public class RenderBacon extends HitBoxes {
          } else if (renderEgg && !flipTime[0]) {
              g.drawImage(assets.getImage6(), eggX, eggY, null);
          }
-         if (renderEgg2 && System.currentTimeMillis() - timer[1] >= cookTime) {
+         if (renderEgg2 && System.currentTimeMillis() - timer[1] >= burnTime
+                                                                 * burnMult1) {
+             burnt[1] = true;
+             g.drawImage(assets.getImage15(), eggX, eggY2, null);
+         } else if (renderEgg2 && System.currentTimeMillis() - timer[1]
+                                                         >= cookTime) {
+             this.burnMult = 1;
              if (MyMouseListener.getState2() && getSpatula()
                      && isClicked2(x, y, param1, param3, param10, param11)) {
                  this.flipTime[1] = true;
@@ -170,7 +203,12 @@ public class RenderBacon extends HitBoxes {
          } else if (renderEgg2 && !flipTime[1]) {
              g.drawImage(assets.getImage6(), eggX, eggY2, null);
          }
-         if (renderEgg3 && System.currentTimeMillis() - timer[2] >= cookTime) {
+         if (renderEgg3 && System.currentTimeMillis() - timer[2]
+                                            >= burnTime * burnMult2) {
+             burnt[2] = true;
+             g.drawImage(assets.getImage15(), eggX, eggY3, null);
+         } else if (renderEgg3 && System.currentTimeMillis() - timer[2]
+                                                         >= cookTime) {
              if (MyMouseListener.getState2() && getSpatula()
                      && isClicked2(x, y, param1, param4, param10, param11)) {
                  this.flipTime[2] = true;
@@ -181,6 +219,10 @@ public class RenderBacon extends HitBoxes {
              g.drawImage(assets.getImage6(), eggX, eggY3, null);
          }
          if (renderEgg4 && System.currentTimeMillis() - timer[array3]
+                                                     >= burnTime * burnMult3) {
+             burnt[array3] = true;
+             g.drawImage(assets.getImage15(), eggX, eggY4, null);
+         } else if (renderEgg4 && System.currentTimeMillis() - timer[array3]
                                                          >= cookTime) {
              if (MyMouseListener.getState2() && getSpatula()
                      && isClicked2(x, y, param1, param5, param10, param11)) {
@@ -191,7 +233,11 @@ public class RenderBacon extends HitBoxes {
          } else if (renderEgg4 && (!flipTime[array3])) {
              g.drawImage(assets.getImage6(), eggX, eggY4, null);
          }
-         if (renderEgg5 && System.currentTimeMillis() - timer[array4]
+         if (renderEgg5 && System.currentTimeMillis() - timer[array3]
+                                                     >= burnTime * burnMult4) {
+             burnt[array4] = true;
+             g.drawImage(assets.getImage15(), eggX, eggY6, null);
+         } else if (renderEgg5 && System.currentTimeMillis() - timer[array4]
                                                          >= cookTime) {
              if (MyMouseListener.getState2() && getSpatula()
                      && isClicked2(x, y, param1, param6, param10, param11)) {
@@ -202,8 +248,12 @@ public class RenderBacon extends HitBoxes {
          } else if (renderEgg5 && !flipTime[array4]) {
              g.drawImage(assets.getImage6(), eggX, eggY6, null);
          }
-         if (renderEgg6 && System.currentTimeMillis() - timer[array5]
-                                                         >= cookTime) {
+         if (renderEgg6 && System.currentTimeMillis() - timer[array4]
+                                                     >= burnTime * burnMult5) {
+             burnt[array5] = true;
+             g.drawImage(assets.getImage15(), eggX, eggY7, null);
+         } else if (renderEgg6 && System.currentTimeMillis() - timer[array5]
+                                                        >= cookTime) {
              if (MyMouseListener.getState2() && getSpatula()
                      && isClicked2(x, y, param1, param7, param10, param11)) {
                  this.flipTime[array5] = true;
@@ -214,7 +264,11 @@ public class RenderBacon extends HitBoxes {
              g.drawImage(assets.getImage6(), eggX, eggY7, null);
          }
          if (renderEgg7 && System.currentTimeMillis() - timer[array6]
-                                                         >= cookTime) {
+                                                  >= burnTime  * burnMult6) {
+             burnt[array6] = true;
+             g.drawImage(assets.getImage15(), eggX, eggY8, null);
+         } else if (renderEgg7 && System.currentTimeMillis() - timer[array6]
+                                                            >= cookTime) {
              if (MyMouseListener.getState2() && getSpatula()
                      && isClicked2(x, y, param1, param8, param10, param11)) {
                  this.flipTime[array6] = true;
@@ -225,7 +279,11 @@ public class RenderBacon extends HitBoxes {
              g.drawImage(assets.getImage6(), eggX, eggY8, null);
          }
          if (renderEgg8 && System.currentTimeMillis() - timer[array7]
-                                                         >= cookTime) {
+                                                     >= burnTime  * burnMult7) {
+             burnt[array7] = true;
+             g.drawImage(assets.getImage15(), eggX, eggY9, null);
+         } else if (renderEgg8 && System.currentTimeMillis() - timer[array7]
+                                                             >= cookTime) {
              if (MyMouseListener.getState2() && getSpatula()
                      && isClicked2(x, y, param1, param9, param10, param11)) {
                  this.flipTime[array7] = true;
@@ -244,29 +302,37 @@ public class RenderBacon extends HitBoxes {
       * @param y
       */
       public void flipTime(final Graphics g, final int x, final int y) {
-          if (getSpatula() && flipTime[0]) {
+          if (getSpatula() && flipTime[0] && !burnt[0]) {
+              this.burnMult = 1.25;
               g.drawImage(assets.getImage13(), eggX, eggY, null);
           }
-          if (getSpatula() && flipTime[1]) {
+          if (getSpatula() && flipTime[1] && !burnt[1]) {
               g.drawImage(assets.getImage13(), eggX, eggY2, null);
+              this.burnMult1 = 1.25;
           }
-          if (getSpatula() && flipTime[2]) {
+          if (getSpatula() && flipTime[2] && !burnt[2]) {
               g.drawImage(assets.getImage13(), eggX, eggY3, null);
+              burnMult2 = 1.25;
           }
-          if (getSpatula() && flipTime[array3]) {
+          if (getSpatula() && flipTime[array3] && !burnt[array3]) {
               g.drawImage(assets.getImage13(), eggX, eggY4, null);
+              burnMult3 = 1.25;
           }
-          if (getSpatula() && flipTime[array4]) {
+          if (getSpatula() && flipTime[array4] && !burnt[array4]) {
               g.drawImage(assets.getImage13(), eggX, eggY6, null);
+              burnMult4 = 1.25;
           }
-          if (getSpatula() && flipTime[array5]) {
+          if (getSpatula() && flipTime[array5] && !burnt[array5]) {
               g.drawImage(assets.getImage13(), eggX, eggY7, null);
+              burnMult5 = 1.25;
           }
-          if (getSpatula() && flipTime[array6]) {
+          if (getSpatula() && flipTime[array6] && !burnt[array6]) {
               g.drawImage(assets.getImage13(), eggX, eggY8, null);
+              burnMult6 = 1.25;
           }
-          if (getSpatula() && flipTime[array7]) {
+          if (getSpatula() && flipTime[array7] && !burnt[array7]) {
               g.drawImage(assets.getImage13(), eggX, eggY9, null);
+              burnMult7 = 1.25;
           }
       }
 

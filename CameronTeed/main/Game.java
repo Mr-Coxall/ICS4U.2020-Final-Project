@@ -173,7 +173,7 @@ public class Game extends Canvas implements Runnable {
         scenes.loadBackground(g);
         // Renders the cursors
         renderEggs.putEgg(g, x, y);
-        renderPancake.putPancake(g, x, y);
+        renderPancake.putPancakes(g, x, y);
         renderBacon.putBacon(g, x, y);
         rePaint(g);
     } else if (getState() == STATE.MENU) {
