@@ -144,7 +144,7 @@ public class RenderEggs extends HitBoxes {
             } else if (!flipTime[1]) {
                 g.drawImage(assets.getImage8(), eggX, eggY2, null);
             }
-        } else if (renderEgg2 && !flipTime[0]) {
+        } else if (renderEgg2 && !flipTime[1]) {
             g.drawImage(assets.getImage5(), eggX, eggY2, null);
         }
         if (renderEgg3 && System.currentTimeMillis() - timer[2] >= cookTime) {
