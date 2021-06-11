@@ -197,7 +197,7 @@ public class RenderBacon extends HitBoxes {
     /**
      * This returns the state of the spatula.
      *
-     * @return
+     * @return spatula
      */
     boolean getSpatula() {
         return spatula;
