@@ -114,7 +114,7 @@ public class RenderBacon extends HitBoxes {
     /** Initializes the size. */
     private double burnMult7 = 1;
     /** Initializes the size. */
-    private double burnMultiplier = 1.25;
+    private final double burnMultiplier = 1.25;
 
     /**
      * Creates the logic to render the bacon.
