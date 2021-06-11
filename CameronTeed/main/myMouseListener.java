@@ -27,6 +27,8 @@ final class MyMouseListener implements MouseListener {
   private static boolean clicked2;
   /** Initializes the variable that stores the key state. */
   private static boolean clicked3;
+  /** Initializes the variable that stores the key state. */
+  private static boolean clicked4;
   /** Initializes the x coordinent. */
   private final int param1 = 8;
   /** Initializes the x coordinent. */
@@ -49,25 +51,29 @@ final class MyMouseListener implements MouseListener {
     clicked = false;
     clicked2 = false;
     clicked3 = true;
+    clicked4 = false;
   }
 
   @Override
   public void mouseClicked(final MouseEvent e) {
+      // System.out.println("out1");
+      setState4(true);
   }
 
   @Override
   public void mouseEntered(final MouseEvent e) {
-
+      // out.println("out2");
   }
 
   @Override
   public void mouseExited(final MouseEvent e) {
-
+      // System.out.println("out3");
   }
 
   @Override
   public void mousePressed(final MouseEvent e) {
       setState2(true);
+      // System.out.println("out4");
   }
 
   @Override
@@ -84,22 +90,26 @@ final class MyMouseListener implements MouseListener {
         setKeyPressed2(false);
         setKeyPressed1(false);
         setState3(true);
+        setState4(false);
       } else if (bounds1.contains(e.getX(), e.getY())) {
         setKeyPressed1(true);
         setKeyPressed(false);
         setKeyPressed2(false);
         setState3(true);
+        setState4(false);
       } else if (bounds2.contains(e.getX(), e.getY())) {
         setKeyPressed2(true);
         setKeyPressed1(false);
         setKeyPressed(false);
         setState3(true);
+        setState4(false);
       } else {
         setKeyPressed(false);
         setKeyPressed1(false);
         setKeyPressed2(false);
         setState3(false);
       }
+      // System.out.println("out6");
   }
 
   /**
@@ -209,4 +219,23 @@ final class MyMouseListener implements MouseListener {
         public static boolean getState3() {
           return clicked3;
         }
+
+
+        /**
+         * Setter.
+         *
+         * @param keyState3
+         */
+         public void setState4(final boolean keyState3) {
+           clicked4 = keyState3;
+         }
+
+         /**
+          * Getter.
+          *
+          * @return clicked3
+          */
+          public static boolean getState4() {
+            return clicked4;
+          }
 }
