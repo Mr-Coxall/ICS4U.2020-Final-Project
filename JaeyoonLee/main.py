@@ -10,199 +10,156 @@ import sys
 
 import constants
 import pygame
-from Button import Button
+from Button import Button, SelectionBox
 from Manager import Manager
 
 
 def splashScreen():
-    start_ticks = pygame.time.get_ticks()
-
     # background image
-    backgroundImageBlit("images\\virusSimulator_splash.png")
+    backgroundImageBlit(constants.SPLASH_IMG)
 
     # splash screen title
     titleText(60, adjustment=0)
 
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit()
+    pygame.display.update()
 
-        displayUpdate()
-
-        count = (pygame.time.get_ticks() - start_ticks) / 1000
-        if count > constants.SPLASH_TIME:  # break after 3 seconds
-            break
+    pygame.time.wait(1000)
 
 
 def menuScreen():
     # background image
-    backgroundImageBlit("images\\virusSimulator_mainMemu.png")
+    backgroundImageBlit(constants.MENU_IMG)
 
     # main menu screen title
     titleText(100)
 
-    buttonText = ["Start", "Option", "Help", "Quit"]
+    buttonText = constants.MENU_TEXTS
     buttons = [
-        Button(
-            constants.CENTER_X - 100,
-            constants.CENTER_Y + (60 * index),
-            200,
-            50,
-            buttonText[index],
-        )
+        Button(600, 400 + (60 * index), 200, 50, buttonText[index])
         for index in range(len(buttonText))
     ]
 
     while True:
         buttonActive = [False for _ in range(4)]
         clicked = False
+
         # event check
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit()
-            elif event.type == pygame.MOUSEBUTTONUP:
+            checkQuit(event)
+            if event.type == pygame.MOUSEBUTTONUP:
                 for idx in range(4):
                     buttonActive[idx] = checkButtonClick(buttons[idx])
                     if buttonActive[idx]:
-                        # buttonSound.play()
                         clicked = True
                 if buttonActive[3]:
-                    quit()
-
-        for button in buttons:
-            button.draw(screen)
+                    pygame.quit()
+                    sys.exit()
 
         # button active
         if clicked:
+            # buttonSound.play()
             if buttonActive[0]:
                 simulateScreen()
             elif buttonActive[1]:
                 optionScreen()
             elif buttonActive[2]:
                 helpScreen()
-            backgroundImageBlit("images\\virusSimulator_mainMemu.png")
+            backgroundImageBlit(constants.MENU_IMG)
             titleText(100)
+
+        for button in buttons:
+            button.draw(screen)
 
         displayUpdate()
 
 
 def optionScreen():
     # background image
-    backgroundImageBlit("images\\virusSimulator_options.png")
+    backgroundImageBlit(constants.OPTION_IMG)
 
-    backButton = Button(10, 10, 150, 50, "Back")
-    backActive = False
+    backButton, backActive = genBackButton()
 
-    # colourSettings = [SelectionBox(...)]
+    colourOptions = constants.PEOPLE_COLOURS
+    colourTexts = constants.PEOPLE_OPTIONS
 
-    while True:
+    colourSettings = [
+        SelectionBox(
+            450,
+            320 + (140 * idx),
+            200,
+            40,
+            constants.OPTION_BOX,
+            colourTexts[idx],
+            colourOptions[idx],
+        )
+        for idx in range(3)
+    ]
+
+    while not backActive:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit()
-            elif event.type == pygame.MOUSEBUTTONUP:
+            checkQuit(event)
+            if event.type == pygame.MOUSEBUTTONUP:
                 backActive = checkButtonClick(backButton)
+                for colourSetting in colourSettings:
+                    colourSetting.update()
 
         backButton.draw(screen)
+        for colourSetting in colourSettings:
+            colourSetting.draw(screen)
 
-        # Setting text
-        displayText("Setting", 50, (20, 100))
-        displayText("Sound:", 40, (40, 200))
-        for idx in range(len(constants.SETTING_TEXTS)):
-            displayText(constants.SETTING_TEXTS[idx], 40, (40, 320 + (140 * idx)))
-
-        # Variable text
-        displayText("Variables", 50, (constants.CENTER_X + 20, 100))
-        displayText("Covid mode", 40, (constants.WIDTH - 250, 120))
-        for idx in range(len(constants.VARIABLE_TEXTS)):
-            displayText(
-                constants.VARIABLE_TEXTS[idx],
-                40,
-                (constants.CENTER_X + 40, (2 + idx) * 100),
-            )
-
-        drawLine((10, 140), (210, 140))
-        drawLine((constants.CENTER_X + 10, 140), (constants.CENTER_X + 210, 140))
-        drawLine((constants.CENTER_X, 150), (constants.CENTER_X, constants.HEIGHT - 50))
-
-        if backActive:
-            # buttonSound.play()
-            break
+        # set texts and lines on screen
+        setTextAndLine()
 
         displayUpdate()
+
+    # buttonSound.play()
 
 
 def helpScreen():
     # background image
-    backgroundImageBlit("images\\virusSimulator_options.png")
+    backgroundImageBlit(constants.OPTION_IMG)
 
-    backButton = Button(10, 10, 150, 50, "Back")
-    backActive = False
+    backButton, backActive = genBackButton()
 
     # help screen title
     titleText(80, title="About Virus Simulator", adjustment=250)
 
-    while True:
+    while not backActive:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit()
-            elif event.type == pygame.MOUSEBUTTONUP:
-                backActive = checkButtonClick(backButton)
+            checkQuit(event)
+            backActive = checkBackButton(event, backButton)
 
         backButton.draw(screen)
 
         for idx in range(len(constants.HELPS)):
-            displayText(
-                constants.HELPS[idx],
-                48,
-                (constants.CENTER_X, 300 + (72 * idx)),
-                centre=True,
-            )
-        displayText(
-            "Create by Jay Lee",
-            48,
-            (constants.CENTER_X, constants.HEIGHT - 48),
-            centre=True,
-        )
-
-        if backActive:
-            # buttonSound.play()
-            break
+            displayText(constants.HELPS[idx], 48, (700, 300 + (72 * idx)), centre=True)
+        displayText("Create by Jay Lee", 48, (700, 750), centre=True)
 
         displayUpdate()
+    # buttonSound.play()
 
 
 def simulateScreen():
-    manager = Manager()
-
+    # Pop up setting
     optionBox = Button(550, 300, 300, 200, "", colour=constants.BLACK)
     settingButton = Button(600, 360, 200, 32, "Settings")
     quitButton = Button(600, 408, 200, 32, "Quit")
     optionActive = False
     quitGame = False
 
-    imageNames = ["pause", "play", "fast"]
-    timeImages = loadImages(imageNames)
+    timeImages = loadImages(constants.TIME_TEXTS)
 
     speed = 1
 
-    while True:
+    while not quitGame:
         screen.fill(constants.GREY)
 
         # event check
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit()
-            elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_ESCAPE:
-                    if not optionActive:
-                        speed = 0
-                        # pygame.mixer.music.pause()
-                    else:
-                        speed = 1
-                        # pygame.mixer.music.unpause()
-                    manager.setSpeed(speed)
-                    optionActive = not optionActive
+            checkQuit(event)
+            if event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
+                manager.setSpeed(1 if optionActive else 0)
+                optionActive = not optionActive
             elif event.type == pygame.MOUSEBUTTONUP:
                 mousePosition = pygame.mouse.get_pos()
                 if optionActive:
@@ -210,27 +167,18 @@ def simulateScreen():
                         # buttonSound.play()
                         optionScreen()
                     quitGame = checkButtonClick(quitButton)
-
                 else:
                     for idx in range(3):
                         image = timeImages[idx].get_rect(center=(16 + (32 * idx), 108))
                         if image.collidepoint(mousePosition):
-                            if idx == 2 and speed < 8:  # max time speed: x8
-                                speed *= idx
-                            else:
-                                speed = idx
-                            manager.setSpeed(speed)
+                            speed = (speed * idx) if idx == 2 and speed < 8 else idx
+                            manager.setSpeed(speed)  # max time speed: x8
 
         manager.movePerson(screen)
         manager.checkInfected()
         manager.checkDeath()
 
-        health = manager.getNumberOfHealthPeople()
-        infectious = manager.getNumberOfInfectedPeople()
-        death = manager.getNumberOfDeadPeople()
-        displayText("Healthy: " + str(health), 30, (5, 5), colour=constants.GREEN)
-        displayText("Infectious: " + str(infectious), 30, (5, 35), colour=constants.RED)
-        displayText("Death: " + str(death), 30, (5, 65), colour=constants.BLACK)
+        displayInfo()
 
         for index in range(len(timeImages)):
             screen.blit(timeImages[index], (4 + (32 * index), 84))
@@ -239,9 +187,6 @@ def simulateScreen():
             optionBox.draw(screen)
             settingButton.draw(screen)
             quitButton.draw(screen)
-
-        if quitGame:
-            break
 
         displayUpdate()
 
@@ -255,9 +200,17 @@ def displayText(strText, fontSize, position, colour=constants.WHITE, centre=Fals
         screen.blit(text, position)
 
 
-def quit():
-    pygame.quit()
-    sys.exit()
+def checkQuit(event):
+    if event.type == pygame.QUIT:
+        pygame.quit()
+        sys.exit()
+
+
+def checkBackButton(event, backButton):
+    if event.type == pygame.MOUSEBUTTONUP:
+        return checkButtonClick(backButton)
+    else:
+        return False
 
 
 def resizeImage(image, newSize):
@@ -311,6 +264,45 @@ def checkButtonClick(button):
     return button.getRect().collidepoint(pygame.mouse.get_pos())
 
 
+def setTextAndLine():
+    # Setting text
+    displayText("Setting", 50, (20, 100))
+    displayText("Sound:", 40, (40, 200))
+    for idx in range(len(constants.SETTING_TEXTS)):
+        displayText(constants.SETTING_TEXTS[idx], 40, (40, 320 + (140 * idx)))
+
+    # Variable text
+    displayText("Variables", 50, (720, 100))
+    displayText("Covid mode", 40, (1150, 120))
+    for idx in range(len(constants.VARIABLE_TEXTS)):
+        displayText(constants.VARIABLE_TEXTS[idx], 40, (740, (2 + idx) * 100))
+
+    drawLine((10, 140), (210, 140))
+    drawLine((710, 140), (910, 140))
+    drawLine((700, 150), (700, 750))
+
+
+def genBackButton():
+    return Button(10, 10, 150, 50, "Back"), False
+
+
+def displayInfo():
+    health = manager.getNumberOfHealthPeople()
+    infectious = manager.getNumberOfInfectedPeople()
+    death = manager.getNumberOfDeadPeople()
+    displayText("Healthy: " + str(health), 30, (5, 5), colour=constants.GREEN)
+    displayText("Infectious: " + str(infectious), 30, (5, 35), colour=constants.RED)
+    displayText("Death: " + str(death), 30, (5, 65), colour=constants.BLACK)
+
+
+def drawSlider(startPos, length, defaultValue, width=2):
+    endPos = (list(startPos)[0], list(startPos)[1] + length)
+    pointPos = (list(startPos)[0], list(startPos)[1] + defaultValue)
+    drawLine(startPos, endPos, width=width)
+    pygame.draw.circle(screen, constants.WHITE, pointPos, 10)
+    return
+
+
 if __name__ == "__main__":
     # find current path
     sourceFileDir = os.path.dirname(os.path.abspath(__file__))
@@ -323,6 +315,8 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT))
 
     splashScreen()
+
+    manager = Manager()
 
     # buttonSound = pygame.mixer.Sound(getFilePath("sounds\\button_click_sound.mp3"))
     pygame.mixer.music.load(getFilePath("sounds\\background_music.mp3"))
