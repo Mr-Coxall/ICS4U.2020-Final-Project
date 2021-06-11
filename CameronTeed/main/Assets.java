@@ -71,11 +71,23 @@ final class Assets {
   /**
    * Initializing variable.
    */
+  private static BufferedImage egg2;
+  /**
+   * Initializing variable.
+   */
   private static BufferedImage bacon1;
   /**
    * Initializing variable.
    */
+  private static BufferedImage bacon2;
+  /**
+   * Initializing variable.
+   */
   private static BufferedImage pancake;
+  /**
+   * Initializing variable.
+   */
+  private static BufferedImage pancake2;
 
   Assets() {
 
@@ -98,10 +110,13 @@ final class Assets {
 
     egg = bs.grabImage(col, row1, imageW, imageEgg);
     egg1 = bs.grabImage(1, 1, imageBacon, imageBacon);
+    egg2 = bs.grabImage(1, 2, imageBacon, imageBacon);
 
-    pancake = ss.grabImage(1, 2, imageBacon, imageBacon);
+    pancake = ss.grabImage(1, 1, imageBacon, imageBacon);
+    pancake2 = ss.grabImage(1, row1, imageBacon, imageBacon);
 
     bacon1 = fs.grabImage(1, 1, imageW, imageBacon2);
+    bacon2 = fs.grabImage(1, row1, imageW, imageBacon2);
   }
 
   /**
@@ -158,5 +173,29 @@ final class Assets {
    */
   public BufferedImage getImage7() {
       return pancake;
+  }
+
+  /**
+   * Getter for a sprite.
+   * @return egg1
+   */
+  public BufferedImage getImage8() {
+      return egg2;
+  }
+
+  /**
+   * Getter for a sprite.
+   * @return egg1
+   */
+  public BufferedImage getImage9() {
+      return bacon2;
+  }
+
+  /**
+   * Getter for a sprite.
+   * @return egg1
+   */
+  public BufferedImage getImage10() {
+      return pancake2;
   }
 }

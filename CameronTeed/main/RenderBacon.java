@@ -73,6 +73,11 @@ public class RenderBacon extends HitBoxes {
     private final int param10 = 100;
     /** Initializes the size. */
     private final int param11 = 45;
+    /** Initializes the size. */
+    private long[] timer = new long[8];
+    /** Initializes the size. */
+    private final int cookTime = 12000;
+    
 
     /**
      * Creates the logic to render the bacon.
@@ -89,20 +94,28 @@ public class RenderBacon extends HitBoxes {
           System.out.println(x + ", " + y);
           if (isClicked(x, y, param1, param2, param10, param11)) {
             renderEgg = true;
+            timer[0] = System.currentTimeMillis();
           } else if (isClicked(x, y, param1, param3, param10, param11)) {
             renderEgg2 = true;
+            timer[1] = System.currentTimeMillis();
           } else if (isClicked(x, y, param1, param4, param10, param11)) {
             renderEgg3 = true;
+            timer[2] = System.currentTimeMillis();
           } else if (isClicked(x, y, param1, param5, param10, param11)) {
             renderEgg4 = true;
+            timer[3] = System.currentTimeMillis();
           } else if (isClicked(x, y, param1, param6, param10, param11)) {
             renderEgg5 = true;
+            timer[4] = System.currentTimeMillis();
           } else if (isClicked(x, y, param1, param7, param10, param11)) {
             renderEgg6 = true;
+            timer[5] = System.currentTimeMillis();
           } else if (isClicked(x, y, param1, param8, param10, param11)) {
             renderEgg7 = true;
+            timer[6] = System.currentTimeMillis();
           } else if (isClicked(x, y, param1, param9, param10, param11)) {
             renderEgg8 = true;
+            timer[7] = System.currentTimeMillis();
           }
         } else if (!MyMouseListener.isKeyPressed2()
                 && !MyMouseListener.isKeyPressed1()
@@ -114,32 +127,49 @@ public class RenderBacon extends HitBoxes {
     }
 
     /**
-    * This method pains some graphics.
+    * This method pains some graphics.s
     * @param g
     */
     public void putBacon(final Graphics g) {
-        if (renderEgg) {
+
+        if (renderEgg && System.currentTimeMillis() - timer[0] >= cookTime) {
+            g.drawImage(assets.getImage9(), eggX, eggY, null);
+        } else if (renderEgg) {
             g.drawImage(assets.getImage6(), eggX, eggY, null);
         }
-        if (renderEgg2) {
+        if (renderEgg2 && System.currentTimeMillis() - timer[1] >= cookTime) {
+            g.drawImage(assets.getImage9(), eggX, eggY2, null);
+        } else if (renderEgg2) {
             g.drawImage(assets.getImage6(), eggX, eggY2, null);
         }
-        if (renderEgg3) {
+        if (renderEgg3 && System.currentTimeMillis() - timer[2] >= cookTime) {
+            g.drawImage(assets.getImage9(), eggX, eggY3, null);
+        } else if (renderEgg3) {
             g.drawImage(assets.getImage6(), eggX, eggY3, null);
         }
-        if (renderEgg4) {
+        if (renderEgg4 && System.currentTimeMillis() - timer[3] >= cookTime) {
+            g.drawImage(assets.getImage9(), eggX, eggY4, null);
+        } else if (renderEgg4) {
             g.drawImage(assets.getImage6(), eggX, eggY4, null);
         }
-        if (renderEgg5) {
+        if (renderEgg5 && System.currentTimeMillis() - timer[4] >= cookTime) {
+            g.drawImage(assets.getImage9(), eggX, eggY6, null);
+        } else if (renderEgg5) {
             g.drawImage(assets.getImage6(), eggX, eggY6, null);
         }
-        if (renderEgg6) {
+        if (renderEgg6 && System.currentTimeMillis() - timer[5] >= cookTime) {
+            g.drawImage(assets.getImage9(), eggX, eggY7, null);
+        } else if (renderEgg6) {
             g.drawImage(assets.getImage6(), eggX, eggY7, null);
         }
-        if (renderEgg7) {
+        if (renderEgg7 && System.currentTimeMillis() - timer[6] >= cookTime) {
+            g.drawImage(assets.getImage9(), eggX, eggY8, null);
+        } else if (renderEgg7) {
             g.drawImage(assets.getImage6(), eggX, eggY8, null);
         }
-        if (renderEgg8) {
+        if (renderEgg8 && System.currentTimeMillis() - timer[7] >= cookTime) {
+            g.drawImage(assets.getImage9(), eggX, eggY9, null);
+        } else if (renderEgg8) {
             g.drawImage(assets.getImage6(), eggX, eggY9, null);
         }
     }
