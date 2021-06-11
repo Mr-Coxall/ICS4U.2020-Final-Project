@@ -6,6 +6,7 @@
 
 
 import math
+import random
 
 import constants
 import pygame
@@ -58,14 +59,17 @@ class Person:
 class Infectious(Person):
     def __init__(self, x, y, velocity, direction, colour, infectionRate, deathRate):
         super().__init__(x, y, velocity, direction, colour)
-        self.infectionRate = infectionRate
-        self.deathRate = deathRate
+        self.__infectionRate = infectionRate
+        self.__deathRate = deathRate
 
     def mutate(self):
-        pass
+        if random.randint(0, 1) == 0:
+            self.__infectionRate = random.randint(1, 10)
+        else:
+            self.__deathRate = random.randint(0, 100)
 
     def getInfectionRate(self):
-        return self.infectionRate
+        return self.__infectionRate
 
     def getDeathRate(self):
-        return self.deathRate
+        return self.__deathRate
