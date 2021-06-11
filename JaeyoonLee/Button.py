@@ -92,10 +92,9 @@ class SelectionBox(Button):
         for idx in range(len(self.__optionList)):
             if self.__menuActive:
                 rectColour = self.getColour()
-                rectScreen.set_alpha(0)
             else:
                 super().draw(screen)
-                rectScreen.set_alpha(0)
+            rectScreen.set_alpha(0)
             text = self.getFont().render(
                 self.__optionList[idx], True, self.__textColour[idx]
             )
