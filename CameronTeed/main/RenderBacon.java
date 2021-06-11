@@ -113,6 +113,8 @@ public class RenderBacon extends HitBoxes {
     private double burnMult6 = 1;
     /** Initializes the size. */
     private double burnMult7 = 1;
+    /** Initializes the size. */
+    private double burnMultiplier = 1.25;
 
     /**
      * Creates the logic to render the bacon.
@@ -303,36 +305,36 @@ public class RenderBacon extends HitBoxes {
       */
       public void flipTime(final Graphics g, final int x, final int y) {
           if (getSpatula() && flipTime[0] && !burnt[0]) {
-              this.burnMult = 1.25;
+              this.burnMult = burnMultiplier;
               g.drawImage(assets.getImage13(), eggX, eggY, null);
           }
           if (getSpatula() && flipTime[1] && !burnt[1]) {
               g.drawImage(assets.getImage13(), eggX, eggY2, null);
-              this.burnMult1 = 1.25;
+              this.burnMult1 = burnMultiplier;
           }
           if (getSpatula() && flipTime[2] && !burnt[2]) {
               g.drawImage(assets.getImage13(), eggX, eggY3, null);
-              burnMult2 = 1.25;
+              burnMult2 = burnMultiplier;
           }
           if (getSpatula() && flipTime[array3] && !burnt[array3]) {
               g.drawImage(assets.getImage13(), eggX, eggY4, null);
-              burnMult3 = 1.25;
+              burnMult3 = burnMultiplier;
           }
           if (getSpatula() && flipTime[array4] && !burnt[array4]) {
               g.drawImage(assets.getImage13(), eggX, eggY6, null);
-              burnMult4 = 1.25;
+              burnMult4 = burnMultiplier;
           }
           if (getSpatula() && flipTime[array5] && !burnt[array5]) {
               g.drawImage(assets.getImage13(), eggX, eggY7, null);
-              burnMult5 = 1.25;
+              burnMult5 = burnMultiplier;
           }
           if (getSpatula() && flipTime[array6] && !burnt[array6]) {
               g.drawImage(assets.getImage13(), eggX, eggY8, null);
-              burnMult6 = 1.25;
+              burnMult6 = burnMultiplier;
           }
           if (getSpatula() && flipTime[array7] && !burnt[array7]) {
               g.drawImage(assets.getImage13(), eggX, eggY9, null);
-              burnMult7 = 1.25;
+              burnMult7 = burnMultiplier;
           }
       }
 

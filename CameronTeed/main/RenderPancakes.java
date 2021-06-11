@@ -99,6 +99,8 @@ public class RenderPancakes extends HitBoxes {
     private double burnMult6 = 1;
     /** Initializes the size. */
     private double burnMult7 = 1;
+    /** Initializes the size. */
+    private double burnMultiplier = 1.25;
 
     /**
      * Creates the logic to render the eggs.
@@ -151,7 +153,8 @@ public class RenderPancakes extends HitBoxes {
                                                                 * burnMult) {
             burnt[0] = true;
             g.drawImage(assets.getImage14(), eggX, eggY, null);
-        } else if (renderEgg && System.currentTimeMillis() - timer[0] >= cookTime) {
+        } else if (renderEgg && System.currentTimeMillis() - timer[0]
+                                                                >= cookTime) {
             if (MyMouseListener.getState2() && !spatula.getSpatula()
                     && isClicked2(x, y, param1, param2, param6, param6)) {
                 this.flipTime[0] = true;
@@ -165,7 +168,8 @@ public class RenderPancakes extends HitBoxes {
                                                                 * burnMult1) {
             burnt[1] = true;
             g.drawImage(assets.getImage14(), eggX, eggY2, null);
-        } else if (renderEgg2 && System.currentTimeMillis() - timer[1] >= cookTime) {
+        } else if (renderEgg2 && System.currentTimeMillis() - timer[1]
+                                                                >= cookTime) {
             if (MyMouseListener.getState2() && !spatula.getSpatula()
                     && isClicked2(x, y, param1, param3, param6, param6)) {
                 this.flipTime[1] = true;
@@ -179,7 +183,8 @@ public class RenderPancakes extends HitBoxes {
                                                                 * burnMult2) {
             burnt[2] = true;
             g.drawImage(assets.getImage14(), eggX, eggY3, null);
-        } else if (renderEgg3 && System.currentTimeMillis() - timer[2] >= cookTime) {
+        } else if (renderEgg3 && System.currentTimeMillis() - timer[2]
+                                                            >= cookTime) {
             if (MyMouseListener.getState2() && !spatula.getSpatula()
                     && isClicked2(x, y, param1, param4, param6, param6)) {
                 this.flipTime[2] = true;
@@ -275,35 +280,35 @@ public class RenderPancakes extends HitBoxes {
      public void flipTime(final Graphics g, final int x, final int y) {
          if (!spatula.getSpatula() && flipTime[0] && !burnt[0]) {
              g.drawImage(assets.getImage12(), eggX, eggY, null);
-             burnMult = 1.25;
+             burnMult = burnMultiplier;
          }
          if (!spatula.getSpatula() && flipTime[1] && !burnt[1]) {
              g.drawImage(assets.getImage12(), eggX, eggY2, null);
-             burnMult1 = 1.25;
+             burnMult1 = burnMultiplier;
          }
          if (!spatula.getSpatula() && flipTime[2] && !burnt[2]) {
              g.drawImage(assets.getImage12(), eggX, eggY3, null);
-             burnMult2 = 1.25;
+             burnMult2 = burnMultiplier;
          }
          if (!spatula.getSpatula() && flipTime[array3] && !burnt[array3]) {
              g.drawImage(assets.getImage12(), eggX, eggY4, null);
-             burnMult3 = 1.25;
+             burnMult3 = burnMultiplier;
          }
          if (!spatula.getSpatula() && flipTime[array4] && !burnt[array4]) {
              g.drawImage(assets.getImage12(), eggX2, eggY, null);
-             burnMult4 = 1.25;
+             burnMult4 = burnMultiplier;
          }
          if (!spatula.getSpatula() && flipTime[array5] && !burnt[array5]) {
              g.drawImage(assets.getImage12(), eggX2, eggY2, null);
-             burnMult5 = 1.25;
+             burnMult5 = burnMultiplier;
          }
          if (!spatula.getSpatula() && flipTime[array6] && !burnt[array6]) {
              g.drawImage(assets.getImage12(), eggX2, eggY3, null);
-             burnMult6 = 1.25;
+             burnMult6 = burnMultiplier;
          }
          if (!spatula.getSpatula() && flipTime[array7] && !burnt[array7]) {
              g.drawImage(assets.getImage12(), eggX2, eggY4, null);
-             burnMult7 = 1.25;
+             burnMult7 = burnMultiplier;
          }
      }
 }
