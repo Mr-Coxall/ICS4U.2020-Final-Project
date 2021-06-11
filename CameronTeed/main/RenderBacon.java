@@ -91,6 +91,8 @@ public class RenderBacon extends HitBoxes {
     private final long[] timer = new long[array8];
     /** Initializes the size. */
     private boolean spatula = false;
+    /** Initializes the size. */
+    private final boolean[] flipTime = new boolean[array8];
 
     /**
      * Creates the logic to render the bacon.
@@ -100,6 +102,7 @@ public class RenderBacon extends HitBoxes {
      * @param g2d
      */
     public void baconLogic(final int x, final int y, final Graphics g2d) {
+        this.spatula = false;
         if (MyMouseListener.isKeyPressed2()) {
           // Checks if user clicked on the hitbox for the spoon and loads it
           g2d.drawImage(assets.getImage3(), x - offsetCursorx,
@@ -136,63 +139,136 @@ public class RenderBacon extends HitBoxes {
             // Checks if user clicked on the hitbox for the spatula and loads it
             g2d.drawImage(assets.getImage(), x - offsetCursorx,
                     y - offsetCursory, null);
-            spatula = true;
+            this.spatula = true;
           }
     }
 
     /**
-    * This method pains some graphics.
-    *
-    * @param g
-    */
-    public void putBacon(final Graphics g) {
+     * This method pains some graphics.
+     * @param g
+     * @param x
+     * @param y
+     */
+     public void putBacon(final Graphics g, final int x, final int y) {
+         if (renderEgg && System.currentTimeMillis() - timer[0] >= cookTime) {
+             if (MyMouseListener.getState2() && getSpatula()
+                     && isClicked2(x, y, param1, param2, param10, param11)) {
+                 this.flipTime[0] = true;
+             } else if (!flipTime[0]) {
+                 g.drawImage(assets.getImage9(), eggX, eggY, null);
+             }
+         } else if (renderEgg && !flipTime[0]) {
+             g.drawImage(assets.getImage6(), eggX, eggY, null);
+         }
+         if (renderEgg2 && System.currentTimeMillis() - timer[1] >= cookTime) {
+             if (MyMouseListener.getState2() && getSpatula()
+                     && isClicked2(x, y, param1, param3, param10, param11)) {
+                 this.flipTime[1] = true;
+             } else if (!flipTime[1]) {
+                 g.drawImage(assets.getImage9(), eggX, eggY2, null);
+             }
+         } else if (renderEgg2 && !flipTime[1]) {
+             g.drawImage(assets.getImage6(), eggX, eggY2, null);
+         }
+         if (renderEgg3 && System.currentTimeMillis() - timer[2] >= cookTime) {
+             if (MyMouseListener.getState2() && getSpatula()
+                     && isClicked2(x, y, param1, param4, param10, param11)) {
+                 this.flipTime[2] = true;
+             } else if (!flipTime[2]) {
+                 g.drawImage(assets.getImage9(), eggX, eggY3, null);
+             }
+         } else if (renderEgg3 && !flipTime[2]) {
+             g.drawImage(assets.getImage6(), eggX, eggY3, null);
+         }
+         if (renderEgg4 && System.currentTimeMillis() - timer[array3]
+                                                         >= cookTime) {
+             if (MyMouseListener.getState2() && getSpatula()
+                     && isClicked2(x, y, param1, param5, param10, param11)) {
+                 this.flipTime[array3] = true;
+             } else if (!flipTime[array3]) {
+                 g.drawImage(assets.getImage9(), eggX, eggY4, null);
+             }
+         } else if (renderEgg4 && (!flipTime[array3])) {
+             g.drawImage(assets.getImage6(), eggX, eggY4, null);
+         }
+         if (renderEgg5 && System.currentTimeMillis() - timer[array4]
+                                                         >= cookTime) {
+             if (MyMouseListener.getState2() && getSpatula()
+                     && isClicked2(x, y, param1, param6, param10, param11)) {
+                 this.flipTime[array4] = true;
+             } else if (!flipTime[array4]) {
+                 g.drawImage(assets.getImage9(), eggX, eggY6, null);
+             }
+         } else if (renderEgg5 && !flipTime[array4]) {
+             g.drawImage(assets.getImage6(), eggX, eggY6, null);
+         }
+         if (renderEgg6 && System.currentTimeMillis() - timer[array5]
+                                                         >= cookTime) {
+             if (MyMouseListener.getState2() && getSpatula()
+                     && isClicked2(x, y, param1, param7, param10, param11)) {
+                 this.flipTime[array5] = true;
+             } else if (!flipTime[array5]) {
+                 g.drawImage(assets.getImage9(), eggX, eggY7, null);
+             }
+         } else if (renderEgg6 && !flipTime[array5]) {
+             g.drawImage(assets.getImage6(), eggX, eggY7, null);
+         }
+         if (renderEgg7 && System.currentTimeMillis() - timer[array6]
+                                                         >= cookTime) {
+             if (MyMouseListener.getState2() && getSpatula()
+                     && isClicked2(x, y, param1, param8, param10, param11)) {
+                 this.flipTime[array6] = true;
+             } else if (!flipTime[array6]) {
+                 g.drawImage(assets.getImage9(), eggX, eggY8, null);
+             }
+         } else if (renderEgg7 && !flipTime[array6]) {
+             g.drawImage(assets.getImage6(), eggX, eggY8, null);
+         }
+         if (renderEgg8 && System.currentTimeMillis() - timer[array7]
+                                                         >= cookTime) {
+             if (MyMouseListener.getState2() && getSpatula()
+                     && isClicked2(x, y, param1, param9, param10, param11)) {
+                 this.flipTime[array7] = true;
+             } else if (!flipTime[array7]) {
+                 g.drawImage(assets.getImage9(), eggX, eggY9, null);
+             }
+         } else if (renderEgg8 && !flipTime[array7]) {
+             g.drawImage(assets.getImage6(), eggX, eggY9, null);
+         }
+     }
 
-        if (renderEgg && System.currentTimeMillis() - timer[0] >= cookTime) {
-            g.drawImage(assets.getImage9(), eggX, eggY, null);
-        } else if (renderEgg) {
-            g.drawImage(assets.getImage6(), eggX, eggY, null);
-        }
-        if (renderEgg2 && System.currentTimeMillis() - timer[1] >= cookTime) {
-            g.drawImage(assets.getImage9(), eggX, eggY2, null);
-        } else if (renderEgg2) {
-            g.drawImage(assets.getImage6(), eggX, eggY2, null);
-        }
-        if (renderEgg3 && System.currentTimeMillis() - timer[2] >= cookTime) {
-            g.drawImage(assets.getImage9(), eggX, eggY3, null);
-        } else if (renderEgg3) {
-            g.drawImage(assets.getImage6(), eggX, eggY3, null);
-        }
-        if (renderEgg4 && System.currentTimeMillis() - timer[array3]
-                                                        >= cookTime) {
-            g.drawImage(assets.getImage9(), eggX, eggY4, null);
-        } else if (renderEgg4) {
-            g.drawImage(assets.getImage6(), eggX, eggY4, null);
-        }
-        if (renderEgg5 && System.currentTimeMillis() - timer[array4]
-                                                        >= cookTime) {
-            g.drawImage(assets.getImage9(), eggX, eggY6, null);
-        } else if (renderEgg5) {
-            g.drawImage(assets.getImage6(), eggX, eggY6, null);
-        }
-        if (renderEgg6 && System.currentTimeMillis() - timer[array5]
-                                                        >= cookTime) {
-            g.drawImage(assets.getImage9(), eggX, eggY7, null);
-        } else if (renderEgg6) {
-            g.drawImage(assets.getImage6(), eggX, eggY7, null);
-        }
-        if (renderEgg7 && System.currentTimeMillis() - timer[array6]
-                                                        >= cookTime) {
-            g.drawImage(assets.getImage9(), eggX, eggY8, null);
-        } else if (renderEgg7) {
-            g.drawImage(assets.getImage6(), eggX, eggY8, null);
-        }
-        if (renderEgg8 && System.currentTimeMillis() - timer[array7]
-                                                        >= cookTime) {
-            g.drawImage(assets.getImage9(), eggX, eggY9, null);
-        } else if (renderEgg8) {
-            g.drawImage(assets.getImage6(), eggX, eggY9, null);
-        }
-    }
+     /**
+      * This checks if the eggs are ready to flip.
+      * @param g
+      * @param x
+      * @param y
+      */
+      public void flipTime(final Graphics g, final int x, final int y) {
+          if (getSpatula() && flipTime[0]) {
+              g.drawImage(assets.getImage13(), eggX, eggY, null);
+          }
+          if (getSpatula() && flipTime[1]) {
+              g.drawImage(assets.getImage13(), eggX, eggY2, null);
+          }
+          if (getSpatula() && flipTime[2]) {
+              g.drawImage(assets.getImage13(), eggX, eggY3, null);
+          }
+          if (getSpatula() && flipTime[array3]) {
+              g.drawImage(assets.getImage13(), eggX, eggY4, null);
+          }
+          if (getSpatula() && flipTime[array4]) {
+              g.drawImage(assets.getImage13(), eggX, eggY6, null);
+          }
+          if (getSpatula() && flipTime[array5]) {
+              g.drawImage(assets.getImage13(), eggX, eggY7, null);
+          }
+          if (getSpatula() && flipTime[array6]) {
+              g.drawImage(assets.getImage13(), eggX, eggY8, null);
+          }
+          if (getSpatula() && flipTime[array7]) {
+              g.drawImage(assets.getImage13(), eggX, eggY9, null);
+          }
+      }
 
     /**
      * This returns the state of the spatula.
