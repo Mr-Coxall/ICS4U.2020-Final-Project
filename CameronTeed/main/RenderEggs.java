@@ -60,8 +60,6 @@ public class RenderEggs extends HitBoxes {
     /** Initializes the size. */
     private final int param7 = 625;
     /** Initializes the size. */
-    private final long[] timer = new long[8];
-    /** Initializes the size. */
     private final int cookTime = 10000;
     /** Initializes the size. */
     private final int array3 = 3;
@@ -73,6 +71,12 @@ public class RenderEggs extends HitBoxes {
     private final int array6 = 6;
     /** Initializes the size. */
     private final int array7 = 7;
+    /** Initializes the size. */
+    private final int array8 = 8;
+    /** Initializes the size. */
+    private final long[] timer = new long[array8];
+    /** Initializes the size. */
+    private final boolean[] flipTime = new boolean[array8];
 
     /**
      * Creates the logic to render the eggs.
@@ -82,6 +86,7 @@ public class RenderEggs extends HitBoxes {
      * @param g2d
      */
     public void eggLogic(final int x, final int y, final Graphics g2d) {
+        flipTime[0] = false;
         if (MyMouseListener.isKeyPressed1()) {
           // Checks if user clicked on the hitbox for the spoon and loads it
           g2d.drawImage(assets.getImage4(), x - offsetCursorx,
@@ -118,9 +123,9 @@ public class RenderEggs extends HitBoxes {
     * This method pains some graphics.
     * @param g
     */
-    public void putEgg(final Graphics g) {
+    public void putEgg(final Graphics g, int x, int y) {
         if (renderEgg && System.currentTimeMillis() - timer[0] >= cookTime) {
-            g.drawImage(assets.getImage8(), eggX, eggY, null);
+          g.drawImage(assets.getImage8(), eggX, eggY, null);
         } else if (renderEgg) {
             g.drawImage(assets.getImage5(), eggX, eggY, null);
         }

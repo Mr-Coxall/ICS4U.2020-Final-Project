@@ -74,8 +74,6 @@ public class RenderBacon extends HitBoxes {
     /** Initializes the size. */
     private final int param11 = 45;
     /** Initializes the size. */
-    private final long[] timer = new long[8];
-    /** Initializes the size. */
     private final int cookTime = 12000;
     /** Initializes the size. */
     private final int array3 = 3;
@@ -87,6 +85,10 @@ public class RenderBacon extends HitBoxes {
     private final int array6 = 6;
     /** Initializes the size. */
     private final int array7 = 7;
+    /** Initializes the size. */
+    private final int array8 = 8;
+    /** Initializes the size. */
+    private final long[] timer = new long[array8];
 
     /**
      * Creates the logic to render the bacon.
