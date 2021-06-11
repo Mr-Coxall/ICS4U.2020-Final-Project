@@ -5,7 +5,6 @@
 # This class is button class
 
 
-from typing import Optional
 import constants
 import pygame
 

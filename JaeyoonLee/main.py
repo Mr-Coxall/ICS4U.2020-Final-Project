@@ -298,7 +298,7 @@ def displayInfo():
 def drawSlider(startPos, length, defaultValue, width=2):
     endPos = (list(startPos)[0], list(startPos)[1] + length)
     pointPos = (list(startPos)[0], list(startPos)[1] + defaultValue)
-    drawLine(startPos, endPos, width=width)
+    drawLine(startPos, endPos, lineWidth=width)
     pygame.draw.circle(screen, constants.WHITE, pointPos, 10)
     return
 
