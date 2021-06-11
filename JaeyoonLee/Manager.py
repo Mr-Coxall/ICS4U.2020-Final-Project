@@ -60,7 +60,11 @@ class Manager:
 
     def checkDeath(self):
         for infectionCount, infectious in enumerate(self.infectedPeople):
-            infectionRate = infectious.getInfectionRate() * constants.FPS
+            infectionRate = (
+                infectious.getInfectionRate()
+                * constants.FPS
+                // infectious.getVelocity()
+            )
             if random.randint(0, infectionRate) == 0:
                 newDeath = Person(
                     infectious.getX(), infectious.getY(), 0, 0, constants.BLACK
@@ -69,7 +73,9 @@ class Manager:
                 del self.infectedPeople[infectionCount]
 
     def mutateVirus(self):
-        pass
+        for infectious in self.infectedPeople:
+            if random.randint(0, constants.MUTATE) == 0:
+                infectious.mutate()
 
     def setSpeed(self, speed):
         for personIndex in range(self.getNumberOfLivingPeople()):
@@ -104,11 +110,6 @@ class Manager:
 
     def getDistance(self, pos1, pos2):
         return math.sqrt((pos2[0] - pos1[0]) ** 2 + (pos2[1] - pos1[1]) ** 2)
-
-    def neg_or_pos(self, n):
-        if random.randint(0, 1) == 0:
-            n *= -1
-        return n
 
     def hitWall(self, pos_x, pos_y, direction, radius):
         if (
