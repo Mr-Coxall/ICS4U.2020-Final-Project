@@ -109,8 +109,8 @@ final class Assets {
     bacon = ss.grabImage(col, row3, imageBacon, imageBacon);
 
     egg = bs.grabImage(col, row1, imageW, imageEgg);
-    egg1 = bs.grabImage(1, 1, imageBacon, imageBacon);
-    egg2 = bs.grabImage(1, 2, imageBacon, imageBacon);
+    egg2 = bs.grabImage(1, 1, imageBacon, imageBacon);
+    egg1 = bs.grabImage(1, 2, imageBacon, imageBacon);
 
     pancake = ss.grabImage(1, 1, imageBacon, imageBacon);
     pancake2 = ss.grabImage(1, row1, imageBacon, imageBacon);

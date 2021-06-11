@@ -60,10 +60,20 @@ public class RenderPancakes extends HitBoxes {
     /** Initializes the size. */
     private final int param7 = 940;
     /** Initializes the size. */
-    private long[] timer = new long[8];
+    private final long[] timer = new long[8];
     /** Initializes the size. */
-    private long cookTime = 11000;
-    
+    private final long cookTime = 11000;
+    /** Initializes the size. */
+    private final int array3 = 3;
+    /** Initializes the size. */
+    private final int array4 = 4;
+    /** Initializes the size. */
+    private final int array5 = 5;
+    /** Initializes the size. */
+    private final int array6 = 6;
+    /** Initializes the size. */
+    private final int array7 = 7;
+
 
     /**
      * Creates the logic to render the eggs.
@@ -88,19 +98,19 @@ public class RenderPancakes extends HitBoxes {
             timer[2] = System.currentTimeMillis();
           } else if (isClicked(x, y, param1, param5, param6, param6)) {
             renderEgg4 = true;
-            timer[3] = System.currentTimeMillis();
+            timer[array3] = System.currentTimeMillis();
           } else if (isClicked(x, y, param7, param2, param6, param6)) {
             renderEgg5 = true;
-            timer[4] = System.currentTimeMillis();
+            timer[array4] = System.currentTimeMillis();
           } else if (isClicked(x, y, param7, param3, param6, param6)) {
             renderEgg6 = true;
-            timer[5] = System.currentTimeMillis();
+            timer[array5] = System.currentTimeMillis();
           } else if (isClicked(x, y, param7, param4, param6, param6)) {
             renderEgg7 = true;
-            timer[6] = System.currentTimeMillis();
+            timer[array6] = System.currentTimeMillis();
           } else if (isClicked(x, y, param7, param5, param6, param6)) {
             renderEgg8 = true;
-            timer[7] = System.currentTimeMillis();
+            timer[array7] = System.currentTimeMillis();
           }
        }
     }
@@ -126,27 +136,32 @@ public class RenderPancakes extends HitBoxes {
         } else if (renderEgg3) {
             g.drawImage(assets.getImage7(), eggX, eggY3, null);
         }
-        if (renderEgg4 && System.currentTimeMillis() - timer[3] >= cookTime) {
+        if (renderEgg4 && System.currentTimeMillis() - timer[array3]
+                                                        >= cookTime) {
             g.drawImage(assets.getImage10(), eggX, eggY4, null);
         } else if (renderEgg4) {
             g.drawImage(assets.getImage7(), eggX, eggY4, null);
         }
-        if (renderEgg5 && System.currentTimeMillis() - timer[4] >= cookTime) {
+        if (renderEgg5 && System.currentTimeMillis() - timer[array4]
+                                                        >= cookTime) {
             g.drawImage(assets.getImage10(), eggX2, eggY, null);
         } else if (renderEgg5) {
             g.drawImage(assets.getImage7(), eggX2, eggY, null);
         }
-        if (renderEgg6 && System.currentTimeMillis() - timer[5] >= cookTime) {
+        if (renderEgg6 && System.currentTimeMillis() - timer[array5]
+                                                        >= cookTime) {
             g.drawImage(assets.getImage10(), eggX2, eggY2, null);
         } else if (renderEgg6) {
             g.drawImage(assets.getImage7(), eggX2, eggY2, null);
         }
-        if (renderEgg7 && System.currentTimeMillis() - timer[6] >= cookTime) {
+        if (renderEgg7 && System.currentTimeMillis() - timer[array6]
+                                                        >= cookTime) {
             g.drawImage(assets.getImage10(), eggX2, eggY3, null);
         } else if (renderEgg7) {
             g.drawImage(assets.getImage7(), eggX2, eggY3, null);
         }
-        if (renderEgg8 && System.currentTimeMillis() - timer[7] >= cookTime) {
+        if (renderEgg8 && System.currentTimeMillis() - timer[array7]
+                                                        >= cookTime) {
             g.drawImage(assets.getImage10(), eggX2, eggY4, null);
         } else if (renderEgg8) {
             g.drawImage(assets.getImage7(), eggX2, eggY4, null);
