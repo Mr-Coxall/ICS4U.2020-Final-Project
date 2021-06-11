@@ -122,8 +122,10 @@ public class RenderEggs extends HitBoxes {
     /**
     * This method pains some graphics.
     * @param g
+    * @param x
+    * @param y
     */
-    public void putEgg(final Graphics g, int x, int y) {
+    public void putEgg(final Graphics g, final int x, final int y) {
         if (renderEgg && System.currentTimeMillis() - timer[0] >= cookTime) {
           g.drawImage(assets.getImage8(), eggX, eggY, null);
         } else if (renderEgg) {
