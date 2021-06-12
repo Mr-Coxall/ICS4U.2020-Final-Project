@@ -395,6 +395,6 @@ if __name__ == "__main__":
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.5)
 
-    variables = []
+    variables: list[float] = []
 
     menuScreen()
