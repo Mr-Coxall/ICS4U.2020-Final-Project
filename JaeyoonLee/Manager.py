@@ -15,10 +15,7 @@ from Person import Infectious, Person
 class Manager:
     def __init__(self, variables):
         self.N_people = int(variables[0])
-        if variables[0] < 75:
-            self.radius = 10
-        else:
-            self.radius = 5
+        self.radius = 10 if variables[0] < 75 else 5
         self.infectionRate = variables[1]
         self.deathRate = variables[2]
         self.activity = int(variables[3])
@@ -80,18 +77,17 @@ class Manager:
                 infectious.getVelocity() != 0
                 and infectious.getDeathCount()
                 == random.randint(2, 4) * constants.FPS // infectious.getVelocity()
-            ):
-                if random.randint(1, 100) <= infectious.getDeathRate():
-                    newDeath = Person(
-                        infectious.getX(),
-                        infectious.getY(),
-                        0,
-                        0,
-                        constants.BLACK,
-                        self.radius,
-                    )
-                    self.deadPeople.append(newDeath)
-                    del self.infectedPeople[infectionIdx]
+            ) and random.randint(1, 100) <= infectious.getDeathRate():
+                newDeath = Person(
+                    infectious.getX(),
+                    infectious.getY(),
+                    0,
+                    0,
+                    constants.BLACK,
+                    self.radius,
+                )
+                self.deadPeople.append(newDeath)
+                del self.infectedPeople[infectionIdx]
             infectious.setDeathCount(infectious.getDeathCount() + 1)
 
     def mutateVirus(self):

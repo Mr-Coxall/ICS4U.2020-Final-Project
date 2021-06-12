@@ -177,7 +177,7 @@ def optionScreen(variableAccess=True):
 
         for idx, variable in enumerate(variables):
             unit = ""
-            if idx == 0 or idx == 3:
+            if idx in [0, 3]:
                 variable = int(variable)
             else:
                 unit = "%"
