@@ -26,7 +26,7 @@ VARIABLE_TEXTS = [
     "Number of people:",
     "Probability of infection:",
     "Probability of death:",
-    "Activity: "
+    "Activity: ",
 ]
 HELPS = [
     "This program simulates the spread of a virus to people.",

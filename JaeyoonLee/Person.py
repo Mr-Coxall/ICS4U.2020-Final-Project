@@ -8,7 +8,6 @@
 import math
 import random
 
-import constants
 import pygame
 
 
