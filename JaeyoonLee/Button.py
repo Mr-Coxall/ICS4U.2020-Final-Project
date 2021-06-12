@@ -81,27 +81,24 @@ class SelectionBox(Button):
         self.__selected = selected
         self.__menuActive = False
         self.__optionRects = [
-            pygame.Rect(x, y + (height * idx + 1), width, height)
+            pygame.Rect(x, y + (height * (idx + 1)), width, height)
             for idx in range(len(optionList))
         ]
 
     def draw(self, screen):
-        rectColour = (0, 0, 0)
-        rectScreen = screen.copy()
-        rectScreen.fill(rectColour)
         for idx in range(len(self.__optionList)):
+            rect = self.__optionRects[idx].copy()
             if self.__menuActive:
-                rectColour = self.getColour()
-                rectScreen.set_alpha(0)
+                # rect.move(self.getX(), self.getY())
+                screens = screen.copy()
+                text = self.getFont().render(
+                    self.__optionList[idx], True, self.__textColour[idx]
+                )
+                pygame.draw.rect(screens, self.getColour(), rect)
+                screens.blit(text, text.get_rect(center=rect.center))
             else:
                 super().draw(screen)
-                rectScreen.set_alpha(0)
-            text = self.getFont().render(
-                self.__optionList[idx], True, self.__textColour[idx]
-            )
-            rect = self.__optionRects[idx]
-            pygame.draw.rect(rectScreen, self.getColour(), rect)
-            rectScreen.blit(text, text.get_rect(center=rect.center))
+                # rect.move(self.getX() + 1500, self.getY())
 
     def update(self):
         mousePosition = pygame.mouse.get_pos()
