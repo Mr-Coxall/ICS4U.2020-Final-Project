@@ -101,6 +101,12 @@ public class RenderEggs extends HitBoxes {
     private double burnMult7 = 1;
     /** Initializes the size. */
     private final double burnMultiplier = 1.25;
+    /** Initializes the size. */
+    private final MoveFood move = new MoveFood();
+    /** Initializes the size. */
+    private boolean move1 = false;
+    /** Initializes the size. */
+    private boolean move2 = false;
 
     /**
      * Creates the logic to render the eggs.
@@ -276,15 +282,35 @@ public class RenderEggs extends HitBoxes {
      * @param g
      * @param x
      * @param y
-     */
+     */ 
      public void flipTime(final Graphics g, final int x, final int y) {
-         if (!spatula.getSpatula() && flipTime[0] && !burnt[0]) {
+         if (!spatula.getSpatula() && flipTime[0] && move1){
+             move.moveSprites(assets.getImage11(), x, y, g);
+             if (move.getMove()) {
+                 flipTime[0] = false;
+                 renderEgg = false;
+                 move1 = false;
+             }
+         } else if (!spatula.getSpatula() && flipTime[0] && !burnt[0] && !move1) {
              g.drawImage(assets.getImage11(), eggX, eggY, null);
              burnMult = burnMultiplier;
+             if (isClicked(x, y, param1, param2, param6, param6) && MyMouseListener.getClicks()) {
+                 move1 = true;
+             }
          }
-         if (!spatula.getSpatula() && flipTime[1] && !burnt[1]) {
+         if (!spatula.getSpatula() && flipTime[1] && move2){
+             move.moveSprites(assets.getImage11(), x, y, g);
+             if (move.getMove()) {
+                 flipTime[1] = false;
+                 renderEgg2 = false;
+                 move2 = false;
+             }
+         } else if (!spatula.getSpatula() && flipTime[1] && !burnt[1]) {
              g.drawImage(assets.getImage11(), eggX, eggY2, null);
              burnMult1 = burnMultiplier;
+             if (isClicked(x, y, param1, param3, param6, param6) && MyMouseListener.getClicks()) {
+                 move2 = true;
+             }
          }
          if (!spatula.getSpatula() && flipTime[2] && !burnt[2]) {
              g.drawImage(assets.getImage11(), eggX, eggY3, null);
