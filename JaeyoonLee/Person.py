@@ -8,17 +8,17 @@
 import math
 import random
 
-import constants
 import pygame
 
 
 class Person:
-    def __init__(self, x, y, velocity, direction, colour):
+    def __init__(self, x, y, velocity, direction, colour, radius):
         self.__x = x
         self.__y = y
         self.__velocity = velocity
         self.__direction = direction
         self.__colour = colour
+        self.__radius = radius
 
     def move(self):
         vx = math.cos(self.getDirection()) * self.getVelocity()
@@ -28,7 +28,7 @@ class Person:
 
     def draw(self, screen):
         pygame.draw.circle(
-            screen, self.__colour, [int(self.__x), int(self.__y)], constants.RADIUS
+            screen, self.__colour, [int(self.__x), int(self.__y)], self.__radius
         )
 
     def getX(self):
@@ -57,10 +57,13 @@ class Person:
 
 
 class Infectious(Person):
-    def __init__(self, x, y, velocity, direction, colour, infectionRate, deathRate):
-        super().__init__(x, y, velocity, direction, colour)
+    def __init__(
+        self, x, y, velocity, direction, colour, radius, infectionRate, deathRate
+    ):
+        super().__init__(x, y, velocity, direction, colour, radius)
         self.__infectionRate = infectionRate
         self.__deathRate = deathRate
+        self.__deathCount = 0
 
     def mutate(self):
         if random.randint(0, 1) == 0:
@@ -73,3 +76,9 @@ class Infectious(Person):
 
     def getDeathRate(self):
         return self.__deathRate
+
+    def getDeathCount(self):
+        return self.__deathCount
+
+    def setDeathCount(self, deathCount):
+        self.__deathCount = deathCount

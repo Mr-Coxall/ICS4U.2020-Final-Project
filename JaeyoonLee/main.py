@@ -12,6 +12,7 @@ import constants
 import pygame
 from Button import Button, SelectionBox
 from Manager import Manager
+from Setting import CheckBox, Slider
 
 
 def splashScreen():
@@ -32,6 +33,9 @@ def menuScreen():
 
     # main menu screen title
     titleText(100)
+
+    global variables
+    variables = [100, 25, 4, 6]
 
     buttonText = constants.MENU_TEXTS
     buttons = [
@@ -73,7 +77,8 @@ def menuScreen():
         displayUpdate()
 
 
-def optionScreen():
+def optionScreen(variableAccess=True):
+    global variables
     # background image
     backgroundImageBlit(constants.OPTION_IMG)
 
@@ -85,7 +90,7 @@ def optionScreen():
     colourSettings = [
         SelectionBox(
             450,
-            320 + (140 * idx),
+            320 + (170 * idx),
             200,
             40,
             constants.OPTION_BOX,
@@ -95,20 +100,88 @@ def optionScreen():
         for idx in range(3)
     ]
 
+    sliderLength = constants.SLIDER_LENGTH
+    sound = pygame.mixer.music.get_volume()
+    soundSlider = Slider((40, 240), sliderLength, sound * sliderLength)
+
+    varRange = constants.MIN_MAX_VAR  # [[min, max], ..., [min, max]]
+    varSettings = [
+        Slider(
+            (740, (2 + idx) * 100 + 40),
+            sliderLength,
+            variables[idx] * sliderLength / (varRange[idx][1] - varRange[idx][0]),
+        )
+        for idx in range(len(variables))
+    ]
+
+    defaultModelCheckBox = CheckBox((1320, 120), 40)
+
     while not backActive:
+        backgroundImageBlit(constants.OPTION_IMG)
         for event in pygame.event.get():
             checkQuit(event)
+            mousePosition = pygame.mouse.get_pos()
             if event.type == pygame.MOUSEBUTTONUP:
                 backActive = checkButtonClick(backButton)
                 for colourSetting in colourSettings:
                     colourSetting.update()
+                # sound slide bar check
+                if soundSlider.getRect().collidepoint(mousePosition):
+                    sound = soundSlider.updatePoint(mousePosition) / sliderLength
+                    pygame.mixer.music.set_volume(sound)
+                if variableAccess:
+                    if defaultModelCheckBox.getBoxRect().collidepoint(mousePosition):
+                        defaultModelCheckBox.update()
+                    for idx, varSlider in enumerate(varSettings):
+                        if varSlider.getRect().collidepoint(mousePosition):
+                            variables[idx] = (
+                                varRange[idx][0]
+                                + varSlider.updatePoint(mousePosition)
+                                * (varRange[idx][1] - varRange[idx][0])
+                                / sliderLength
+                            )
+                            if (
+                                variables != constants.DEFAULT_VAR
+                                and defaultModelCheckBox.getChecked()
+                            ):
+                                defaultModelCheckBox.update()
 
         backButton.draw(screen)
+
         for colourSetting in colourSettings:
             colourSetting.draw(screen)
 
+        defaultModelCheckBox.draw(screen)
+
+        soundSlider.draw(screen)
+        for idx, varSlider in enumerate(varSettings):
+            varSlider.draw(screen)
+            if defaultModelCheckBox.getChecked():
+                variables[idx] = constants.DEFAULT_VAR[idx]
+                varSlider.setDefault()
+
         # set texts and lines on screen
-        setTextAndLine()
+        displayText("Setting", 50, (20, 100))
+        displayText("Sound:", 40, (40, 200))
+        for idx in range(len(constants.SETTING_TEXTS)):
+            displayText(constants.SETTING_TEXTS[idx], 40, (40, 320 + (170 * idx)))
+        displayText("Variables", 50, (720, 100))
+        displayText("Covid mode", 40, (1150, 120))
+        for idx in range(len(constants.VARIABLE_TEXTS)):
+            displayText(constants.VARIABLE_TEXTS[idx], 40, (740, (2 + idx) * 100))
+        drawLine((10, 140), (210, 140))
+        drawLine((710, 140), (910, 140))
+        drawLine((700, 150), (700, 750))
+
+        displayText(str(int(sound * 100)), 40, (560, 230))
+
+        for idx, variable in enumerate(variables):
+            unit = ""
+            if idx == 0 or idx == 3:
+                variable = int(variable)
+            else:
+                unit = "%"
+            displayText(str(variable) + unit, 40, (1250, (2 + idx) * 100 + 30))
 
         displayUpdate()
 
@@ -137,22 +210,31 @@ def helpScreen():
 
         displayUpdate()
     # buttonSound.play()
+    pygame.mixer.music.set_volume(0.1)
 
 
 def simulateScreen():
     # Pop up setting
-    optionBox = Button(550, 300, 300, 200, "", colour=constants.BLACK)
-    settingButton = Button(600, 360, 200, 32, "Settings")
-    quitButton = Button(600, 408, 200, 32, "Quit")
+    optionBox, settingButton, quitButton = genPopUP()
     optionActive = False
     quitGame = False
 
+    simEndBox, quitSimButton = genPopUP(gameEnd=True)
+
     timeImages = loadImages(constants.TIME_TEXTS)
+
+    manager = Manager(variables)
 
     speed = 1
 
     while not quitGame:
         screen.fill(constants.GREY)
+
+        health = manager.getNumberOfHealthPeople()
+        infectious = manager.getNumberOfInfectedPeople()
+        death = manager.getNumberOfDeadPeople()
+
+        simEnd = health == 0 or infectious == 0
 
         # event check
         for event in pygame.event.get():
@@ -165,8 +247,10 @@ def simulateScreen():
                 if optionActive:
                     if checkButtonClick(settingButton):
                         # buttonSound.play()
-                        optionScreen()
+                        optionScreen(variableAccess=False)
                     quitGame = checkButtonClick(quitButton)
+                elif simEnd:
+                    quitGame = checkButtonClick(quitSimButton)
                 else:
                     for idx in range(3):
                         image = timeImages[idx].get_rect(center=(16 + (32 * idx), 108))
@@ -178,17 +262,33 @@ def simulateScreen():
         manager.checkInfected()
         manager.checkDeath()
 
-        displayInfo()
+        displayText("Healthy: " + str(health), 30, (5, 5), colour=constants.GREEN)
+        displayText("Infectious: " + str(infectious), 30, (5, 35), colour=constants.RED)
+        displayText("Death: " + str(death), 30, (5, 65), colour=constants.BLACK)
 
         for index in range(len(timeImages)):
             screen.blit(timeImages[index], (4 + (32 * index), 84))
+        displayText("x" + str(speed), 50, (110, 90), colour=constants.BLACK)
 
         if optionActive:
             optionBox.draw(screen)
             settingButton.draw(screen)
             quitButton.draw(screen)
 
+        if simEnd:
+            text = (
+                constants.VIRUS_END_TEXT
+                if infectious == 0
+                else constants.HUMAN_END_TEXT
+            )
+            simEndBox.draw(screen)
+            displayText(text, 32, (700, 320), colour=constants.RED, centre=True)
+            quitSimButton.draw(screen)
+
         displayUpdate()
+    if simEnd:
+        # creditScreen()
+        print("credit")
 
 
 def displayText(strText, fontSize, position, colour=constants.WHITE, centre=False):
@@ -248,6 +348,15 @@ def titleText(size, title=constants.TITLE, adjustment=100):
     )
 
 
+def genPopUP(gameEnd=False):
+    optionBox = Button(550, 300, 300, 200, "", colour=constants.BLACK)
+    quitButton = Button(600, 408, 200, 32, "Quit")
+    if not gameEnd:
+        settingButton = Button(600, 360, 200, 32, "Settings")
+        return optionBox, settingButton, quitButton
+    return optionBox, quitButton
+
+
 def getFilePath(filePath):
     return os.path.join(sourceFileDir, filePath)
 
@@ -264,43 +373,8 @@ def checkButtonClick(button):
     return button.getRect().collidepoint(pygame.mouse.get_pos())
 
 
-def setTextAndLine():
-    # Setting text
-    displayText("Setting", 50, (20, 100))
-    displayText("Sound:", 40, (40, 200))
-    for idx in range(len(constants.SETTING_TEXTS)):
-        displayText(constants.SETTING_TEXTS[idx], 40, (40, 320 + (140 * idx)))
-
-    # Variable text
-    displayText("Variables", 50, (720, 100))
-    displayText("Covid mode", 40, (1150, 120))
-    for idx in range(len(constants.VARIABLE_TEXTS)):
-        displayText(constants.VARIABLE_TEXTS[idx], 40, (740, (2 + idx) * 100))
-
-    drawLine((10, 140), (210, 140))
-    drawLine((710, 140), (910, 140))
-    drawLine((700, 150), (700, 750))
-
-
 def genBackButton():
     return Button(10, 10, 150, 50, "Back"), False
-
-
-def displayInfo():
-    health = manager.getNumberOfHealthPeople()
-    infectious = manager.getNumberOfInfectedPeople()
-    death = manager.getNumberOfDeadPeople()
-    displayText("Healthy: " + str(health), 30, (5, 5), colour=constants.GREEN)
-    displayText("Infectious: " + str(infectious), 30, (5, 35), colour=constants.RED)
-    displayText("Death: " + str(death), 30, (5, 65), colour=constants.BLACK)
-
-
-def drawSlider(startPos, length, defaultValue, width=2):
-    endPos = (list(startPos)[0], list(startPos)[1] + length)
-    pointPos = (list(startPos)[0], list(startPos)[1] + defaultValue)
-    drawLine(startPos, endPos, lineWidth=width)
-    pygame.draw.circle(screen, constants.WHITE, pointPos, 10)
-    return
 
 
 if __name__ == "__main__":
@@ -316,10 +390,11 @@ if __name__ == "__main__":
 
     splashScreen()
 
-    manager = Manager()
-
     # buttonSound = pygame.mixer.Sound(getFilePath("sounds\\button_click_sound.mp3"))
     pygame.mixer.music.load(getFilePath("sounds\\background_music.mp3"))
     pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.5)
+
+    variables: list[float] = []
 
     menuScreen()
