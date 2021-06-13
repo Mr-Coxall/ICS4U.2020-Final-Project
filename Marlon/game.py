@@ -26,6 +26,9 @@ class longWayGame(arcade.Window):
         # create player sprite variable
         self.player_sprite = None
 
+        # create physics engine
+        self.physics_engine = None
+
         # set background colour of window
         arcade.set_background_color(constants.BG_COLOUR)
 
@@ -41,8 +44,8 @@ class longWayGame(arcade.Window):
         # set player sprite
         player_source = ":resources:assets/Lava.gif"
         self.player_sprite = arcade.Sprite(player_source, constants.PLAYER_SCALING)
-        self.player_sprite.center_x = 64
-        self.player_sprite.center_y = 200
+        self.player_sprite.center_x = 32
+        self.player_sprite.center_y = 104
         self.player_list.append(self.player_sprite)
 
         # add Tiled map
@@ -64,6 +67,8 @@ class longWayGame(arcade.Window):
         # set coins
         self.coin_list = arcade.tilemap.process_layer(level_one, coin_name, constants.TILE_SCALING)
 
+        # use arcade class physics engine to simulate gravity and physics
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.wall_list)
 
     def on_draw(self):
         # render screen
@@ -74,3 +79,35 @@ class longWayGame(arcade.Window):
         self.wall_list.draw()
         self.coin_list.draw()
         self.player_list.draw()
+
+    def on_key_press(self, key, modifiers):
+        # called whenever key is pressed
+
+        # if statement for arrow key/WASD presses
+        if key == arcade.key.UP or key == arcade.key.W:
+            self.player_sprite.change_y = constants.PLAYER_MOVEMENT_SPEED
+        elif key == arcade.key.DOWN or key == arcade.key.S:
+            self.player_sprite.change_y = -constants.PLAYER_MOVEMENT_SPEED
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            self.player_sprite.change_x = -constants.PLAYER_MOVEMENT_SPEED
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
+            self.player_sprite.change_x = constants.PLAYER_MOVEMENT_SPEED
+
+    def on_key_release(self, key, modifiers):
+        # called whenever key is released
+
+        # if statement for arrow key/WASD presses
+        if key == arcade.key.UP or key == arcade.key.W:
+            self.player_sprite.change_y = 0
+        elif key == arcade.key.DOWN or key == arcade.key.S:
+            self.player_sprite.change_y = 0
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            self.player_sprite.change_x = 0
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
+            self.player_sprite.change_x = 0
+
+    def on_update(self, delta_time):
+        # contains movement and game logic
+
+        # move player using physics engine
+        self.physics_engine.update()
