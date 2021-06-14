@@ -69,7 +69,7 @@ def menuScreen():
                 inputActive = True
                 virus_name = constants.VIRUS_NAME
             elif start:
-                simulateScreen(virus_name)
+                simulateScreen()
                 inputActive = False
             elif buttonActive[1]:
                 optionScreen()

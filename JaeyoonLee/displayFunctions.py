@@ -267,14 +267,14 @@ def checkBackButton(screen, backButton):
 def genInputBox():
     inputBox = Button(
         580,
-        480,
+        400,
         240,
         40,
         constants.VIRUS_NAME,
         colour=constants.GREY,
         textColour=constants.WHITE,
     )
-    inputBack = Button(520, 420, 360, 120, "", constants.BACKGROUND_BLACK)
+    inputBack = Button(520, 360, 360, 180, "", constants.BACKGROUND_BLACK)
     return inputBox, inputBack
 
 
@@ -294,7 +294,6 @@ def drawInputBox(screen, virus_name, inputBox, inputBack):
         screen, "Virus Name:", 36, (700, 460), colour=constants.RED, centre=True
     )
     inputBox.setText(virus_name)
-    inputBox.setWidth(max(240, inputBox.getText().get_width() + 10))
     inputBox.draw(screen)
 
 

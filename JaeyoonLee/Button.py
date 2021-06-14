@@ -61,9 +61,6 @@ class Button:
     def getColour(self):
         return self.__colour
 
-    def setWidth(self, width):
-        self.__width = width
-
     def setText(self, text):
         self.__text = self.__font.render(text, True, self.__textColour)
 
