@@ -13,20 +13,23 @@ from Person import Infectious, Person
 
 
 class Manager:
-    def __init__(self, variables):
+    def __init__(self, variables, colours):
+        # variables
         self.N_people = int(variables[0])
-        if variables[0] < 75:
-            self.radius = 10
-        else:
-            self.radius = 5
+        self.radius = 10 if variables[0] < 75 else 5
         self.infectionRate = variables[1]
         self.deathRate = variables[2]
         self.activity = int(variables[3])
+        # colours
+        self.healthColour = colours[0]
+        self.infectiousColour = colours[1]
+        self.deathColour = colours[2]
+        # objects
         self.healthPeople = self.generatePeople(
-            self.N_people - 1, [100, 1300], [100, 700], constants.WHITE
+            self.N_people - 1, [100, 1300], [100, 700], self.healthColour
         )
         self.infectedPeople = self.generatePeople(
-            1, [650, 750], [350, 450], constants.RED, infected=True
+            1, [650, 750], [350, 450], self.infectiousColour, infected=True
         )
         self.deadPeople = []
 
@@ -61,15 +64,8 @@ class Manager:
                 )
                 if distance < self.radius * 2 or chance:
                     # infection
-                    newInfectious = Infectious(
-                        health.getX(),
-                        health.getY(),
-                        health.getVelocity(),
-                        health.getDirection(),
-                        constants.RED,
-                        self.radius,
-                        infectious.getInfectionRate(),
-                        infectious.getDeathRate(),
+                    newInfectious = self.genNewCondition(
+                        health, infectious, infected=True
                     )
                     self.infectedPeople.append(newInfectious)
                     del self.healthPeople[healthCount]
@@ -80,18 +76,10 @@ class Manager:
                 infectious.getVelocity() != 0
                 and infectious.getDeathCount()
                 == random.randint(2, 4) * constants.FPS // infectious.getVelocity()
-            ):
-                if random.randint(1, 100) <= infectious.getDeathRate():
-                    newDeath = Person(
-                        infectious.getX(),
-                        infectious.getY(),
-                        0,
-                        0,
-                        constants.BLACK,
-                        self.radius,
-                    )
-                    self.deadPeople.append(newDeath)
-                    del self.infectedPeople[infectionIdx]
+            ) and random.randint(1, 100) <= infectious.getDeathRate():
+                newDeath = self.genNewCondition(infectious, infectious, death=True)
+                self.deadPeople.append(newDeath)
+                del self.infectedPeople[infectionIdx]
             infectious.setDeathCount(infectious.getDeathCount() + 1)
 
     def mutateVirus(self):
@@ -134,6 +122,28 @@ class Manager:
                 )
             people.append(person)
         return people
+
+    def genNewCondition(self, itself, opponent, infected=False, death=False):
+        if infected:
+            return Infectious(
+                itself.getX(),
+                itself.getY(),
+                itself.getVelocity(),
+                itself.getDirection(),
+                self.infectiousColour,
+                self.radius,
+                opponent.getInfectionRate(),
+                opponent.getDeathRate(),
+            )
+        elif death:
+            return Person(
+                itself.getX(),
+                itself.getY(),
+                0,
+                0,
+                self.deathColour,
+                self.radius,
+            )
 
     def separatePeople(self, personIndex, death=False):
         if personIndex < len(self.healthPeople):

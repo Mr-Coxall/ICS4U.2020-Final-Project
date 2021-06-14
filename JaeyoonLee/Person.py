@@ -67,7 +67,7 @@ class Infectious(Person):
 
     def mutate(self):
         if random.randint(0, 1) == 0:
-            self.__infectionRate = random.randint(1, 10)
+            self.__infectionRate = random.randint(0, 100)
         else:
             self.__deathRate = random.randint(0, 100)
 
