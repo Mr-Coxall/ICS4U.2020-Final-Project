@@ -137,7 +137,7 @@ public class Main {
       final Scanner gameInput = new Scanner(System.in);
 
       // Printing title text
-      System.out.println("♠♥♦♣ Welcome to Black Jack! ♣♦♥♠");
+      System.out.println("Gemmell Casinos BlackJack");
       System.out.println("");
 
       // Input that starts the game
