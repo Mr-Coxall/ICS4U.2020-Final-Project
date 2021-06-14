@@ -11,7 +11,6 @@ import pygame
 from Manager import Manager
 from Setting import CheckBox, Slider
 
-
 variables: list = [100, 25, 4, 6]
 colours: list = [constants.WHITE, constants.RED, constants.BLACK]
 

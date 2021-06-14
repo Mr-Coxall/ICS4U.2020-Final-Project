@@ -256,6 +256,7 @@ def genBackButton(text="Back"):
 
 
 def onlyCheckBackButton(screen, backButton):
+    backActive = False
     for event in pygame.event.get():
         checkQuit(event)
         backActive = checkBackButton(event, backButton)
