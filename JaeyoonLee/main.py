@@ -5,14 +5,17 @@
 # This program simulates a virus spreading.
 
 
+from os import terminal_size
 import constants
 import displayFunctions as display
 import pygame
 from Manager import Manager
 from Setting import CheckBox, Slider
+from Button import Button
 
 variables: list = [100, 25, 4, 6]
 colours: list = [constants.WHITE, constants.RED, constants.BLACK]
+virus_name = constants.VIRUS_NAME
 
 
 def splashScreen():
@@ -24,10 +27,11 @@ def splashScreen():
 
     pygame.display.update()
 
-    pygame.time.wait(1000)
+    pygame.time.wait(500)
 
 
 def menuScreen():
+    global virus_name
     # background image
     display.backgroundImageBlit(screen, constants.MENU_IMG)
 
@@ -35,27 +39,45 @@ def menuScreen():
     display.titleText(screen, 100)
 
     buttons = display.genMenuButtons()
+    inputBox, inputBack = display.genInputBox()
+    inputActive = False
 
     while True:
         buttonActive = [False for _ in range(4)]
         clicked = False
+        start = False
 
         # event check
         for event in pygame.event.get():
             display.checkQuit(event)
             if event.type == pygame.MOUSEBUTTONUP:
                 for idx in range(4):
-                    buttonActive[idx] = display.checkButtonClick(buttons[idx])
-                    if buttonActive[idx]:
-                        clicked = True
+                    if not inputActive:
+                        buttonActive[idx] = display.checkButtonClick(buttons[idx])
                 if buttonActive[3]:
                     display.checkQuit(event, specific=True)
+                clicked = True
+                inputActive = display.checkButtonClick(inputBox)
+            elif inputActive and event.type == pygame.KEYDOWN:
+                virus_name = display.checkVirusName(event, virus_name, buttonSound)
+                if event.key == pygame.K_RETURN:
+                    clicked, start = True, True
+
+        for button in buttons:
+            button.draw(screen)
+
+        if inputActive:
+            display.drawInputBox(screen, virus_name, inputBox, inputBack)
 
         # button active
         if clicked:
             buttonSound.play()
+            if start:
+                simulateScreen(virus_name)
+                inputActive = False
             if buttonActive[0]:
-                simulateScreen()
+                inputActive = True
+                virus_name = constants.VIRUS_NAME
             elif buttonActive[1]:
                 optionScreen()
             elif buttonActive[2]:
@@ -63,10 +85,7 @@ def menuScreen():
             display.backgroundImageBlit(screen, constants.MENU_IMG)
             display.titleText(screen, 100)
 
-        for button in buttons:
-            button.draw(screen)
-
-        display.displayUpdate()
+        display.update()
 
 
 def optionScreen(variableAccess=True):
@@ -114,11 +133,11 @@ def optionScreen(variableAccess=True):
         )
 
         # set texts and lines on screen
-        display.displaySettingText(screen)
+        display.settingText(screen)
 
         display.displayVariables(screen, variables)
 
-        display.displayUpdate()
+        display.update()
 
 
 def helpScreen():
@@ -131,7 +150,7 @@ def helpScreen():
     display.titleText(screen, 80, title="About Virus Simulator", adjustment=250)
 
     while not backActive:
-        backActive = display.onlyCheckBackButton(screen, backButton)
+        backActive = display.checkBackButton(screen, backButton)
 
         for idx in range(len(constants.HELPS)):
             display.displayText(
@@ -139,7 +158,7 @@ def helpScreen():
             )
         display.displayText(screen, "Create by Jay Lee", 48, (700, 750), centre=True)
 
-        display.displayUpdate()
+        display.update()
     buttonSound.play()
 
 
@@ -159,11 +178,7 @@ def simulateScreen():
     speed = 1
 
     while not (quitGame or credit):
-        backgroundColour = (
-            constants.GREY
-            if colours[-1] == constants.BLACK
-            else constants.BACKGROUND_BLACK
-        )
+        backgroundColour = display.getBackgroundColour(colours)
         screen.fill(backgroundColour)
 
         health = manager.getNumberOfHealthPeople()
@@ -181,7 +196,6 @@ def simulateScreen():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 buttonSound.play()
             elif event.type == pygame.MOUSEBUTTONUP:
-                mousePosition = pygame.mouse.get_pos()
                 if optionActive:
                     if display.checkButtonClick(settingButton):
                         optionScreen(variableAccess=False)
@@ -190,25 +204,26 @@ def simulateScreen():
                     quitGame = display.checkButtonClick(quitSimButton)
                     credit = display.checkButtonClick(creditButton)
                 else:
-                    speed = display.timeSetting(
-                        manager, timeImages, mousePosition, speed
-                    )
+                    speed = display.timeSetting(manager, timeImages, speed)
 
         manager.movePerson(screen)
         manager.checkInfected()
         manager.checkDeath()
 
-        display.displaySimText(screen, health, infectious, death)
-        display.displayTimeText(screen, timeImages, speed)
+        display.simText(screen, health, infectious, death)
+        display.TimeText(screen, timeImages, speed)
+        display.displayText(
+            screen, virus_name, 48, (700, 27), colour=constants.RED, centre=True
+        )
 
         if optionActive:
-            display.displayPopUp(screen, optionBox, settingButton, quitButton)
+            display.popUp(screen, optionBox, settingButton, quitButton)
         elif simEnd:
             display.simEndPopUP(
                 screen, simEndBox, quitSimButton, creditButton, infectious
             )
 
-        display.displayUpdate()
+        display.update()
     if simEnd and credit:
         creditScreen()
 
@@ -223,7 +238,7 @@ def creditScreen():
     display.titleText(screen, 80, title="Credits", adjustment=250)
 
     while not backActive:
-        backActive = display.onlyCheckBackButton(screen, backButton)
+        backActive = display.checkBackButton(screen, backButton)
 
         for idx in range(len(constants.CREDITS_TEXT)):
             display.displayText(
@@ -234,7 +249,7 @@ def creditScreen():
             screen, "Thank you for using Virus Simulator", 32, (700, 750), centre=True
         )
 
-        display.displayUpdate()
+        display.update()
     buttonSound.play()
 
 

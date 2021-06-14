@@ -54,7 +54,7 @@ def loadImages(imageNames):
     return images
 
 
-def displayUpdate():
+def update():
     pygame.display.update()
     fps.tick(constants.FPS)
 
@@ -79,15 +79,14 @@ def titleText(screen, size, title=constants.TITLE, adjustment=100):
 
 def genMenuButtons():
     buttonText = constants.MENU_TEXTS
-    buttons = [
+    return [
         Button(600, 400 + (60 * index), 200, 50, buttonText[index])
         for index in range(len(buttonText))
     ]
-    return buttons
 
 
 def genSelectoionBox(options):
-    selectoionBox = [
+    return [
         SelectionBox(
             450,
             320 + (170 * idx),
@@ -99,13 +98,12 @@ def genSelectoionBox(options):
         )
         for idx in range(len(options))
     ]
-    return selectoionBox
 
 
 def genSliders(variables):
     sliderLength = constants.SLIDER_LENGTH
     varRange = constants.MIN_MAX_VAR
-    sliders = [
+    return [
         Slider(
             (740, (2 + idx) * 100 + 40),
             sliderLength,
@@ -113,7 +111,6 @@ def genSliders(variables):
         )
         for idx in range(len(variables))
     ]
-    return sliders
 
 
 def drawSliders(screen, variables, varSettings, checkBox):
@@ -125,7 +122,7 @@ def drawSliders(screen, variables, varSettings, checkBox):
     return variables
 
 
-def displaySettingText(screen):
+def settingText(screen):
     displayText(screen, "Setting", 50, (20, 100))
     displayText(screen, "Sound:", 40, (40, 200))
     for idx in range(len(constants.SETTING_TEXTS)):
@@ -170,8 +167,8 @@ def checkSlider(defaultModelCheckBox, mousePosition, varSettings, variables):
 
 
 def checkVolumeSlider(soundSlider, mousePosition, buttonSound):
-    sliderLength = constants.SLIDER_LENGTH
     if soundSlider.getRect().collidepoint(mousePosition):
+        sliderLength = constants.SLIDER_LENGTH
         sound = soundSlider.updatePoint(mousePosition) / sliderLength
         pygame.mixer.music.set_volume(sound)
         buttonSound.set_volume(sound)
@@ -185,7 +182,8 @@ def genPopUP(btnText1="Setting", btnText2="Quit"):
     return optionBox, settingButton, quitButton
 
 
-def timeSetting(manager, timeImages, mousePosition, speed):
+def timeSetting(manager, timeImages, speed):
+    mousePosition = pygame.mouse.get_pos()
     for idx in range(3):
         image = timeImages[idx].get_rect(center=(16 + (32 * idx), 108))
         if image.collidepoint(mousePosition):
@@ -194,7 +192,7 @@ def timeSetting(manager, timeImages, mousePosition, speed):
     return speed
 
 
-def displaySimText(screen, health, infectious, death):
+def simText(screen, health, infectious, death):
     displayText(screen, "Healthy: " + str(health), 30, (5, 5), colour=constants.GREEN)
     displayText(
         screen, "Infectious: " + str(infectious), 30, (5, 35), colour=constants.RED
@@ -202,13 +200,13 @@ def displaySimText(screen, health, infectious, death):
     displayText(screen, "Death: " + str(death), 30, (5, 65), colour=constants.BLACK)
 
 
-def displayTimeText(screen, timeImages, speed):
+def TimeText(screen, timeImages, speed):
     for index in range(3):
         screen.blit(timeImages[index], (4 + (32 * index), 84))
     displayText(screen, "x" + str(speed), 50, (110, 90), colour=constants.BLACK)
 
 
-def displayPopUp(screen, optionBox, settingButton, quitButton):
+def popUp(screen, optionBox, settingButton, quitButton):
     optionBox.draw(screen)
     settingButton.draw(screen)
     quitButton.draw(screen)
@@ -243,6 +241,12 @@ def getFont(fontSize):
     return pygame.font.SysFont(constants.FONT, fontSize)
 
 
+def getBackgroundColour(colours):
+    return (
+        constants.GREY if colours[-1] == constants.BLACK else constants.BACKGROUND_BLACK
+    )
+
+
 def drawLine(screen, startPos, endPos, colour=constants.WHITE, lineWidth=2):
     pygame.draw.line(screen, colour, startPos, endPos, lineWidth)
 
@@ -255,7 +259,7 @@ def genBackButton(text="Back"):
     return Button(10, 10, 150, 50, text), False
 
 
-def onlyCheckBackButton(screen, backButton):
+def checkBackButton(screen, backButton):
     backActive = False
     for event in pygame.event.get():
         checkQuit(event)
@@ -264,3 +268,37 @@ def onlyCheckBackButton(screen, backButton):
     backButton.draw(screen)
 
     return backActive
+
+
+def genInputBox():
+    inputBox = Button(
+        580,
+        480,
+        240,
+        40,
+        constants.VIRUS_NAME,
+        colour=constants.GREY,
+        textColour=constants.WHITE,
+    )
+    inputBack = Button(520, 420, 360, 120, "", constants.BACKGROUND_BLACK)
+    return inputBox, inputBack
+
+
+def checkVirusName(event, virus_name, buttonSound):
+    if event.key == pygame.K_BACKSPACE:
+        virus_name = virus_name[:-1]
+    elif len(virus_name) < 15:
+        virus_name += event.unicode
+    elif not (event.key == pygame.K_RETURN):
+        buttonSound.play()
+    return virus_name
+
+
+def drawInputBox(screen, virus_name, inputBox, inputBack):
+    inputBack.draw(screen)
+    displayText(
+        screen, "Virus Name:", 36, (700, 460), colour=constants.RED, centre=True
+    )
+    inputBox.setText(virus_name)
+    inputBox.setWidth(max(240, inputBox.getText().get_width() + 10))
+    inputBox.draw(screen)
