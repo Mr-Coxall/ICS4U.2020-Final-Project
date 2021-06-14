@@ -79,15 +79,14 @@ def titleText(screen, size, title=constants.TITLE, adjustment=100):
 
 def genMenuButtons():
     buttonText = constants.MENU_TEXTS
-    buttons = [
+    return [
         Button(600, 400 + (60 * index), 200, 50, buttonText[index])
         for index in range(len(buttonText))
     ]
-    return buttons
 
 
 def genSelectoionBox(options):
-    selectoionBox = [
+    return [
         SelectionBox(
             450,
             320 + (170 * idx),
@@ -99,13 +98,12 @@ def genSelectoionBox(options):
         )
         for idx in range(len(options))
     ]
-    return selectoionBox
 
 
 def genSliders(variables):
     sliderLength = constants.SLIDER_LENGTH
     varRange = constants.MIN_MAX_VAR
-    sliders = [
+    return [
         Slider(
             (740, (2 + idx) * 100 + 40),
             sliderLength,
@@ -113,7 +111,6 @@ def genSliders(variables):
         )
         for idx in range(len(variables))
     ]
-    return sliders
 
 
 def drawSliders(screen, variables, varSettings, checkBox):
@@ -170,8 +167,8 @@ def checkSlider(defaultModelCheckBox, mousePosition, varSettings, variables):
 
 
 def checkVolumeSlider(soundSlider, mousePosition, buttonSound):
-    sliderLength = constants.SLIDER_LENGTH
     if soundSlider.getRect().collidepoint(mousePosition):
+        sliderLength = constants.SLIDER_LENGTH
         sound = soundSlider.updatePoint(mousePosition) / sliderLength
         pygame.mixer.music.set_volume(sound)
         buttonSound.set_volume(sound)
