@@ -34,13 +34,6 @@ def checkQuit(event, specific=False):
         sys.exit()
 
 
-def checkBackButton(event, backButton):
-    if event.type == pygame.MOUSEBUTTONUP:
-        return checkButtonClick(backButton)
-    else:
-        return False
-
-
 def resizeImage(image, newSize):
     return pygame.transform.scale(image, newSize)
 
@@ -263,7 +256,8 @@ def checkBackButton(screen, backButton):
     backActive = False
     for event in pygame.event.get():
         checkQuit(event)
-        backActive = checkBackButton(event, backButton)
+        if event.type == pygame.MOUSEBUTTONUP:
+            backActive = checkButtonClick(backButton)
 
     backButton.draw(screen)
 
@@ -302,3 +296,8 @@ def drawInputBox(screen, virus_name, inputBox, inputBack):
     inputBox.setText(virus_name)
     inputBox.setWidth(max(240, inputBox.getText().get_width() + 10))
     inputBox.draw(screen)
+
+
+def drawBackground(screen):
+    backgroundImageBlit(screen, constants.MENU_IMG)
+    titleText(screen, 100)

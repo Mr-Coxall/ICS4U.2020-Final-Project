@@ -5,13 +5,11 @@
 # This program simulates a virus spreading.
 
 
-from os import terminal_size
 import constants
 import displayFunctions as display
 import pygame
 from Manager import Manager
 from Setting import CheckBox, Slider
-from Button import Button
 
 variables: list = [100, 25, 4, 6]
 colours: list = [constants.WHITE, constants.RED, constants.BLACK]
@@ -32,11 +30,7 @@ def splashScreen():
 
 def menuScreen():
     global virus_name
-    # background image
-    display.backgroundImageBlit(screen, constants.MENU_IMG)
-
-    # main menu screen title
-    display.titleText(screen, 100)
+    display.drawBackground(screen)
 
     buttons = display.genMenuButtons()
     inputBox, inputBack = display.genInputBox()
@@ -44,8 +38,7 @@ def menuScreen():
 
     while True:
         buttonActive = [False for _ in range(4)]
-        clicked = False
-        start = False
+        clicked, start = False, False
 
         # event check
         for event in pygame.event.get():
@@ -72,18 +65,17 @@ def menuScreen():
         # button active
         if clicked:
             buttonSound.play()
-            if start:
-                simulateScreen(virus_name)
-                inputActive = False
             if buttonActive[0]:
                 inputActive = True
                 virus_name = constants.VIRUS_NAME
+            elif start:
+                simulateScreen(virus_name)
+                inputActive = False
             elif buttonActive[1]:
                 optionScreen()
             elif buttonActive[2]:
                 helpScreen()
-            display.backgroundImageBlit(screen, constants.MENU_IMG)
-            display.titleText(screen, 100)
+            display.drawBackground(screen)
 
         display.update()
 
