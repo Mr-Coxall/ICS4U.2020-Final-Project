@@ -12,7 +12,6 @@ import pygame
 from Button import Button, SelectionBox
 from Setting import Slider
 
-
 sourceFileDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(sourceFileDir)
 fps = pygame.time.Clock()
@@ -254,3 +253,13 @@ def checkButtonClick(button):
 
 def genBackButton(text="Back"):
     return Button(10, 10, 150, 50, text), False
+
+
+def onlyCheckBackButton(screen, backButton):
+    for event in pygame.event.get():
+        checkQuit(event)
+        backActive = checkBackButton(event, backButton)
+
+    backButton.draw(screen)
+
+    return backActive

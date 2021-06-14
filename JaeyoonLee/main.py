@@ -12,6 +12,10 @@ from Manager import Manager
 from Setting import CheckBox, Slider
 
 
+variables: list = [100, 25, 4, 6]
+colours: list = [constants.WHITE, constants.RED, constants.BLACK]
+
+
 def splashScreen():
     # background image
     display.backgroundImageBlit(screen, constants.SPLASH_IMG)
@@ -128,11 +132,7 @@ def helpScreen():
     display.titleText(screen, 80, title="About Virus Simulator", adjustment=250)
 
     while not backActive:
-        for event in pygame.event.get():
-            display.checkQuit(event)
-            backActive = display.checkBackButton(event, backButton)
-
-        backButton.draw(screen)
+        backActive = display.onlyCheckBackButton(screen, backButton)
 
         for idx in range(len(constants.HELPS)):
             display.displayText(
@@ -224,11 +224,7 @@ def creditScreen():
     display.titleText(screen, 80, title="Credits", adjustment=250)
 
     while not backActive:
-        for event in pygame.event.get():
-            display.checkQuit(event)
-            backActive = display.checkBackButton(event, backButton)
-
-        backButton.draw(screen)
+        backActive = display.onlyCheckBackButton(screen, backButton)
 
         for idx in range(len(constants.CREDITS_TEXT)):
             display.displayText(
@@ -250,8 +246,6 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT))
 
     buttonSound = display.musicInit()
-    variables: list = [100, 25, 4, 6]
-    colours: list = [constants.WHITE, constants.RED, constants.BLACK]
 
     splashScreen()
     menuScreen()
