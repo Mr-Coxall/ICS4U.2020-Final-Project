@@ -90,8 +90,6 @@ public class RenderBacon extends HitBoxes {
     /** Initializes the size. */
     private final long[] timer = new long[array8];
     /** Initializes the size. */
-    private boolean spatula = false;
-    /** Initializes the size. */
     private final boolean[] flipTime = new boolean[array8];
     /** Initializes the size. */
     private final boolean[] burnt = new boolean[array8];
@@ -114,7 +112,30 @@ public class RenderBacon extends HitBoxes {
     /** Initializes the size. */
     private double burnMult7 = 1;
     /** Initializes the size. */
-    private final double burnMultiplier = 1.25;
+    private double burnMultiplier = 1.25;
+    /** Initializes the size. */
+    private Spatula spatula = new Spatula();
+    /** Initializes the size. */
+    private final MoveFood move = new MoveFood();
+    /** Initializes the size. */
+    private boolean move1 = false;
+    /** Initializes the size. */
+    private boolean move2 = false;
+    /** Initializes the size. */
+    private boolean move3 = false;
+    /** Initializes the size. */
+    private boolean move4 = false;
+    /** Initializes the size. */
+    private boolean move5 = false;
+    /** Initializes the size. */
+    private boolean move6 = false;
+    /** Initializes the size. */
+    private boolean move7 = false;
+    /** Initializes the size. */
+    private boolean move8 = false;
+    /** Initializes the size. */
+    private static boolean bacon;
+
 
     /**
      * Creates the logic to render the bacon.
@@ -124,7 +145,6 @@ public class RenderBacon extends HitBoxes {
      * @param g2d
      */
     public void baconLogic(final int x, final int y, final Graphics g2d) {
-        this.spatula = false;
         if (MyMouseListener.isKeyPressed2()) {
           // Checks if user clicked on the hitbox for the spoon and loads it
           g2d.drawImage(assets.getImage3(), x - offsetCursorx,
@@ -155,14 +175,7 @@ public class RenderBacon extends HitBoxes {
             renderEgg8 = true;
             timer[array7] = System.currentTimeMillis();
           }
-        } else if (!MyMouseListener.isKeyPressed2()
-                && !MyMouseListener.isKeyPressed1()
-                && !MyMouseListener.isKeyPressed()) {
-            // Checks if user clicked on the hitbox for the spatula and loads it
-            g2d.drawImage(assets.getImage(), x - offsetCursorx,
-                    y - offsetCursory, null);
-            this.spatula = true;
-          }
+        } 
     }
 
     /**
@@ -180,7 +193,7 @@ public class RenderBacon extends HitBoxes {
          } else if (renderEgg && System.currentTimeMillis() - timer[0]
                                                          >= cookTime) {
              this.burnMult = 1;
-             if (MyMouseListener.getState2() && getSpatula()
+             if (MyMouseListener.getState2() && !spatula.getSpatula()
                      && isClicked2(x, y, param1, param2, param10, param11)) {
                  this.flipTime[0] = true;
              } else if (!flipTime[0]) {
@@ -196,7 +209,7 @@ public class RenderBacon extends HitBoxes {
          } else if (renderEgg2 && System.currentTimeMillis() - timer[1]
                                                          >= cookTime) {
              this.burnMult = 1;
-             if (MyMouseListener.getState2() && getSpatula()
+             if (MyMouseListener.getState2() && !spatula.getSpatula()
                      && isClicked2(x, y, param1, param3, param10, param11)) {
                  this.flipTime[1] = true;
              } else if (!flipTime[1]) {
@@ -211,7 +224,7 @@ public class RenderBacon extends HitBoxes {
              g.drawImage(assets.getImage15(), eggX, eggY3, null);
          } else if (renderEgg3 && System.currentTimeMillis() - timer[2]
                                                          >= cookTime) {
-             if (MyMouseListener.getState2() && getSpatula()
+             if (MyMouseListener.getState2() && !spatula.getSpatula()
                      && isClicked2(x, y, param1, param4, param10, param11)) {
                  this.flipTime[2] = true;
              } else if (!flipTime[2]) {
@@ -226,7 +239,7 @@ public class RenderBacon extends HitBoxes {
              g.drawImage(assets.getImage15(), eggX, eggY4, null);
          } else if (renderEgg4 && System.currentTimeMillis() - timer[array3]
                                                          >= cookTime) {
-             if (MyMouseListener.getState2() && getSpatula()
+             if (MyMouseListener.getState2() && !spatula.getSpatula()
                      && isClicked2(x, y, param1, param5, param10, param11)) {
                  this.flipTime[array3] = true;
              } else if (!flipTime[array3]) {
@@ -241,7 +254,7 @@ public class RenderBacon extends HitBoxes {
              g.drawImage(assets.getImage15(), eggX, eggY6, null);
          } else if (renderEgg5 && System.currentTimeMillis() - timer[array4]
                                                          >= cookTime) {
-             if (MyMouseListener.getState2() && getSpatula()
+             if (MyMouseListener.getState2() && !spatula.getSpatula()
                      && isClicked2(x, y, param1, param6, param10, param11)) {
                  this.flipTime[array4] = true;
              } else if (!flipTime[array4]) {
@@ -256,7 +269,7 @@ public class RenderBacon extends HitBoxes {
              g.drawImage(assets.getImage15(), eggX, eggY7, null);
          } else if (renderEgg6 && System.currentTimeMillis() - timer[array5]
                                                         >= cookTime) {
-             if (MyMouseListener.getState2() && getSpatula()
+             if (MyMouseListener.getState2() && !spatula.getSpatula()
                      && isClicked2(x, y, param1, param7, param10, param11)) {
                  this.flipTime[array5] = true;
              } else if (!flipTime[array5]) {
@@ -271,7 +284,7 @@ public class RenderBacon extends HitBoxes {
              g.drawImage(assets.getImage15(), eggX, eggY8, null);
          } else if (renderEgg7 && System.currentTimeMillis() - timer[array6]
                                                             >= cookTime) {
-             if (MyMouseListener.getState2() && getSpatula()
+             if (MyMouseListener.getState2() && !spatula.getSpatula()
                      && isClicked2(x, y, param1, param8, param10, param11)) {
                  this.flipTime[array6] = true;
              } else if (!flipTime[array6]) {
@@ -286,7 +299,7 @@ public class RenderBacon extends HitBoxes {
              g.drawImage(assets.getImage15(), eggX, eggY9, null);
          } else if (renderEgg8 && System.currentTimeMillis() - timer[array7]
                                                              >= cookTime) {
-             if (MyMouseListener.getState2() && getSpatula()
+             if (MyMouseListener.getState2() && !spatula.getSpatula()
                      && isClicked2(x, y, param1, param9, param10, param11)) {
                  this.flipTime[array7] = true;
              } else if (!flipTime[array7]) {
@@ -304,46 +317,160 @@ public class RenderBacon extends HitBoxes {
       * @param y
       */
       public void flipTime(final Graphics g, final int x, final int y) {
-          if (getSpatula() && flipTime[0] && !burnt[0]) {
+          bacon = false;
+          if (!spatula.getSpatula() && flipTime[0] && move1){
+              move.moveSprites(assets.getImage13(), x, y, g);
+              if (move.getMove()) {
+                  flipTime[0] = false;
+                  renderEgg = false;
+                  move1 = false;
+              }
+          } else if (!spatula.getSpatula() && flipTime[0] && !burnt[0]) {
               this.burnMult = burnMultiplier;
               g.drawImage(assets.getImage13(), eggX, eggY, null);
+              if (isClicked(x, y, param1, param2, param10, param11)
+                                          && MyMouseListener.getClicks()) {
+                  bacon = true;
+                  move1 = true;
+              }
           }
-          if (getSpatula() && flipTime[1] && !burnt[1]) {
+          if (!spatula.getSpatula() && flipTime[1] && move2){
+              move.moveSprites(assets.getImage13(), x, y, g);
+              if (move.getMove()) {
+                  bacon = true;
+                  flipTime[1] = false;
+                  renderEgg2 = false;
+                  move2 = false;
+              }
+          } else if (!spatula.getSpatula() && flipTime[1] && !burnt[1]) {
               g.drawImage(assets.getImage13(), eggX, eggY2, null);
               this.burnMult1 = burnMultiplier;
+              if (isClicked(x, y, param1, param3, param10, param11)
+                                          && MyMouseListener.getClicks()) {
+                  move2 = true;
+              }
           }
-          if (getSpatula() && flipTime[2] && !burnt[2]) {
+          if (!spatula.getSpatula() && flipTime[2] && move3){
+              move.moveSprites(assets.getImage13(), x, y, g);
+              if (move.getMove()) {
+                  bacon = true;
+                  flipTime[2] = false;
+                  renderEgg3 = false;
+                  move3 = false;
+              }
+          } else if (!spatula.getSpatula() && flipTime[2] && !burnt[2]) {
               g.drawImage(assets.getImage13(), eggX, eggY3, null);
               burnMult2 = burnMultiplier;
+              if (isClicked(x, y, param1, param4, param10, param11)
+                                          && MyMouseListener.getClicks()) {
+                  move3 = true;
+              }
           }
-          if (getSpatula() && flipTime[array3] && !burnt[array3]) {
+          if (!spatula.getSpatula() && flipTime[array3] && move4){
+              move.moveSprites(assets.getImage13(), x, y, g);
+              if (move.getMove()) {
+                  bacon = true;
+                  flipTime[array3] = false;
+                  renderEgg4 = false;
+                  move4 = false;
+              }
+          } else if (!spatula.getSpatula() && flipTime[array3]
+                                                  && !burnt[array3]) {
               g.drawImage(assets.getImage13(), eggX, eggY4, null);
               burnMult3 = burnMultiplier;
+              if (isClicked(x, y, param1, param5, param10, param11)
+                                           && MyMouseListener.getClicks()) {
+                  move4 = true;
+              }
           }
-          if (getSpatula() && flipTime[array4] && !burnt[array4]) {
+          if (!spatula.getSpatula() && flipTime[array4] && move5){
+              move.moveSprites(assets.getImage13(), x, y, g);
+              if (move.getMove()) {
+                  bacon = true;
+                  flipTime[array4] = false;
+                  renderEgg5 = false;
+                  move5 = false;
+              }
+          } else if (!spatula.getSpatula() && flipTime[array4]
+                                              && !burnt[array4]) {
               g.drawImage(assets.getImage13(), eggX, eggY6, null);
               burnMult4 = burnMultiplier;
+              if (isClicked(x, y, param1, param6, param10, param11)
+                                            && MyMouseListener.getClicks()) {
+                  move5 = true;
+              }
           }
-          if (getSpatula() && flipTime[array5] && !burnt[array5]) {
+          if (!spatula.getSpatula() && flipTime[array5] && move6){
+              move.moveSprites(assets.getImage13(), x, y, g);
+              if (move.getMove()) {
+                  bacon = true;
+                  flipTime[array5] = false;
+                  renderEgg6 = false;
+                  move6 = false;
+              }
+          } else if (!spatula.getSpatula() && flipTime[array5]
+                                              && !burnt[array5]) {
               g.drawImage(assets.getImage13(), eggX, eggY7, null);
               burnMult5 = burnMultiplier;
+              if (isClicked(x, y, param1, param7, param10, param11)
+                                      && MyMouseListener.getClicks()) {
+                  move6 = true;
+              }
           }
-          if (getSpatula() && flipTime[array6] && !burnt[array6]) {
+          if (!spatula.getSpatula() && flipTime[array6] && move7){
+              move.moveSprites(assets.getImage13(), x, y, g);
+              if (move.getMove()) {
+                  bacon = true;
+                  flipTime[array6] = false;
+                  renderEgg7 = false;
+                  move7 = false;
+              }
+          } else if (!spatula.getSpatula() && flipTime[array6]
+                                              && !burnt[array6]) {
               g.drawImage(assets.getImage13(), eggX, eggY8, null);
               burnMult6 = burnMultiplier;
+              if (isClicked(x, y, param1, param8, param10, param11)
+                                      && MyMouseListener.getClicks()) {
+                  move7 = true;
+              }
           }
-          if (getSpatula() && flipTime[array7] && !burnt[array7]) {
+          if (!spatula.getSpatula() && flipTime[array7] && move8){
+              move.moveSprites(assets.getImage13(), x, y, g);
+              if (move.getMove()) {
+                  bacon = true;
+                  flipTime[array7] = false;
+                  renderEgg8 = false;
+                  move8 = false;
+              }
+          } else if (!spatula.getSpatula() && flipTime[array7]
+                                              && !burnt[array7]) {
               g.drawImage(assets.getImage13(), eggX, eggY9, null);
               burnMult7 = burnMultiplier;
+              if (isClicked(x, y, param1, param9, param10, param11)
+                                      && MyMouseListener.getClicks()) {
+                  move8 = true;
+              }
           }
       }
 
-    /**
-     * This returns the state of the spatula.
-     *
-     * @return spatula
-     */
-    boolean getSpatula() {
-        return spatula;
-    }
+      /**
+       * Returns if the bacon is picked up.
+       *
+       * @return
+       */
+      public static boolean getBacon() {
+          return bacon;
+      }
+
+      /**
+       * Checks if the food is burnt.
+       *
+       */
+      public void getBurnt() {
+          for (int counter = 0; counter != burnt.length; counter++) {
+              if (burnt[counter]) {
+                  Game.setState(Game.STATE.END);
+              }
+          }
+      }
 }

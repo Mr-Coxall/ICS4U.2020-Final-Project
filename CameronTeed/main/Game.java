@@ -67,6 +67,14 @@ public class Game extends Canvas implements Runnable {
   private long timer2;
   /** Initializes the timer the splash screen. */
   private final int splashTime = 1800;
+  /** Initializes the timer. */
+  private final Spatula spatula = new Spatula();
+  /** Initializes the timer. */
+  private final RenderPlates render = new RenderPlates();
+  /** Initializes the splash screen. */
+  private EndScreen end = new EndScreen();
+  
+  
 
   /** Constructor. */
   public Game() {
@@ -148,10 +156,13 @@ public class Game extends Canvas implements Runnable {
 
     renderEggs.eggLogic(x, y, g2d);
     renderEggs.flipTime(g2d, x, y);
-    renderBacon.flipTime(g2d, x, y);
     renderPancake.pancakeLogic(x, y, g2d);
     renderPancake.flipTime(g2d, x, y);
+    renderBacon.flipTime(g2d, x, y);
     renderBacon.baconLogic(x, y, g2d);
+    spatula.getSpatula(g2d, x, y);
+    render.renderPlates(g2d);
+    render.createPlates();
   }
 
   /** This method renders the graphics. */
@@ -168,13 +179,18 @@ public class Game extends Canvas implements Runnable {
     int y = (int) b.getY();
     int x = (int) b.getX();
 
-    if (getState() == STATE.GAME) {
+    if (getState() == STATE.END) {
+        end.render(g);
+    } else if (getState() == STATE.GAME) {
         // Renders the background
         scenes.loadBackground(g);
         // Renders the cursors
         renderEggs.putEgg(g, x, y);
         renderPancake.putPancakes(g, x, y);
         renderBacon.putBacon(g, x, y);
+        renderBacon.getBurnt();
+        renderEggs.getBurnt();
+        renderPancake.getBurnt();
         rePaint(g);
     } else if (getState() == STATE.MENU) {
         menu.render(g, x, y);

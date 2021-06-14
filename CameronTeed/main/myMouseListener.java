@@ -59,7 +59,7 @@ final class MyMouseListener implements MouseListener {
 
   @Override
   public void mouseClicked(final MouseEvent e) {
-      if(e.getClickCount() == 2){
+      if(e.getButton() == MouseEvent.BUTTON3) {
           doubleClicked = true;
       } else {
           doubleClicked = false;
