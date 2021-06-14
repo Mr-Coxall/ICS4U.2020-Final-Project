@@ -27,13 +27,17 @@ class longWayGame(arcade.Window):
         self.player_sprite = None
 
         # create physics engine
-        self.physics_engine = None
+        self.physics_eng = None
 
         # set background colour of window
         arcade.set_background_color(constants.BG_COLOUR)
 
     def setup(self):
         # function for gameplay
+
+        # keep track of scrolling
+        self.view_left = 0
+        self.view_bottom = 0
 
         # create sprite lists
         self.player_list = arcade.SpriteList()
@@ -59,16 +63,22 @@ class longWayGame(arcade.Window):
         level_one = arcade.tilemap.read_tmx(my_level_one)
 
         # set platforms
-        self.wall_list = arcade.tilemap.process_layer(map_object= level_one,
-                                                       layer_name = platform_name,
-                                                       scaling = constants.TILE_SCALING,
+        self.wall_list = arcade.tilemap.process_layer(map_object=
+                                                      level_one,
+                                                       layer_name =
+                                                       platform_name,
+                                                       scaling =
+                                                       constants.TILE_SCALING,
                                                        use_spatial_hash=True)
 
         # set coins
-        self.coin_list = arcade.tilemap.process_layer(level_one, coin_name, constants.TILE_SCALING)
+        self.coin_list = arcade.tilemap.process_layer(level_one, coin_name,
+                                                      constants.TILE_SCALING)
 
         # use arcade class physics engine to simulate gravity and physics
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.wall_list)
+        self.physics_eng = arcade.PhysicsEnginePlatformer(self.player_sprite,
+                                                          self.wall_list,
+                                                          constants.GRAVITY)
 
     def on_draw(self):
         # render screen
@@ -85,9 +95,8 @@ class longWayGame(arcade.Window):
 
         # if statement for arrow key/WASD presses
         if key == arcade.key.UP or key == arcade.key.W:
-            self.player_sprite.change_y = constants.PLAYER_MOVEMENT_SPEED
-        elif key == arcade.key.DOWN or key == arcade.key.S:
-            self.player_sprite.change_y = -constants.PLAYER_MOVEMENT_SPEED
+            if self.physics_eng.can_jump():
+                self.player_sprite.change_y = constants.PLAYER_JUMP_SPEED
         elif key == arcade.key.LEFT or key == arcade.key.A:
             self.player_sprite.change_x = -constants.PLAYER_MOVEMENT_SPEED
         elif key == arcade.key.RIGHT or key == arcade.key.D:
@@ -97,11 +106,7 @@ class longWayGame(arcade.Window):
         # called whenever key is released
 
         # if statement for arrow key/WASD presses
-        if key == arcade.key.UP or key == arcade.key.W:
-            self.player_sprite.change_y = 0
-        elif key == arcade.key.DOWN or key == arcade.key.S:
-            self.player_sprite.change_y = 0
-        elif key == arcade.key.LEFT or key == arcade.key.A:
+        if key == arcade.key.LEFT or key == arcade.key.A:
             self.player_sprite.change_x = 0
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.player_sprite.change_x = 0
@@ -110,4 +115,48 @@ class longWayGame(arcade.Window):
         # contains movement and game logic
 
         # move player using physics engine
-        self.physics_engine.update()
+        self.physics_eng.update()
+
+        # scrolling -------------------------------------------------
+        # check if viewport needs to be changed
+        changed = False
+
+        # Scroll left
+        left_boundary = self.view_left + constants.LEFT_MARGIN
+        if self.player_sprite.left < left_boundary:
+            self.view_left -= left_boundary - self.player_sprite.left
+            changed = True
+
+        # Scroll right
+        right_boundary = self.view_left + constants.SCREEN_WIDTH\
+                         - constants.RIGHT_MARGIN
+        if self.player_sprite.right > right_boundary:
+            self.view_left += self.player_sprite.right - right_boundary
+            changed = True
+
+        # Scroll up
+        top_boundary = self.view_bottom + constants.SCREEN_HEIGHT \
+                       - constants.TOP_MARGIN
+        if self.player_sprite.top > top_boundary:
+            self.view_bottom += self.player_sprite.top - top_boundary
+            changed = True
+
+        # Scroll down
+        bottom_boundary = self.view_bottom + constants.BOTTOM_MARGIN
+        if self.player_sprite.bottom < bottom_boundary:
+            self.view_bottom -= bottom_boundary - self.player_sprite.bottom
+            changed = True
+
+        # if statement for if change is detected
+        if changed:
+            # scroll to int (pixel) on screen
+            self.view_bottom = int(self.view_bottom)
+            self.view_left = int(self.view_left)
+
+            # perform scroll, call arcade class
+            arcade.set_viewport(self.view_left,
+                                constants.SCREEN_WIDTH
+                                + self.view_left,
+                                self.view_bottom,
+                                constants.SCREEN_HEIGHT
+                                + self.view_bottom)
