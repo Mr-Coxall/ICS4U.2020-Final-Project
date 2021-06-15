@@ -122,8 +122,6 @@ public class RenderEggs extends HitBoxes {
     /** Initializes the size. */
     private static boolean eggs;
 
-
-
     /**
      * Creates the logic to render the eggs.
      *

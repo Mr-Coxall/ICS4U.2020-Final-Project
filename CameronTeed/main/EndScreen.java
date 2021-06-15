@@ -1,4 +1,5 @@
 package com.breakfast.main;
+import java.awt.Font;
 /*
  * This renders the splash screen.
  *
@@ -15,6 +16,12 @@ public class EndScreen {
     private final int width = 740;
     /** Initializes height. */
     private final int height = 550;
+    /** Initializes height. */
+    private final int x = 430;
+    /** Initializes height. */
+    private final int y = 182;
+    /** Initializes height. */
+    private final int font = 30;
     /** Initializes width the background. */
     private Backgrounds background = new Backgrounds();
 
@@ -25,6 +32,9 @@ public class EndScreen {
      */
     public void render(final Graphics g) {
         background.loadBackground4(g);
+        Font myFont = new Font ("Plain", 1, font);
+        g.setFont(myFont);
+        g.drawString("" + RenderPlates.getScore(), x, y);
     }
 
     /**

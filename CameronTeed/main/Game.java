@@ -51,6 +51,8 @@ public class Game extends Canvas implements Runnable {
       /** Initializes splash screen. */
       SPLASH,
       /** Initializes menu. */
+      HELP,
+      /** Initializes menu. */
       MENU,
       /** Initializes the game. */
       GAME,
@@ -73,6 +75,10 @@ public class Game extends Canvas implements Runnable {
   private final RenderPlates render = new RenderPlates();
   /** Initializes the splash screen. */
   private EndScreen end = new EndScreen();
+  /** Initializes the size. */
+  private AudioFilePlayer music = new AudioFilePlayer();
+  /** Initializes the size. */
+  private Help help = new Help();
   
   
 
@@ -85,6 +91,7 @@ public class Game extends Canvas implements Runnable {
   /** initializing. */
   public void init() {
     assets.init();
+    music.load("C:\\Users\\super\\git\\ICS4U.2020-Final-Project\\CameronTeed\\Breakfast\\Music\\bell_small_001.wav");
   }
 
   /** Starts the GUI. */
@@ -153,7 +160,10 @@ public class Game extends Canvas implements Runnable {
     Point b = a.getLocation();
     int y = (int) b.getY();
     int x = (int) b.getX();
+    System.out.println(x + ", " + y);
 
+    render.renderPlates(g2d);
+    render.createPlates();
     renderEggs.eggLogic(x, y, g2d);
     renderEggs.flipTime(g2d, x, y);
     renderPancake.pancakeLogic(x, y, g2d);
@@ -161,8 +171,6 @@ public class Game extends Canvas implements Runnable {
     renderBacon.flipTime(g2d, x, y);
     renderBacon.baconLogic(x, y, g2d);
     spatula.getSpatula(g2d, x, y);
-    render.renderPlates(g2d);
-    render.createPlates();
   }
 
   /** This method renders the graphics. */
@@ -192,6 +200,8 @@ public class Game extends Canvas implements Runnable {
         renderEggs.getBurnt();
         renderPancake.getBurnt();
         rePaint(g);
+    } else if (getState() == STATE.HELP) {
+        help.render(g, x, y);
     } else if (getState() == STATE.MENU) {
         menu.render(g, x, y);
     } else if (getState() == STATE.SPLASH) {

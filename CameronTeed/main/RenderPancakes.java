@@ -169,7 +169,6 @@ public class RenderPancakes extends HitBoxes {
     * @param y
     */
     public void putPancakes(final Graphics g, final int x, final int y) {
-        pancakes = false;
         if (renderEgg && System.currentTimeMillis() - timer[0] >= burnTime
                                                                 * burnMult) {
             burnt[0] = true;
@@ -299,6 +298,7 @@ public class RenderPancakes extends HitBoxes {
      * @param y
      */
      public void flipTime(final Graphics g, final int x, final int y) {
+         pancakes = false;
          if (!spatula.getSpatula() && flipTime[0] && move1){
              move.moveSprites(assets.getImage12(), x, y, g);
              if (move.getMove()) {

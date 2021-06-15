@@ -321,6 +321,7 @@ public class RenderBacon extends HitBoxes {
           if (!spatula.getSpatula() && flipTime[0] && move1){
               move.moveSprites(assets.getImage13(), x, y, g);
               if (move.getMove()) {
+                  bacon = true;
                   flipTime[0] = false;
                   renderEgg = false;
                   move1 = false;
@@ -330,7 +331,6 @@ public class RenderBacon extends HitBoxes {
               g.drawImage(assets.getImage13(), eggX, eggY, null);
               if (isClicked(x, y, param1, param2, param10, param11)
                                           && MyMouseListener.getClicks()) {
-                  bacon = true;
                   move1 = true;
               }
           }

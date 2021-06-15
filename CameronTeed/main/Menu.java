@@ -18,7 +18,9 @@ public class Menu extends HitBoxes {
     /** Initializes the width. */
     private final int param3 = 180;
     /** Initializes the height. */
-    private final int param4 = 50;
+    private final int param4 = 60;
+    /** Initializes the y. */
+    private final int param5 = 450;
     /** Initializes the width. */
     private final int width = 740;
     /** Initializes the height. */
@@ -36,9 +38,11 @@ public class Menu extends HitBoxes {
     public void render(final Graphics g, final int x, final int y) {
         background.loadBackground2(g);
         if (isClicked(x, y, param1, param2, param3, param4)) {
-            System.out.println("Click");
             g.clearRect(0, 0, width, height);
             Game.setState(Game.STATE.GAME);
+        } else if (isClicked(x, y, param1, param5, param3, param4)) {
+            g.clearRect(0, 0, width, height);
+            Game.setState(Game.STATE.HELP);
         }
     }
 }
