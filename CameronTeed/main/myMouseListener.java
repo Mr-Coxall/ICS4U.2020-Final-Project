@@ -43,6 +43,8 @@ final class MyMouseListener implements MouseListener {
   private final int param6 = 100;
   /** Initializes the size. */
   private final int param7 = 90;
+  /** Initializes the variable that stores the key state. */
+  private static boolean doubleClicked;
 
   MyMouseListener() {
     keyPressed = false;
@@ -52,10 +54,16 @@ final class MyMouseListener implements MouseListener {
     clicked2 = false;
     clicked3 = true;
     clicked4 = false;
+    doubleClicked = false;
   }
 
   @Override
   public void mouseClicked(final MouseEvent e) {
+      if (e.getClickCount() == 2) {
+          doubleClicked = true;
+      } else {
+          doubleClicked = false;
+      }
       // System.out.println("out1");
       setState4(true);
   }
@@ -238,4 +246,13 @@ final class MyMouseListener implements MouseListener {
           public static boolean getState4() {
             return clicked4;
           }
+
+          /**
+           * Getter.
+           *
+           * @return clicked3
+           */
+           public static boolean getClicks() {
+             return doubleClicked;
+           }
 }
