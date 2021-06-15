@@ -133,22 +133,22 @@ class longWayGame(arcade.Window):
         # called whenever key is pressed
 
         # if statement for arrow key/WASD presses
-        if key == arcade.key.UP or key == arcade.key.W:
+        if key in [arcade.key.UP, arcade.key.W]:
             if self.physics_eng.can_jump():
                 self.player_sprite.change_y = constants.PLAYER_JUMP_SPEED
                 arcade.play_sound(self.jump_sound)
-        elif key == arcade.key.LEFT or key == arcade.key.A:
+        elif key in [arcade.key.LEFT, arcade.key.A]:
             self.player_sprite.change_x = -constants.PLAYER_MOVEMENT_SPEED
-        elif key == arcade.key.RIGHT or key == arcade.key.D:
+        elif key in [arcade.key.RIGHT, arcade.key.D]:
             self.player_sprite.change_x = constants.PLAYER_MOVEMENT_SPEED
 
     def on_key_release(self, key, modifiers):
         # called whenever key is released
 
         # if statement for arrow key/WASD presses
-        if key == arcade.key.LEFT or key == arcade.key.A:
+        if key in [arcade.key.LEFT, arcade.key.A]:
             self.player_sprite.change_x = 0
-        elif key == arcade.key.RIGHT or key == arcade.key.D:
+        elif key in [arcade.key.RIGHT, arcade.key.D]:
             self.player_sprite.change_x = 0
 
     def on_update(self, delta_time):
