@@ -18,6 +18,7 @@ MIN_MAX_VAR = [[10, 150], [0, 100], [0, 100], [1, 12]]
 
 # Text constants
 TITLE = "Virus Simulator"
+VIRUS_NAME = "Covid-21"
 MENU_TEXTS = ["Start", "Option", "Help", "Quit"]
 TIME_TEXTS = ["pause", "play", "fast"]
 SETTING_TEXTS = [
