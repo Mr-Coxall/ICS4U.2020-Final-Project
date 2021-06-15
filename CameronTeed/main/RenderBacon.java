@@ -112,7 +112,7 @@ public class RenderBacon extends HitBoxes {
     /** Initializes the size. */
     private double burnMult7 = 1;
     /** Initializes the size. */
-    private double burnMultiplier = 1.25;
+    private final double burnMultiplier = 1.25;
     /** Initializes the size. */
     private Spatula spatula = new Spatula();
     /** Initializes the size. */
@@ -175,7 +175,7 @@ public class RenderBacon extends HitBoxes {
             renderEgg8 = true;
             timer[array7] = System.currentTimeMillis();
           }
-        } 
+        }
     }
 
     /**
@@ -318,7 +318,7 @@ public class RenderBacon extends HitBoxes {
       */
       public void flipTime(final Graphics g, final int x, final int y) {
           bacon = false;
-          if (!spatula.getSpatula() && flipTime[0] && move1){
+          if (!spatula.getSpatula() && flipTime[0] && move1) {
               move.moveSprites(assets.getImage13(), x, y, g);
               if (move.getMove()) {
                   bacon = true;
@@ -334,7 +334,7 @@ public class RenderBacon extends HitBoxes {
                   move1 = true;
               }
           }
-          if (!spatula.getSpatula() && flipTime[1] && move2){
+          if (!spatula.getSpatula() && flipTime[1] && move2) {
               move.moveSprites(assets.getImage13(), x, y, g);
               if (move.getMove()) {
                   bacon = true;
@@ -350,7 +350,7 @@ public class RenderBacon extends HitBoxes {
                   move2 = true;
               }
           }
-          if (!spatula.getSpatula() && flipTime[2] && move3){
+          if (!spatula.getSpatula() && flipTime[2] && move3) {
               move.moveSprites(assets.getImage13(), x, y, g);
               if (move.getMove()) {
                   bacon = true;
@@ -366,7 +366,7 @@ public class RenderBacon extends HitBoxes {
                   move3 = true;
               }
           }
-          if (!spatula.getSpatula() && flipTime[array3] && move4){
+          if (!spatula.getSpatula() && flipTime[array3] && move4) {
               move.moveSprites(assets.getImage13(), x, y, g);
               if (move.getMove()) {
                   bacon = true;
@@ -383,7 +383,7 @@ public class RenderBacon extends HitBoxes {
                   move4 = true;
               }
           }
-          if (!spatula.getSpatula() && flipTime[array4] && move5){
+          if (!spatula.getSpatula() && flipTime[array4] && move5) {
               move.moveSprites(assets.getImage13(), x, y, g);
               if (move.getMove()) {
                   bacon = true;
@@ -400,7 +400,7 @@ public class RenderBacon extends HitBoxes {
                   move5 = true;
               }
           }
-          if (!spatula.getSpatula() && flipTime[array5] && move6){
+          if (!spatula.getSpatula() && flipTime[array5] && move6) {
               move.moveSprites(assets.getImage13(), x, y, g);
               if (move.getMove()) {
                   bacon = true;
@@ -417,7 +417,7 @@ public class RenderBacon extends HitBoxes {
                   move6 = true;
               }
           }
-          if (!spatula.getSpatula() && flipTime[array6] && move7){
+          if (!spatula.getSpatula() && flipTime[array6] && move7) {
               move.moveSprites(assets.getImage13(), x, y, g);
               if (move.getMove()) {
                   bacon = true;
@@ -434,7 +434,7 @@ public class RenderBacon extends HitBoxes {
                   move7 = true;
               }
           }
-          if (!spatula.getSpatula() && flipTime[array7] && move8){
+          if (!spatula.getSpatula() && flipTime[array7] && move8) {
               move.moveSprites(assets.getImage13(), x, y, g);
               if (move.getMove()) {
                   bacon = true;
@@ -456,7 +456,7 @@ public class RenderBacon extends HitBoxes {
       /**
        * Returns if the bacon is picked up.
        *
-       * @return
+       * @return bacon
        */
       public static boolean getBacon() {
           return bacon;

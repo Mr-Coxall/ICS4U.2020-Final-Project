@@ -79,8 +79,6 @@ public class Game extends Canvas implements Runnable {
   private AudioFilePlayer music = new AudioFilePlayer();
   /** Initializes the size. */
   private Help help = new Help();
-  
-  
 
   /** Constructor. */
   public Game() {
@@ -91,7 +89,8 @@ public class Game extends Canvas implements Runnable {
   /** initializing. */
   public void init() {
     assets.init();
-    music.load("C:\\Users\\super\\git\\ICS4U.2020-Final-Project\\CameronTeed\\Breakfast\\Music\\bell_small_001.wav");
+    music.load("C:\\Users\\super\\git\\ICS4U.2020-Final-Proj"
+            + "ect\\CameronTeed\\Breakfast\\Music\\bell_small_001.wav");
   }
 
   /** Starts the GUI. */

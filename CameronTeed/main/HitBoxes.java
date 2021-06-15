@@ -37,7 +37,8 @@ abstract class HitBoxes {
             if (clickCount == 0 && MyMouseListener.getState4()
                                 && Game.getState() == STATE.GAME) {
                 music.load2("C:\\Users\\super\\git\\ICS4U.2020-Final-Project\\"
-                    + "\\CameronTeed\\Breakfast\\Music\\Sizzling-sound-effect.wav");
+                                        + "\\CameronTeed\\Breakfast\\Musi"
+                                        + "c\\Sizzling-sound-effect.wav");
                 clickCount++;
             }
             return true;
@@ -81,7 +82,7 @@ abstract class HitBoxes {
     public boolean isClicked3(final double x, final double y, final int param1,
                         final int param2, final int param3, final int param4) {
         Rectangle eggBound = new Rectangle(param1, param2, param3, param4);
-        if (eggBound.contains(x, y) && MyMouseListener.getState4() ) {
+        if (eggBound.contains(x, y) && MyMouseListener.getState4()) {
             return true;
       }
        // System.out.println(x + "," + y);
@@ -106,7 +107,8 @@ abstract class HitBoxes {
             if (clickCount == 0 && MyMouseListener.getState4()
                     && Game.getState() == STATE.GAME) {
                 music.load2("C:\\Users\\super\\git\\ICS4U.2020-Final-Project\\"
-                        + "\\CameronTeed\\Breakfast\\Music\\Sizzling-sound-effect.wav");
+                                    + "\\CameronTeed\\Breakfast\\Music"
+                                    + "\\Sizzling-sound-effect.wav");
                 clickCount++;
             }
             return true;

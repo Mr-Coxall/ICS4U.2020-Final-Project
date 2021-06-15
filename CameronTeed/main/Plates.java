@@ -8,7 +8,6 @@ package com.breakfast.main;
  */
 
 public class Plates extends HitBoxes {
-    /** */
 
     /** */
     private final int param1 = 514;
@@ -31,12 +30,7 @@ public class Plates extends HitBoxes {
      * @return boolean
      */
     public boolean isHit(final int x, final int y) {
-        if (isClicked(x, y, param1, param2, param3, param4)) {
-
-            return true;
-        } else {
-            return false;
-        }
+        return (isClicked(x, y, param1, param2, param3, param4));
     }
 
     /**
@@ -47,12 +41,7 @@ public class Plates extends HitBoxes {
      * @return boolean
      */
     public boolean isHit2(final int x, final int y) {
-        if (isClicked(x, y, param5, param2, param3, param4)) {
- 
-            return true;
-        } else {
-            return false;
-        }
+        return (isClicked(x, y, param5, param2, param3, param4));
     }
 
     /**
@@ -63,11 +52,6 @@ public class Plates extends HitBoxes {
      * @return boolean
      */
     public boolean isHit3(final int x, final int y) {
-        if (isClicked(x, y, param6, param2, param3, param4)) {
-
-            return true;
-        } else {
-            return false;
-        }
+        return (isClicked(x, y, param6, param2, param3, param4));
     }
 }

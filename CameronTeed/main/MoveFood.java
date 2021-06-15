@@ -37,7 +37,6 @@ public class MoveFood {
         plate2 = false;
         plate3 = false;
         this.move = false;
-        
     }
 
     /**
@@ -48,16 +47,17 @@ public class MoveFood {
      * @param y
      * @param g
      */
-    void moveSprites(BufferedImage image, final int x, final int y, Graphics g) {
-        if (!spatula.getSpatula() && plates.isHit(x,y)) {
+    void moveSprites(BufferedImage image, final int x, final int y,
+                                                        Graphics g) {
+        if (!spatula.getSpatula() && plates.isHit(x ,y)) {
             plate3 = false;
             plate2 = false;
             plate1 = true;
-        } else if (!spatula.getSpatula() && plates.isHit2(x,y)) {
+        } else if (!spatula.getSpatula() && plates.isHit2(x, y)) {
             plate3 = false;
             plate2 = true;
             plate1 = false;
-        } else if (!spatula.getSpatula() && plates.isHit3(x,y)) {
+        } else if (!spatula.getSpatula() && plates.isHit3(x, y)) {
             plate3 = true;
             plate2 = false;
             plate1 = false;
@@ -66,9 +66,11 @@ public class MoveFood {
             plate2 = false;
             plate1 = false;
         }
-        if (!spatula.getSpatula() && plates.isHit(x,y) || plates.isHit2(x,y) || plates.isHit3(x,y)) {
+        if (!spatula.getSpatula() && plates.isHit(x, y) ||
+                            plates.isHit2(x, y) || plates.isHit3(x, y)) {
             this.move = true;
-        } else if (!spatula.getSpatula() && !plates.isHit(x,y) || !plates.isHit2(x,y) || !plates.isHit3(x,y)) {
+        } else if (!spatula.getSpatula() && !plates.isHit(x, y)
+                        || !plates.isHit2(x, y) || !plates.isHit3(x, y)) {
             g.drawImage(image, x - offsetCursorx, y - offsetCursory, null);
             this.move = false;
         }

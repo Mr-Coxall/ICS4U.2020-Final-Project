@@ -299,7 +299,7 @@ public class RenderPancakes extends HitBoxes {
      */
      public void flipTime(final Graphics g, final int x, final int y) {
          pancakes = false;
-         if (!spatula.getSpatula() && flipTime[0] && move1){
+         if (!spatula.getSpatula() && flipTime[0] && move1) {
              move.moveSprites(assets.getImage12(), x, y, g);
              if (move.getMove()) {
                  pancakes = true;
@@ -315,7 +315,7 @@ public class RenderPancakes extends HitBoxes {
                  move1 = true;
              }
          }
-         if (!spatula.getSpatula() && flipTime[1] && move2){
+         if (!spatula.getSpatula() && flipTime[1] && move2) {
              move.moveSprites(assets.getImage12(), x, y, g);
              if (move.getMove()) {
                  pancakes = true;
@@ -331,7 +331,7 @@ public class RenderPancakes extends HitBoxes {
                  move2 = true;
              }
          }
-         if (!spatula.getSpatula() && flipTime[2] && move3){
+         if (!spatula.getSpatula() && flipTime[2] && move3) {
              move.moveSprites(assets.getImage12(), x, y, g);
              if (move.getMove()) {
                  pancakes = true;
@@ -347,7 +347,7 @@ public class RenderPancakes extends HitBoxes {
                  move3 = true;
              }
          }
-         if (!spatula.getSpatula() && flipTime[array3] && move4){
+         if (!spatula.getSpatula() && flipTime[array3] && move4) {
              move.moveSprites(assets.getImage12(), x, y, g);
              if (move.getMove()) {
                  pancakes = true;
@@ -364,7 +364,7 @@ public class RenderPancakes extends HitBoxes {
                  move4 = true;
              }
          }
-         if (!spatula.getSpatula() && flipTime[array4] && move5){
+         if (!spatula.getSpatula() && flipTime[array4] && move5) {
              move.moveSprites(assets.getImage12(), x, y, g);
              if (move.getMove()) {
                  pancakes = true;
@@ -381,7 +381,7 @@ public class RenderPancakes extends HitBoxes {
                  move5 = true;
              }
          }
-         if (!spatula.getSpatula() && flipTime[array5] && move6){
+         if (!spatula.getSpatula() && flipTime[array5] && move6) {
              move.moveSprites(assets.getImage12(), x, y, g);
              if (move.getMove()) {
                  pancakes = true;
@@ -398,7 +398,7 @@ public class RenderPancakes extends HitBoxes {
                  move6 = true;
              }
          }
-         if (!spatula.getSpatula() && flipTime[array6] && move7){
+         if (!spatula.getSpatula() && flipTime[array6] && move7) {
              move.moveSprites(assets.getImage12(), x, y, g);
              if (move.getMove()) {
                  pancakes = true;
@@ -415,7 +415,7 @@ public class RenderPancakes extends HitBoxes {
                  move7 = true;
              }
          }
-         if (!spatula.getSpatula() && flipTime[array7] && move8){
+         if (!spatula.getSpatula() && flipTime[array7] && move8) {
              move.moveSprites(assets.getImage12(), x, y, g);
              if (move.getMove()) {
                  pancakes = true;

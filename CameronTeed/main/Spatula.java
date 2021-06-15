@@ -13,6 +13,13 @@ public class Spatula {
     /** Initializes the size. */
     private boolean spatula = false;
 
+    /**
+     * Gets what state the spatla is in.
+     *
+     * @param g2d
+     * @param x
+     * @param y
+     */
     public void getSpatula(final Graphics g2d, final int x, final int y) {
         if (!MyMouseListener.isKeyPressed2()
                 && !MyMouseListener.isKeyPressed1()

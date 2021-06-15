@@ -32,7 +32,7 @@ public class EndScreen {
      */
     public void render(final Graphics g) {
         background.loadBackground4(g);
-        Font myFont = new Font ("Plain", 1, font);
+        Font myFont = new Font("Plain", 1, font);
         g.setFont(myFont);
         g.drawString("" + RenderPlates.getScore(), x, y);
     }

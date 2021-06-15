@@ -19,17 +19,16 @@ public class AudioFilePlayer {
    *
    * @param s
    */
-  public void load(String s) {
-        try {           
+  public void load(final String s) {
+        try {
            File musicPath = new File(s);
-           
-           AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+
+           AudioInputStream audioInput = AudioSystem
+                               .getAudioInputStream(musicPath);
            Clip clip = AudioSystem.getClip();
            clip.open(audioInput);
            clip.start();
-           // clip.loop(Clip.LOOP_CONTINUOUSLY);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -39,17 +38,17 @@ public class AudioFilePlayer {
    *
    * @param s
    */
-  public void load2(String s) {
+  public void load2(final String s) {
       try {           
          File musicPath = new File(s);
-         
-         AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+
+         AudioInputStream audioInput = AudioSystem
+                             .getAudioInputStream(musicPath);
          Clip clip = AudioSystem.getClip();
          clip.open(audioInput);
          clip.start();
          clip.loop(Clip.LOOP_CONTINUOUSLY);
-      }
-      catch(Exception e) {
+      } catch (Exception e) {
           e.printStackTrace();
       }
   }
