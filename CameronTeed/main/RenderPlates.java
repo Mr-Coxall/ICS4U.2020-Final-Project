@@ -13,11 +13,13 @@ import java.awt.Graphics;
 public class RenderPlates {
 
     /** Initializes the y coord. */
-    private final int[] panCounter = new int[3];
+    private final int array3 = 3;
     /** Initializes the y coord. */
-    private final int[] baconCounter = new int[3];
+    private final int[] panCounter = new int[array3];
     /** Initializes the y coord. */
-    private final int[] eggCounter = new int[3];
+    private final int[] baconCounter = new int[array3];
+    /** Initializes the y coord. */
+    private final int[] eggCounter = new int[array3];
     /** Initializes the y coord. */
     private static int score;
     /** Initializes the size. */
