@@ -1,6 +1,6 @@
 package com.breakfast.main;
 /*
- * This class renders the menu.
+ * This class renders the help menu.
  *
  * @author Cameron Teed
  * @version 1.0
@@ -27,7 +27,7 @@ public class Help extends HitBoxes {
     private Backgrounds background = new Backgrounds();
 
     /**
-     * Renders the main menu.
+     * Renders the help menu.
      *
      * @param g
      * @param x
@@ -36,7 +36,6 @@ public class Help extends HitBoxes {
     public void render(final Graphics g, final int x, final int y) {
         background.loadBackground5(g);
         if (isClicked(x, y, param1, param2, param3, param4)) {
-            System.out.println("Click");
             g.clearRect(0, 0, width, height);
             Game.setState(Game.STATE.MENU);
         }

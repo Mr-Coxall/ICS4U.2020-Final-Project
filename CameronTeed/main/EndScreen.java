@@ -1,7 +1,7 @@
 package com.breakfast.main;
 import java.awt.Font;
 /*
- * This renders the splash screen.
+ * This renders the end screen.
  *
  * @author Cameron Teed
  * @version 1.0
@@ -12,10 +12,6 @@ import java.awt.Graphics;
 /** */
 public class EndScreen {
 
-    /** Initializes width. */
-    private final int width = 740;
-    /** Initializes height. */
-    private final int height = 550;
     /** Initializes height. */
     private final int x = 430;
     /** Initializes height. */
@@ -26,7 +22,7 @@ public class EndScreen {
     private Backgrounds background = new Backgrounds();
 
     /**
-     * Renders the splash screen.
+     * Renders the end screen.
      *
      * @param g
      */
@@ -35,15 +31,5 @@ public class EndScreen {
         Font myFont = new Font("Plain", 1, font);
         g.setFont(myFont);
         g.drawString("" + RenderPlates.getScore(), x, y);
-    }
-
-    /**
-     * Clears the splash screen and sets the game state to the menu.
-     *
-     * @param g
-     */
-    public void clearSplash(final Graphics g) {
-        g.clearRect(0, 0, width, height);
-        Game.setState(Game.STATE.MENU);
     }
 }

@@ -1,5 +1,11 @@
 package com.breakfast.main;
-
+/*
+ * This class determines if the spatula is rendered.
+ *
+ * @author  Cameron Teed
+ * @version 1.0
+ * @since   2021-05-26
+ */
 import java.awt.Graphics;
 
 public class Spatula {
