@@ -39,7 +39,7 @@ public class AudioFilePlayer {
    * @param s
    */
   public void load2(final String s) {
-      try {           
+      try {
          File musicPath = new File(s);
 
          AudioInputStream audioInput = AudioSystem

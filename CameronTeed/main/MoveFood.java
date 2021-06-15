@@ -47,9 +47,9 @@ public class MoveFood {
      * @param y
      * @param g
      */
-    void moveSprites(BufferedImage image, final int x, final int y,
-                                                        Graphics g) {
-        if (!spatula.getSpatula() && plates.isHit(x ,y)) {
+    void moveSprites(final BufferedImage image, final int x, final int y,
+                                                        final Graphics g) {
+        if (!spatula.getSpatula() && plates.isHit(x, y)) {
             plate3 = false;
             plate2 = false;
             plate1 = true;
@@ -66,8 +66,8 @@ public class MoveFood {
             plate2 = false;
             plate1 = false;
         }
-        if (!spatula.getSpatula() && plates.isHit(x, y) ||
-                            plates.isHit2(x, y) || plates.isHit3(x, y)) {
+        if (!spatula.getSpatula() && plates.isHit(x, y)
+                    || plates.isHit2(x, y) || plates.isHit3(x, y)) {
             this.move = true;
         } else if (!spatula.getSpatula() && !plates.isHit(x, y)
                         || !plates.isHit2(x, y) || !plates.isHit3(x, y)) {

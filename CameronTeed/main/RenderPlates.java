@@ -13,11 +13,11 @@ import java.awt.Graphics;
 public class RenderPlates {
 
     /** Initializes the y coord. */
-    private int[] panCounter = new int[3];
+    private final int[] panCounter = new int[3];
     /** Initializes the y coord. */
-    private int[] baconCounter = new int[3];
+    private final int[] baconCounter = new int[3];
     /** Initializes the y coord. */
-    private int[] eggCounter = new int[3];
+    private final int[] eggCounter = new int[3];
     /** Initializes the y coord. */
     private static int score;
     /** Initializes the size. */
@@ -119,7 +119,7 @@ public class RenderPlates {
      * @param g2d
      */
     public void renderPlates(final Graphics g2d) {
-        Font myFont = new Font ("Plain", 1, font);
+        Font myFont = new Font("Plain", 1, font);
         g2d.setFont(myFont);
         g2d.drawString("Pancakes: " + panCounter[0], x, y);
         g2d.drawString("Eggs: " + eggCounter[0], x, y2);
