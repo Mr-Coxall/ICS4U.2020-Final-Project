@@ -26,6 +26,7 @@ class Button:
         self.__height = height
         self.__rect = pygame.Rect(x, y, width, height)
         self.__colour = colour
+        self.__textColour = textColour
         self.__font = pygame.font.SysFont(constants.FONT, height)
         self.__text = self.__font.render(text, True, textColour)
 
@@ -54,8 +55,17 @@ class Button:
     def getText(self):
         return self.__text
 
+    def getTextColour(self):
+        return self.__textColour
+
     def getColour(self):
         return self.__colour
+
+    def setText(self, text):
+        self.__text = self.__font.render(text, True, self.__textColour)
+
+    def setTextColour(self, textColour):
+        self.__textColour = textColour
 
     def setColour(self, colour):
         self.__colour = colour
@@ -86,24 +96,26 @@ class SelectionBox(Button):
         ]
 
     def draw(self, screen):
+        super().draw(screen)
+        strText = ""
         for idx in range(len(self.__optionList)):
-            rect = self.__optionRects[idx].copy()
+            rect = self.__optionRects[idx]
             if self.__menuActive:
-                # rect.move(self.getX(), self.getY())
-                screens = screen.copy()
-                text = self.getFont().render(
-                    self.__optionList[idx], True, self.__textColour[idx]
-                )
-                pygame.draw.rect(screens, self.getColour(), rect)
-                screens.blit(text, text.get_rect(center=rect.center))
-            else:
-                super().draw(screen)
-                # rect.move(self.getX() + 1500, self.getY())
+                strText = self.__optionList[idx]
+                pygame.draw.rect(screen, self.getColour(), rect)
+            text = self.getFont().render(strText, True, self.__textColour[idx])
+            screen.blit(text, text.get_rect(center=rect.center))
 
-    def update(self):
-        mousePosition = pygame.mouse.get_pos()
+    def update(self, mousePosition):
         if self.getRect().collidepoint(mousePosition):
             self.__menuActive = not self.__menuActive
+        for idx in range(len(self.__optionList)):
+            rect = self.__optionRects[idx]
+            if rect.collidepoint(mousePosition):
+                self.setTextColour(self.__textColour[idx])
+                self.setText(self.__optionList[idx])
+                self.__menuActive = not self.__menuActive
+        return self.getTextColour()
 
     def getOptionList(self):
         return self.__optionList
