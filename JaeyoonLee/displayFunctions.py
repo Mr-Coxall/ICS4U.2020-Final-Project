@@ -283,7 +283,7 @@ def checkVirusName(event, virus_name, buttonSound):
         virus_name = virus_name[:-1]
     elif len(virus_name) < 15:
         virus_name += event.unicode
-    elif not (event.key == pygame.K_RETURN):
+    elif event.key != pygame.K_RETURN:
         buttonSound.play()
     return virus_name
 
