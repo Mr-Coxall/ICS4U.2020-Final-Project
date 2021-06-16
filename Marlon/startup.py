@@ -30,7 +30,7 @@ class splashScreen(arcade.Sprite):
             self.texture = arcade.load_texture(f"{main_path}{sprite}.png")
             self.splash_textures.append(self.texture)
 
-    def update_animation(self, delta_time: float = 1/60):
+    def update_animation(self, delta_time: float = 1 / 60):
         # updates animation
 
         self.cur_texture += 1
@@ -38,7 +38,6 @@ class splashScreen(arcade.Sprite):
             self.cur_texture = 0
         frame = self.cur_texture // 5
         self.texture = self.splash_textures[frame]
-
 
 
 class startView(arcade.View):
@@ -56,7 +55,6 @@ class startView(arcade.View):
         self.splash.center_x = 600
         self.splash.center_y = 200
         self.splash_list.append(self.splash)
-
 
     def on_show(self):
         # set background
