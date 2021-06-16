@@ -1,34 +1,72 @@
-#!/usr/bin/env python3
-
-# Created by Sean McLeod
-# Created on June 2021
-# This is the prison escape game
-
 import sys
 
+import constants
 import pygame
+from ButtonClass import ButtonClass
+from CheckPrisonerEvents import CheckPrisonerEvents
+from Sprites import Sprites
 
 
-def first_game_scene(screen):
+def first_game_scene():
+    prisoner_x = 700
+    prisoner_y = 450
+    clock = pygame.time.Clock()
+
     # create background
-    background = pygame.image.load("Game Scene 1.jpg")
+    background = pygame.image.load("Backgrounds/Game Scene 1.png")
+
+    # create sprites
+    prisoner = pygame.image.load("Sprites/prisoners/prisoner.png")
+
+    # objects
+    my_prisoner = Sprites(
+        prisoner,
+        prisoner_x,
+        prisoner_y,
+        constants.PRISONER_X_SPEED,
+        constants.PRISONER_Y_SPEED,
+        screen,
+    )
+    my_check_event = CheckPrisonerEvents()
 
     running = True
     while running:
         # upload image
         screen.blit(background, (0, 0))
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-                sys.exit()
+        # get events
+        (
+            key_is_down,
+            key_left,
+            key_right,
+            key_up,
+            key_down,
+            key_is_up,
+        ) = my_check_event.check_events()
+
+        my_prisoner.prisoner_move = (
+            key_is_down,
+            key_left,
+            key_right,
+            key_up,
+            key_down,
+            key_is_up,
+        )
+
+        # choose what image the prisoner should be(there are 10 images for animation)
+        # my_prisoner.prisoner_animation()
+        # upload prisoner image
+        my_prisoner.sprite_upload()
+
         # refresh the screen every frame
         pygame.display.update()
+        # slow down to see the animations move
+        clock.tick(constants.CLOCK_TICK)
 
 
-def splash_screen(screen):
+def splash_screen():
     # create background
-    background = pygame.image.load("Splash.jpg")
+    background = pygame.image.load("Backgrounds/Splash.jpg")
 
     # upload image
     screen.blit(background, (0, 0))
@@ -37,48 +75,44 @@ def splash_screen(screen):
     pygame.display.update()
 
     # wait 1000ms
-    pygame.time.wait(1000)
+    pygame.time.wait(constants.WAIT)
 
 
-def start_screen(screen):
-    # constants
-    rect_x_position = 100
-    rect_y_position = 150
-    text_size = 100
+def start_screen():
+    button_x = 100
+    button_y = 100
+    button_width = 320
+    button_height = 130
+    text_size = 90
+    outline = 5
 
     # create background
-    background = pygame.image.load("StartScreen.jpg")
+    background = pygame.image.load("Backgrounds/StartScreen.jpg")
 
-    # initialize color
-    black = (0, 0, 0)
-    white = (255, 255, 255)
-    # initialize font
-    font = pygame.font.Font(None, text_size)
-    # this is the text
-    text = font.render("START", False, black)
+    # create object
+    my_button = ButtonClass(
+        constants.WHITE, button_x, button_y, button_width, button_height, "START"
+    )
 
     # Game loop
     running = True
     while running:
         # upload image
         screen.blit(background, (0, 0))
-        # get mouse position
-        mouse_position = pygame.mouse.get_pos()
 
-        # create button(surface, color, position & dimensions)
-        button = pygame.draw.rect(
-            screen,
-            white,
-            [rect_x_position, rect_y_position, text_size * 2.5, text_size],
-        )
-
-        # upload text
-        screen.blit(text, (rect_x_position + 20, rect_y_position + 20))
+        # create button
+        my_button.draw_button(screen, text_size, outline)
 
         for event in pygame.event.get():
+            # get mouse position
+            mouse_position = pygame.mouse.get_pos()
+            if event.type == pygame.MOUSEMOTION:
+                if my_button.is_over(mouse_position):
+                    my_button.color = constants.BLACK
+                else:
+                    my_button.color = constants.WHITE
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # if mouse presses button, move to game scene 1
-                if button.collidepoint(mouse_position):
+                if my_button.is_over(mouse_position):
                     running = False
             if event.type == pygame.QUIT:
                 running = False
@@ -87,17 +121,13 @@ def start_screen(screen):
         pygame.display.update()
 
 
-def main():
+if __name__ == "__main__":
     # initialize pygame
     pygame.init()
 
     # create the screen
-    screen = pygame.display.set_mode((800, 600))
+    screen = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
 
-    splash_screen(screen)
-    start_screen(screen)
-    first_game_scene(screen)
-
-
-if __name__ == "__main__":
-    main()
+    splash_screen()
+    start_screen()
+    first_game_scene()
