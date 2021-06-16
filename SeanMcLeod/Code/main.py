@@ -43,7 +43,7 @@ def first_game_scene():
             key_down,
             key_is_up,
         ) = my_check_event.check_events()
-
+        # move prisoner
         my_prisoner.prisoner_move = (
             key_is_down,
             key_left,
