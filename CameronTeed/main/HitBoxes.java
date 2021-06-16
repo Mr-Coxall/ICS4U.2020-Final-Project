@@ -34,7 +34,7 @@ abstract class HitBoxes {
         Rectangle eggBound = new Rectangle(param1, param2, param3, param4);
         if (eggBound.contains(x, y) && MyMouseListener.getState2()) {
             // System.out.println("click");
-            if (clickCount == 0 && MyMouseListener.getState4()
+            if (clickCount == 0 && MyMouseListener.getState2()
                                 && Game.getState() == STATE.GAME) {
                 music.load2("C:\\Users\\super\\git\\ICS4U.2020-Final-Project\\"
                                         + "\\CameronTeed\\Breakfast\\Musi"

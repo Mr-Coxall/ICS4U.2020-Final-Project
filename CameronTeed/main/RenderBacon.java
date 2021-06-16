@@ -1,6 +1,6 @@
 package com.breakfast.main;
 /*
- * This class renders the eggs.
+ * This class renders the bacon.
  *
  * @author  Cameron Teed
  * @version 1.0
@@ -186,6 +186,11 @@ public class RenderBacon extends HitBoxes {
      * @param y
      */
      public void putBacon(final Graphics g, final int x, final int y) {
+         /* Checks if the user has the tongs, and if it clicked one of the
+          * designated spots and loads the sprite, then determines if its time
+          * to flip it and loads the new sprite. Then it you can flip it
+          * and it can burn.
+          */
          if (renderEgg && System.currentTimeMillis() - timer[0] >= burnTime
                                                                  * burnMult) {
              burnt[0] = true;

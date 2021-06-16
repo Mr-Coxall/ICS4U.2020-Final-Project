@@ -1,6 +1,6 @@
 package com.breakfast.main;
 /*
- * This class renders the eggs.
+ * This class renders the plates.
  *
  * @author  Cameron Teed
  * @version 1.0

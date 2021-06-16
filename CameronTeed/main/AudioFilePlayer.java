@@ -1,6 +1,6 @@
 package com.breakfast.main;
 /*
- * This class runs the game loop and renders the sprites.
+ * This class loads the audio files and plays them.
  *
  * @author  Cameron Teed
  * @version 1.0
