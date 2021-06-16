@@ -93,14 +93,18 @@ def genSelectoionBox(options):
     ]
 
 
-def genSliders(variables):
+def calculateDefault(variable, idx):
     sliderLength = constants.SLIDER_LENGTH
     varRange = constants.MIN_MAX_VAR
+    return variable * sliderLength / (varRange[idx][1] - varRange[idx][0])
+
+
+def genSliders(variables):
     return [
         Slider(
             (740, (2 + idx) * 100 + 40),
-            sliderLength,
-            variables[idx] * sliderLength / (varRange[idx][1] - varRange[idx][0]),
+            constants.SLIDER_LENGTH,
+            calculateDefault(variables[idx], idx),
         )
         for idx in range(len(variables))
     ]
@@ -111,7 +115,7 @@ def drawSliders(screen, variables, varSettings, checkBox):
         varSlider.draw(screen)
         if checkBox.getChecked():
             variables[idx] = constants.DEFAULT_VAR[idx]
-            varSlider.setDefault()
+            varSlider.setDefault(calculateDefault(variables[idx], idx))
     return variables
 
 
@@ -141,13 +145,22 @@ def displayVariables(screen, variables):
         displayText(screen, str(variable) + unit, 40, (1250, (2 + idx) * 100 + 30))
 
 
+def sliderCollide(slider, pos):
+    pos_x = list(pos)[0]
+    pos_y = list(pos)[1]
+    return (
+        0 < pos_x - slider.getX() < slider.getLength()
+        and 0 < pos_y - slider.getY() + 10 < 24
+    )
+
+
 def checkSlider(defaultModelCheckBox, mousePosition, varSettings, variables):
     sliderLength = constants.SLIDER_LENGTH
     varRange = constants.MIN_MAX_VAR
     if defaultModelCheckBox.getBoxRect().collidepoint(mousePosition):
         defaultModelCheckBox.update()
     for idx, varSlider in enumerate(varSettings):
-        if varSlider.getRect().collidepoint(mousePosition):
+        if sliderCollide(varSlider, mousePosition):
             variables[idx] = (
                 varRange[idx][0]
                 + varSlider.updatePoint(mousePosition)
@@ -271,11 +284,12 @@ def genInputBox():
         240,
         40,
         constants.VIRUS_NAME,
-        colour=constants.GREY,
-        textColour=constants.WHITE,
+        colour=constants.DARK_GREY,
+        # textColour=constants.WHITE,
     )
-    inputBack = Button(520, 360, 360, 180, "", constants.BACKGROUND_BLACK)
-    return inputBox, inputBack
+    inputBack = Button(520, 360, 360, 180, "", colour = constants.BACKGROUND_BLACK)
+    startButton = Button(580, 465, 240, 40, "Start")
+    return inputBox, startButton, inputBack
 
 
 def checkVirusName(event, virus_name, buttonSound):
@@ -283,18 +297,23 @@ def checkVirusName(event, virus_name, buttonSound):
         virus_name = virus_name[:-1]
     elif len(virus_name) < 15:
         virus_name += event.unicode
-    elif not (event.key == pygame.K_RETURN):
-        buttonSound.play()
+    buttonSound.play()
     return virus_name
 
 
-def drawInputBox(screen, virus_name, inputBox, inputBack):
-    inputBack.draw(screen)
+def drawInputBox(screen, virus_name, inputBoxes, active):
+    # inputBoxes = [inputBox, startButton, inputBack]
+    inputBoxes[2].draw(screen)
     displayText(
-        screen, "Virus Name:", 36, (700, 460), colour=constants.RED, centre=True
+        screen, "Virus Name:", 36, (700, 380), colour=constants.RED, centre=True
     )
-    inputBox.setText(virus_name)
-    inputBox.draw(screen)
+    inputBoxes[0].setText(virus_name)
+    if active:
+        inputBoxes[0].setColour(constants.GREY)
+    else:
+        inputBoxes[0].setColour(constants.DARK_GREY)
+    inputBoxes[0].draw(screen)
+    inputBoxes[1].draw(screen)
 
 
 def drawBackground(screen):
