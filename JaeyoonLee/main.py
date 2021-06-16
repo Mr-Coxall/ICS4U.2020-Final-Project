@@ -64,7 +64,9 @@ def menuScreen():
                     if event.key == pygame.K_RETURN:
                         clicked, start = True, True
                     else:
-                        virus_name = display.checkVirusName(event, virus_name, buttonSound)
+                        virus_name = display.checkVirusName(
+                            event, virus_name, buttonSound
+                        )
 
         # button active
         if clicked:

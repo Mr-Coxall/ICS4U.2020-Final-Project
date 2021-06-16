@@ -287,7 +287,7 @@ def genInputBox():
         colour=constants.DARK_GREY,
         # textColour=constants.WHITE,
     )
-    inputBack = Button(520, 360, 360, 180, "", colour = constants.BACKGROUND_BLACK)
+    inputBack = Button(520, 360, 360, 180, "", colour=constants.BACKGROUND_BLACK)
     startButton = Button(580, 465, 240, 40, "Start")
     return inputBox, startButton, inputBack
 
