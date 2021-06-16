@@ -128,16 +128,19 @@ final class Assets {
     spoon = ss.grabImage(col, row2, imageW, imageH);
     bacon = ss.grabImage(col, row3, imageBacon, imageBacon);
 
+    // This loads all the eggs
     egg = bs.grabImage(col, row1, imageW, imageEgg);
     egg1 = bs.grabImage(1, 1, imageBacon, imageBacon);
     egg2 = bs.grabImage(1, 2, imageBacon, imageBacon);
     egg3 = bs.grabImage(1, row3, imageBacon, imageBacon);
     burnt = bs.grabImage(row3, row3, imageBacon, imageBacon);
 
+    // This loads all the pancakes
     pancake2 = ss.grabImage(1, 1, imageBacon, imageBacon);
     pancake = ss.grabImage(1, row1, imageBacon, imageBacon);
     pancake3 = ss.grabImage(1, row3, imageBacon, imageBacon);
 
+    // This loads all the bacon
     bacon1 = fs.grabImage(1, 1, imageW, imageBacon2);
     bacon2 = fs.grabImage(1, row1, imageW, imageBacon2);
     bacon3 = fs.grabImage(1, row3, imageW, imageBacon2);

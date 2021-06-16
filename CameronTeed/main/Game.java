@@ -51,6 +51,8 @@ public class Game extends Canvas implements Runnable {
       /** Initializes splash screen. */
       SPLASH,
       /** Initializes menu. */
+      HELP,
+      /** Initializes menu. */
       MENU,
       /** Initializes the game. */
       GAME,
@@ -67,6 +69,16 @@ public class Game extends Canvas implements Runnable {
   private long timer2;
   /** Initializes the timer the splash screen. */
   private final int splashTime = 1800;
+  /** Initializes the spatula. */
+  private final Spatula spatula = new Spatula();
+  /** Initializes the plates. */
+  private final RenderPlates render = new RenderPlates();
+  /** Initializes the end screen. */
+  private EndScreen end = new EndScreen();
+  /** Initializes the audio. */
+  private AudioFilePlayer music = new AudioFilePlayer();
+  /** Initializes the help screen. */
+  private Help help = new Help();
 
   /** Constructor. */
   public Game() {
@@ -77,6 +89,8 @@ public class Game extends Canvas implements Runnable {
   /** initializing. */
   public void init() {
     assets.init();
+    music.load("C:\\Users\\super\\git\\ICS4U.2020-Final-Proj"
+            + "ect\\CameronTeed\\Breakfast\\Music\\bell_small_001.wav");
   }
 
   /** Starts the GUI. */
@@ -134,7 +148,8 @@ public class Game extends Canvas implements Runnable {
 
   }
 
-  /** This method pains some graphics.
+  /**
+   * This method pains some graphics.
    *
    * @param g
    */
@@ -145,13 +160,18 @@ public class Game extends Canvas implements Runnable {
     Point b = a.getLocation();
     int y = (int) b.getY();
     int x = (int) b.getX();
+    System.out.println(x + ", " + y);
 
+    // Renders all the sprites.
+    render.renderPlates(g2d);
+    render.createPlates();
     renderEggs.eggLogic(x, y, g2d);
     renderEggs.flipTime(g2d, x, y);
-    renderBacon.flipTime(g2d, x, y);
     renderPancake.pancakeLogic(x, y, g2d);
     renderPancake.flipTime(g2d, x, y);
+    renderBacon.flipTime(g2d, x, y);
     renderBacon.baconLogic(x, y, g2d);
+    spatula.getSpatula(g2d, x, y);
   }
 
   /** This method renders the graphics. */
@@ -168,18 +188,31 @@ public class Game extends Canvas implements Runnable {
     int y = (int) b.getY();
     int x = (int) b.getX();
 
-    if (getState() == STATE.GAME) {
+    // Checks if the game state is equal to the end menu
+    if (getState() == STATE.END) {
+        end.render(g);
+     // Checks if the game state is equal to the game
+    } else if (getState() == STATE.GAME) {
         // Renders the background
         scenes.loadBackground(g);
         // Renders the cursors
         renderEggs.putEgg(g, x, y);
         renderPancake.putPancakes(g, x, y);
         renderBacon.putBacon(g, x, y);
+        renderBacon.getBurnt();
+        renderEggs.getBurnt();
+        renderPancake.getBurnt();
         rePaint(g);
+        // Checks if the game state is equal to the help screen
+    } else if (getState() == STATE.HELP) {
+        help.render(g, x, y);
+     // Checks if the game state is equal to the menu
     } else if (getState() == STATE.MENU) {
         menu.render(g, x, y);
+     // Checks if the game state is equal to the splash
     } else if (getState() == STATE.SPLASH) {
         splash.render(g);
+        // Loads the splash for a certain amount of time.
         if ((System.currentTimeMillis() - timer2) >= splashTime) {
             splash.clearSplash(g);
         }
