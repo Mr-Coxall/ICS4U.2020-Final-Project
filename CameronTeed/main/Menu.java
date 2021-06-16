@@ -38,7 +38,6 @@ public class Menu extends HitBoxes {
     public void render(final Graphics g, final int x, final int y) {
         background.loadBackground2(g);
         if (isClicked(x, y, param1, param2, param3, param4)) {
-            g.clearRect(0, 0, width, height);
             Game.setState(Game.STATE.GAME);
         } else if (isClicked(x, y, param1, param5, param3, param4)) {
             g.clearRect(0, 0, width, height);

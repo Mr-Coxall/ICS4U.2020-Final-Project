@@ -1,6 +1,6 @@
 package com.breakfast.main;
 /*
- * This class renders the eggs.
+ * This class moves the food.
  *
  * @author  Cameron Teed
  * @version 1.0
@@ -49,6 +49,7 @@ public class MoveFood {
      */
     void moveSprites(final BufferedImage image, final int x, final int y,
                                                         final Graphics g) {
+        // Checks if the plate is hit and the spatula is out.
         if (!spatula.getSpatula() && plates.isHit(x, y)) {
             plate3 = false;
             plate2 = false;

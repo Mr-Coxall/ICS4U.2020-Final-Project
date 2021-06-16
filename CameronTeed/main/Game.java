@@ -69,15 +69,15 @@ public class Game extends Canvas implements Runnable {
   private long timer2;
   /** Initializes the timer the splash screen. */
   private final int splashTime = 1800;
-  /** Initializes the timer. */
+  /** Initializes the spatula. */
   private final Spatula spatula = new Spatula();
-  /** Initializes the timer. */
+  /** Initializes the plates. */
   private final RenderPlates render = new RenderPlates();
-  /** Initializes the splash screen. */
+  /** Initializes the end screen. */
   private EndScreen end = new EndScreen();
-  /** Initializes the size. */
+  /** Initializes the audio. */
   private AudioFilePlayer music = new AudioFilePlayer();
-  /** Initializes the size. */
+  /** Initializes the help screen. */
   private Help help = new Help();
 
   /** Constructor. */
@@ -148,7 +148,8 @@ public class Game extends Canvas implements Runnable {
 
   }
 
-  /** This method pains some graphics.
+  /**
+   * This method pains some graphics.
    *
    * @param g
    */
@@ -161,6 +162,7 @@ public class Game extends Canvas implements Runnable {
     int x = (int) b.getX();
     System.out.println(x + ", " + y);
 
+    // Renders all the sprites.
     render.renderPlates(g2d);
     render.createPlates();
     renderEggs.eggLogic(x, y, g2d);
@@ -186,8 +188,10 @@ public class Game extends Canvas implements Runnable {
     int y = (int) b.getY();
     int x = (int) b.getX();
 
+    // Checks if the game state is equal to the end menu
     if (getState() == STATE.END) {
         end.render(g);
+     // Checks if the game state is equal to the game
     } else if (getState() == STATE.GAME) {
         // Renders the background
         scenes.loadBackground(g);
@@ -199,12 +203,16 @@ public class Game extends Canvas implements Runnable {
         renderEggs.getBurnt();
         renderPancake.getBurnt();
         rePaint(g);
+        // Checks if the game state is equal to the help screen
     } else if (getState() == STATE.HELP) {
         help.render(g, x, y);
+     // Checks if the game state is equal to the menu
     } else if (getState() == STATE.MENU) {
         menu.render(g, x, y);
+     // Checks if the game state is equal to the splash
     } else if (getState() == STATE.SPLASH) {
         splash.render(g);
+        // Loads the splash for a certain amount of time.
         if ((System.currentTimeMillis() - timer2) >= splashTime) {
             splash.clearSplash(g);
         }
