@@ -20,8 +20,10 @@ public class RenderPlates {
     private final int[] baconCounter = new int[array3];
     /** Initializes the y coord. */
     private final int[] eggCounter = new int[array3];
+    /** Initializes the size. */
+    private final static int scoreThing = -300;
     /** Initializes the y coord. */
-    private static int score = -300;
+    private static int score = scoreThing;
     /** Initializes the size. */
     private AudioFilePlayer music = new AudioFilePlayer();
     /** Initializes the size. */
