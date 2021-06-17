@@ -21,19 +21,30 @@ WIRE_IMAGE = "Sprites/barbed-wire.png"
 CASTLE_DOOR_IMAGE = "Doors/castledoors.png"
 CHEST_IMAGE = "Sprites/chest-closed.png"
 KEY_IMAGE = "Sprites/goldenkey.png"
+SHADOW_IMAGE = "Sprites/Shadows/shadow(14).png"
+SHIP_IMAGE = "Sprites/ship.png"
 
 # speed
 PRISONER_X_SPEED = 20
 PRISONER_Y_SPEED = 20
 GOLEM_SPEED = (20, 0)
+SHADOW_X_SPEED = 0
+SHADOW_Y_SPEED = -2
+SHIP_X_SPEED = 20
+SHIP_Y_SPEED = 0
 
 # size
 DOUBLE_SIZE = 2
+
+# distance
+SHADOW_DISTANCE = 80
 
 # angle
 RIGHT_ANGLE = 90
 
 # position
+SHADOW_X = 0
+SHADOW_Y = SCREEN_HEIGHT
 GOLEM_ONE_X = 100
 GOLEM_ONE_Y = 100
 GOLEM_TWO_X = 800
@@ -48,6 +59,11 @@ CHEST_X = 400
 CHEST_Y = 320
 KEY_X = 410
 KEY_Y = 290
+SHIP_X = SCREEN_WIDTH / 2
+SHIP_Y = 100
+
+# number
+SHADOW_NUMBER = 10
 
 # rate
 CLOCK_TICK = 10
