@@ -36,8 +36,6 @@ def splashScreen():
 
         pygame.display.update()
 
-    # pygame.time.wait(1500)
-
 
 def menuScreen():
     global virus_name
@@ -135,7 +133,9 @@ def optionScreen(variableAccess=True):
                         defaultModelCheckBox, mousePosition, varSettings, variables
                     )
                     for idx, colourSetting in enumerate(colourSettings):
-                        colours[idx], colourSelected[idx] = colourSetting.update(mousePosition)
+                        colours[idx], colourSelected[idx] = colourSetting.update(
+                            mousePosition
+                        )
 
         backButton.draw(screen)
 

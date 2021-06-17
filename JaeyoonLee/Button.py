@@ -89,7 +89,13 @@ class SelectionBox(Button):
         selected=0,
     ):
         super().__init__(
-            x, y, width, height, optionList[selected], colour=colour, textColour=textColour[0]
+            x,
+            y,
+            width,
+            height,
+            optionList[selected],
+            colour=colour,
+            textColour=textColour[0],
         )
         self.__optionList = optionList
         self.__textColour = textColour
