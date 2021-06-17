@@ -4,7 +4,9 @@ import constants
 import pygame
 from ButtonClass import ButtonClass
 from CheckPrisonerEvents import CheckPrisonerEvents
-from Sprites import Sprites
+from PrisonerClass import PrisonerClass
+
+# from Maps import Maps
 
 
 def first_game_scene():
@@ -17,9 +19,10 @@ def first_game_scene():
 
     # create sprites
     prisoner = pygame.image.load("Sprites/prisoners/prisoner.png")
+    # tile = pygame.image.load("Sprites/cell.png")
 
     # objects
-    my_prisoner = Sprites(
+    my_prisoner = PrisonerClass(
         prisoner,
         prisoner_x,
         prisoner_y,
@@ -27,12 +30,19 @@ def first_game_scene():
         constants.PRISONER_Y_SPEED,
         screen,
     )
+    # my_cell_map = Maps(tile, 60, 50, screen, 1)
     my_check_event = CheckPrisonerEvents()
 
     running = True
     while running:
         # upload image
         screen.blit(background, (0, 0))
+
+        # get rect
+        # prisoner_rect = my_prisoner.get_rect()
+
+        # build map
+        # my_cell_map.build_map(prisoner_rect)
 
         # get events
         (
@@ -44,17 +54,15 @@ def first_game_scene():
             key_is_up,
         ) = my_check_event.check_events()
         # move prisoner
-        my_prisoner.prisoner_move = (
-            key_is_down,
-            key_left,
-            key_right,
-            key_up,
-            key_down,
-            key_is_up,
+        my_prisoner.prisoner_move(
+            key_is_down, key_left, key_right, key_up, key_down, key_is_up
         )
-
         # choose what image the prisoner should be(there are 10 images for animation)
-        # my_prisoner.prisoner_animation()
+        my_prisoner.prisoner_animation()
+        # change sprite size of prisoner
+        my_prisoner.modify_sprite_size(2)
+        # flip prisoner
+        my_prisoner.prisoner_flip()
         # upload prisoner image
         my_prisoner.sprite_upload()
 
