@@ -21,11 +21,21 @@ def splashScreen():
     display.backgroundImageBlit(screen, constants.SPLASH_IMG)
 
     # splash screen title
-    display.titleText(screen, 60, adjustment=0)
+    display.titleText(screen, 120, adjustment=50)
 
-    pygame.display.update()
+    start_ticks = pygame.time.get_ticks()
+    splash = True
 
-    pygame.time.wait(500)
+    while splash:
+        splash_ticks = pygame.time.get_ticks() - start_ticks
+
+        display.drawBar(screen, (550, 600), (300, 32), splash_ticks / 2000)
+
+        splash = splash_ticks < 2000
+
+        pygame.display.update()
+
+    # pygame.time.wait(1500)
 
 
 def menuScreen():
@@ -33,8 +43,9 @@ def menuScreen():
     display.drawBackground(screen)
 
     buttons = display.genMenuButtons()
-    inputBox, inputBack = display.genInputBox()
-    inputActive = False
+    inputBox, startButton, inputBack = display.genInputBox()
+    inputRect = [inputBox, startButton, inputBack]
+    inputActive, popUpActive = False, False
 
     while True:
         buttonActive = [False for _ in range(4)]
@@ -44,38 +55,50 @@ def menuScreen():
         for event in pygame.event.get():
             display.checkQuit(event)
             if event.type == pygame.MOUSEBUTTONUP:
-                for idx in range(4):
-                    if not inputActive:
+                if not popUpActive:
+                    for idx in range(4):
                         buttonActive[idx] = display.checkButtonClick(buttons[idx])
-                if buttonActive[3]:
-                    display.checkQuit(event, specific=True)
-                clicked = True
-                inputActive = display.checkButtonClick(inputBox)
-            elif inputActive and event.type == pygame.KEYDOWN:
-                virus_name = display.checkVirusName(event, virus_name, buttonSound)
-                if event.key == pygame.K_RETURN:
+                        clicked = True
+                    if buttonActive[3]:
+                        display.checkQuit(event, specific=True)
+                elif display.checkButtonClick(inputRect[1]):
                     clicked, start = True, True
-
-        for button in buttons:
-            button.draw(screen)
-
-        if inputActive:
-            display.drawInputBox(screen, virus_name, inputBox, inputBack)
+                elif not display.checkButtonClick(inputRect[2]):
+                    clicked, popUpActive = True, False
+                inputActive = display.checkButtonClick(inputRect[0])
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    popUpActive = False
+                    display.drawBackground(screen)
+                if inputActive:
+                    if event.key == pygame.K_RETURN:
+                        clicked, start = True, True
+                    else:
+                        virus_name = display.checkVirusName(
+                            event, virus_name, buttonSound
+                        )
 
         # button active
         if clicked:
             buttonSound.play()
             if buttonActive[0]:
-                inputActive = True
+                popUpActive = True
                 virus_name = constants.VIRUS_NAME
             elif start:
                 simulateScreen()
-                inputActive = False
+                inputActive, popUpActive = False, False
             elif buttonActive[1]:
                 optionScreen()
             elif buttonActive[2]:
                 helpScreen()
             display.drawBackground(screen)
+            pygame.time.wait(100)
+
+        for button in buttons:
+            button.draw(screen)
+
+        if popUpActive:
+            display.drawInputBox(screen, virus_name, inputRect, inputActive)
 
         display.update()
 
@@ -111,7 +134,8 @@ def optionScreen(variableAccess=True):
                         defaultModelCheckBox, mousePosition, varSettings, variables
                     )
                     for idx, colourSetting in enumerate(colourSettings):
-                        colours[idx] = colourSetting.update(mousePosition)
+                        if colourSetting.getMenuActive():
+                            colours[idx] = colourSetting.update(mousePosition)
 
         backButton.draw(screen)
 
@@ -214,8 +238,8 @@ def simulateScreen():
             display.simEndPopUP(
                 screen, simEndBox, quitSimButton, creditButton, infectious
             )
-
         display.update()
+
     if simEnd and credit:
         creditScreen()
 
@@ -250,7 +274,8 @@ if __name__ == "__main__":
     pygame.init()
     pygame.display.set_caption(constants.TITLE)
     screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT))
-
+    icon = pygame.image.load(display.getFilePath(constants.ICON_IMG))
+    pygame.display.set_icon(icon)
     buttonSound = display.musicInit()
 
     splashScreen()

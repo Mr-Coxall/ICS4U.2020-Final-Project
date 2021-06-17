@@ -7,16 +7,24 @@
 # import arcade class
 import arcade
 
+# import constants
+import constants
+
 # import game class from game file
-from game import longWayGame
+from startup import startView
 
 
 # main function
 def main():
     # creates window instance
-    newWindow = longWayGame()
-    # calls class methods
-    newWindow.setup(newWindow.level)
+    window = arcade.Window(
+        constants.SCREEN_WIDTH,
+        constants.SCREEN_HEIGHT,
+        constants.SCREEN_TITLE,
+    )
+    start_view = startView()
+    window.show_view(start_view)
+    start_view.setup()
     # calls arcade class method
     arcade.run()
 

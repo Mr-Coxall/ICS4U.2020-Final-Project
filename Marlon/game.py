@@ -10,16 +10,20 @@ import arcade
 # import constants
 import constants
 
+# import game over class
+from game_over import game_over
 
-class longWayGame(arcade.Window):
+
+class longWayGame(arcade.View):
     # main game class
     def __init__(self):
         # initialise variables (constructor)
 
-        # Call the parent class and set up the window
-        super().__init__(
-            constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.SCREEN_TITLE
-        )
+        # Call the parent class
+        super().__init__()
+
+        # hide mouse
+        self.window.set_mouse_visible(False)
 
         # create list for sprites
         self.wall_list = None
@@ -43,6 +47,9 @@ class longWayGame(arcade.Window):
         # score
         self.score = 0
 
+        # lives
+        self.lives = constants.PLAYER_LIVES
+
         # right edge of map
         self.end_of_map = 0
 
@@ -63,9 +70,6 @@ class longWayGame(arcade.Window):
         # keep track of scrolling
         self.view_left = 0
         self.view_bottom = 0
-
-        # score
-        self.score = 0
 
         # create sprite lists
         self.player_list = arcade.SpriteList()
@@ -167,6 +171,10 @@ class longWayGame(arcade.Window):
         score_text = f"Score: {self.score}"
         arcade.draw_text(score_text, 25, 290, constants.TXT_COLOUR, 18)
 
+        # draw lives text on screen
+        lives_text = f"x {self.lives}"
+        arcade.draw_text(lives_text, 1150, 290, constants.TXT_COLOUR, 18)
+
     def on_key_press(self, key, modifiers):
         # called whenever key is pressed
 
@@ -217,6 +225,9 @@ class longWayGame(arcade.Window):
             # play death sound
             arcade.play_sound(self.death_sound)
 
+            # remove life
+            self.lives -= 1
+
         # check for collision with lava
         if arcade.check_for_collision_with_list(self.player_sprite, self.death_list):
             self.player_sprite.change_x = 0
@@ -227,10 +238,24 @@ class longWayGame(arcade.Window):
             # play death sound
             arcade.play_sound(self.death_sound)
 
+            # remove life
+            self.lives -= 1
+
+            # check if lives are gone
+            if self.lives == 0:
+                game_view = game_over()
+                self.window.show_view(game_view)
+
         # check if user got to end of level
         if self.player_sprite.center_x >= self.end_of_map:
-            # advance to next level
-            self.level += 1
+
+            # Check if game over
+            if self.level >= 3:
+                game_view = game_over()
+                self.window.show_view(game_view)
+            else:
+                # advance to next level
+                self.level += 1
 
             # load next level
             self.setup(self.level)
