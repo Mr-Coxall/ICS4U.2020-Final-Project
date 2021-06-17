@@ -52,8 +52,7 @@ class ButtonClass:
 
     def is_over(self, mouse_pos):
         # check if the mouse is over the button
-        if self.position_x < mouse_pos[0] < self.position_x + self.width:
-            if self.position_y < mouse_pos[1] < self.position_y + self.height:
-                return True
-
-        return False
+        return (
+            self.position_x < mouse_pos[0] < self.position_x + self.width
+            and self.position_y < mouse_pos[1] < self.position_y + self.height
+        )
