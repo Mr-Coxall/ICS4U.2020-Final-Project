@@ -21,9 +21,9 @@ public class RenderPlates {
     /** Initializes the y coord. */
     private final int[] eggCounter = new int[array3];
     /** Initializes the size. */
-    private final static int scoreThing = -300;
+    private static final int SCORETHING = -300;
     /** Initializes the y coord. */
-    private static int score = scoreThing;
+    private static int score = SCORETHING;
     /** Initializes the size. */
     private AudioFilePlayer music = new AudioFilePlayer();
     /** Initializes the size. */
