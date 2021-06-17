@@ -319,3 +319,12 @@ def drawInputBox(screen, virus_name, inputBoxes, active):
 def drawBackground(screen):
     backgroundImageBlit(screen, constants.MENU_IMG)
     titleText(screen, 100)
+
+
+def drawBar(screen, pos, size, progress):
+    pos = list(pos)
+    size = list(size)
+    pygame.draw.rect(screen, constants.WHITE, (pos, size), 2)
+    innerPos = (pos[0] + 4, pos[1] + 4)
+    innerSize = ((size[0] - 7) * progress, size[1] - 7)
+    pygame.draw.rect(screen, constants.GREEN, (innerPos, innerSize))

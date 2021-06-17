@@ -60,7 +60,7 @@ class Manager:
                 distance = self.getDistance(healthPos, infectiousPos)
                 chance = (
                     random.randint(1, 100) <= infectious.getInfectionRate()
-                    and distance < self.radius * 2 + 4
+                    and distance < self.radius * 3
                 )
                 if distance < self.radius * 2 or chance:
                     # infection

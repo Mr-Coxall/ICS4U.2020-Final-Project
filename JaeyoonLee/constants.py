@@ -47,6 +47,7 @@ CREDITS_TEXT = [
 ]
 
 # File paths
+ICON_IMG = "images\\virusSimulator_icon.png"
 MENU_IMG = "images\\virusSimulator_mainMemu.png"
 SPLASH_IMG = "images\\virusSimulator_splash.png"
 OPTION_IMG = "images\\virusSimulator_options.png"
