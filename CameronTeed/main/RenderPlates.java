@@ -21,7 +21,7 @@ public class RenderPlates {
     /** Initializes the y coord. */
     private final int[] eggCounter = new int[array3];
     /** Initializes the y coord. */
-    private static int score;
+    private static int score = -300;
     /** Initializes the size. */
     private AudioFilePlayer music = new AudioFilePlayer();
     /** Initializes the size. */
@@ -38,6 +38,10 @@ public class RenderPlates {
     private final int y2 = 115;
     /** Initializes the size. */
     private final int y3 = 131;
+    /** Initializes the size. */
+    private final int y4 = 200;
+    /** Initializes the size. */
+    private final int x4 = 125;
     /** Initializes the size. */
     private final int scoreNum = 100;
     /** Initializes the size. */
@@ -123,6 +127,9 @@ public class RenderPlates {
     public void renderPlates(final Graphics g2d) {
         Font myFont = new Font("Plain", 1, font);
         g2d.setFont(myFont);
+
+        g2d.drawString("Score: " + score, x4, y4);
+
         g2d.drawString("Pancakes: " + panCounter[0], x, y);
         g2d.drawString("Eggs: " + eggCounter[0], x, y2);
         g2d.drawString("Bacon: " + baconCounter[0], x, y3);

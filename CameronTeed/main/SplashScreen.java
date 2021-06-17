@@ -34,6 +34,6 @@ public class SplashScreen {
      */
     public void clearSplash(final Graphics g) {
         g.clearRect(0, 0, width, height);
-        Game.setState(Game.STATE.MENU);
+        Main.setState(Main.STATE.MENU);
     }
 }
