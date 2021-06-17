@@ -56,9 +56,9 @@ def menuScreen():
             display.checkQuit(event)
             if event.type == pygame.MOUSEBUTTONUP:
                 if not popUpActive:
+                    clicked = True
                     for idx in range(4):
                         buttonActive[idx] = display.checkButtonClick(buttons[idx])
-                        clicked = True
                     if buttonActive[3]:
                         display.checkQuit(event, specific=True)
                 elif display.checkButtonClick(inputRect[1]):
