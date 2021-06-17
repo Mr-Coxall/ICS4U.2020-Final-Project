@@ -13,11 +13,62 @@ from check_prisoner_events import CheckPrisonerEvents
 from set_up_display import SetUpDisplay
 
 
+def third_game_scene():
+    # create clock
+    clock = pygame.time.Clock()
+
+    print("THIRD!!")
+    # create background
+    background = pygame.image.load("Backgrounds/Game Scene 3.jpg")
+
+    # create object
+    my_setup = SetUpDisplay(screen)
+    my_prisoner, my_ship = my_setup.set_up_game_scene_three()
+    my_prisoner_event = CheckPrisonerEvents()
+
+    running = True
+    while running:
+        # upload image
+        screen.blit(background, (0, 0))
+
+        # move prisoner
+        (
+            key_is_down,
+            key_left,
+            key_right,
+            key_up,
+            key_down,
+            key_is_up,
+        ) = my_prisoner_event.check_events()
+        my_prisoner.prisoner_move(
+            key_is_down, key_left, key_right, key_up, key_down, key_is_up
+        )
+
+        # choose what image the prisoner should be(there are 10 images for animation)
+        my_prisoner.prisoner_animation()
+        # flip prisoner
+        my_prisoner.prisoner_flip()
+        # keep prisoner inside of screen
+        my_prisoner.keep_inside_screen()
+        # increase prisoner size
+        my_prisoner.modify_sprite_size(constants.DOUBLE_SIZE)
+
+        # upload sprites
+        my_prisoner.sprite_upload()
+        my_ship.sprite_upload()
+
+        # refresh the screen every frame
+        pygame.display.update()
+        # slow down to see the animations move
+        clock.tick(constants.CLOCK_TICK)
+
+
 def second_game_scene():
     clock = pygame.time.Clock()
     chest_open = False
     door_open = False
     key_appear = True
+    shadow_appear = False
 
     print("welcome!")
     # create background
@@ -33,6 +84,7 @@ def second_game_scene():
         my_cell_map,
         my_chest,
         my_key,
+        my_shadow,
     ) = my_setup.set_up_game_scene_two()
 
     # get ready to check prisoner events
@@ -69,6 +121,7 @@ def second_game_scene():
             key_is_down, key_left, key_right, key_up, key_down, key_is_up
         )
 
+        # prisoner animation
         my_prisoner.prisoner_animation()
         # flip prisoner
         my_prisoner.prisoner_flip()
@@ -89,6 +142,13 @@ def second_game_scene():
                 # chest_open = False
                 door_open = True
                 key_appear = False
+                shadow_appear = True
+
+        if shadow_appear:
+            # upload shadows
+            my_shadow.upload()
+        # collision detection
+        my_shadow.attack(prisoner_rect)
 
         # collision detection
         if my_door.check_collision(door_rect, prisoner_rect):
@@ -263,3 +323,4 @@ if __name__ == "__main__":
     start_screen()
     first_game_scene()
     second_game_scene()
+    third_game_scene()
