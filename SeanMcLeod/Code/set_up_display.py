@@ -10,6 +10,8 @@ from golem_class import GolemClass
 from maps import Maps
 from monsters import Monsters
 from prisoner_class import PrisonerClass
+from shadow_class import ShadowClass
+from ship_class import ShipClass
 from sprites import Sprites
 
 
@@ -93,6 +95,7 @@ class SetUpDisplay:
         door = pygame.image.load(constants.CASTLE_DOOR_IMAGE)
         chest = pygame.image.load(constants.CHEST_IMAGE)
         key = pygame.image.load(constants.KEY_IMAGE)
+        shadow = pygame.image.load(constants.SHADOW_IMAGE)
 
         # create object
         my_prisoner = PrisonerClass(
@@ -111,5 +114,41 @@ class SetUpDisplay:
             chest, constants.CHEST_X, constants.CHEST_Y, 0, 0, self._screen
         )
         my_key = Sprites(key, constants.KEY_X, constants.KEY_Y, 0, 0, self._screen)
+        my_shadow = ShadowClass(
+            shadow,
+            constants.SHADOW_X,
+            constants.SHADOW_Y,
+            constants.SHADOW_X_SPEED,
+            constants.SHADOW_Y_SPEED,
+            self._screen,
+        )
 
-        return my_prisoner, my_door, my_cell_map, my_chest, my_key
+        return my_prisoner, my_door, my_cell_map, my_chest, my_key, my_shadow
+
+    def set_up_game_scene_three(self):
+        prisoner_x = 400
+        prisoner_y = 500
+
+        # create sprites
+        prisoner = pygame.image.load(constants.PRISONER_IMAGE)
+        ship = pygame.image.load(constants.SHIP_IMAGE)
+
+        # create object
+        my_prisoner = PrisonerClass(
+            prisoner,
+            prisoner_x,
+            prisoner_y,
+            constants.PRISONER_X_SPEED,
+            constants.PRISONER_Y_SPEED,
+            self._screen,
+        )
+        my_ship = ShipClass(
+            ship,
+            constants.SHIP_X,
+            constants.SHIP_Y,
+            constants.SHIP_X_SPEED,
+            constants.SHIP_Y_SPEED,
+            self._screen,
+        )
+
+        return my_prisoner, my_ship
