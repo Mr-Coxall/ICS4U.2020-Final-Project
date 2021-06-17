@@ -64,11 +64,9 @@ def third_game_scene():
         my_prisoner.modify_sprite_size(constants.DOUBLE_SIZE)
 
         # fire a laser, if we have enough power (have not used up all the lasers)
-        for laser_number in range(len(lasers)):
-            if lasers[laser_number].x < 0:
-                lasers[laser_number].move(
-                    my_ship.get_sprite_x(), my_ship.get_sprite_y()
-                )
+        for laser in lasers:
+            if laser.x < 0:
+                laser.move(my_ship.get_sprite_x(), my_ship.get_sprite_y())
                 break
 
         if single_laser >= constants.BULLET_SHOOT_RATE:
@@ -332,9 +330,10 @@ def start_screen():
                     my_button.color = constants.BLACK
                 else:
                     my_button.color = constants.WHITE
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if my_button.is_over(mouse_position):
-                    running = False
+            if event.type == pygame.MOUSEBUTTONDOWN and my_button.is_over(
+                mouse_position
+            ):
+                running = False
             if event.type == pygame.QUIT:
                 running = False
                 sys.exit()
