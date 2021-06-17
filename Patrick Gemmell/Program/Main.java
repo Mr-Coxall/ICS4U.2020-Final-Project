@@ -102,8 +102,8 @@ public final class Main {
    * @return
    * returns money
    */
-  static int stand(final CardHand userSet, final CardHand cpuSet,
-                   final DeckOfCards standDeck, final int money) {
+  static int stand(final CardHand userSet, CardHand cpuSet,
+                   final DeckOfCards standDeck, int money) {
     // Drawing cards for the dealer
     while (cpuSet.getHandValue() < SEVENTEEN) {
       cpuSet = hit(cpuSet, standDeck, cpuSet.amountOfCards());
