@@ -2,11 +2,12 @@ import sys
 
 import constants
 import pygame
-from ButtonClass import ButtonClass
-from CheckPrisonerEvents import CheckPrisonerEvents
-from PrisonerClass import PrisonerClass
-
-# from Maps import Maps
+from button_class import ButtonClass
+from check_prisoner_events import CheckPrisonerEvents
+from golem_class import GolemClass
+from monsters import Monsters
+from prisoner_class import PrisonerClass
+from sprites import Sprites
 
 
 def first_game_scene():
@@ -19,7 +20,9 @@ def first_game_scene():
 
     # create sprites
     prisoner = pygame.image.load("Sprites/prisoners/prisoner.png")
-    # tile = pygame.image.load("Sprites/cell.png")
+    golem = pygame.image.load("Sprites/golems/golem-walk.png")
+    dragon = pygame.image.load("Sprites/Dragon.png")
+    door = pygame.image.load("Doors/Door.png")
 
     # objects
     my_prisoner = PrisonerClass(
@@ -30,8 +33,42 @@ def first_game_scene():
         constants.PRISONER_Y_SPEED,
         screen,
     )
-    # my_cell_map = Maps(tile, 60, 50, screen, 1)
+    my_golem = GolemClass(
+        golem,
+        100,
+        100,
+        constants.GOLEM_SPEED[0],
+        constants.GOLEM_SPEED[1],
+        screen,
+    )
+    my_golem_two = GolemClass(
+        golem,
+        800,
+        200,
+        constants.GOLEM_SPEED[0],
+        constants.GOLEM_SPEED[1],
+        screen,
+    )
+    my_dragon = Monsters(
+        dragon,
+        50,
+        300,
+        0,
+        0,
+        screen,
+    )
+    my_door = Sprites(
+        door,
+        213,
+        0,
+        0,
+        0,
+        screen,
+    )
     my_check_event = CheckPrisonerEvents()
+
+    # modify dragon size
+    my_dragon.modify_sprite_size(2)
 
     running = True
     while running:
@@ -39,10 +76,8 @@ def first_game_scene():
         screen.blit(background, (0, 0))
 
         # get rect
-        # prisoner_rect = my_prisoner.get_rect()
-
-        # build map
-        # my_cell_map.build_map(prisoner_rect)
+        prisoner_rect = my_prisoner.get_rect()
+        door_rect = my_door.get_rect()
 
         # get events
         (
@@ -63,8 +98,32 @@ def first_game_scene():
         my_prisoner.modify_sprite_size(2)
         # flip prisoner
         my_prisoner.prisoner_flip()
+        # restrict movement to inside of screen
+        my_prisoner.keep_inside_screen()
         # upload prisoner image
         my_prisoner.sprite_upload()
+
+        # move golem one
+        my_golem.golem_move()
+        # upload golem one
+        my_golem.sprite_upload()
+
+        # move golem two
+        my_golem_two.golem_move()
+        # upload golem two
+        my_golem_two.sprite_upload()
+
+        # check collision
+        my_dragon.attack(prisoner_rect)
+        my_golem.attack(prisoner_rect)
+        my_golem_two.attack(prisoner_rect)
+        # when prisoner gets to the door, end loop and move scene
+        if my_door.check_collision(door_rect, prisoner_rect):
+            running = False
+
+        # upload dragon and door
+        my_dragon.sprite_upload()
+        my_door.sprite_upload()
 
         # refresh the screen every frame
         pygame.display.update()
