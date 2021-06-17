@@ -13,6 +13,7 @@ from Setting import CheckBox, Slider
 
 variables: list = [100, 25, 4, 6]
 colours: list = [constants.WHITE, constants.RED, constants.BLACK]
+colourSelected: list = [0, 0, 0]
 virus_name = constants.VIRUS_NAME
 
 
@@ -21,7 +22,7 @@ def splashScreen():
     display.backgroundImageBlit(screen, constants.SPLASH_IMG)
 
     # splash screen title
-    display.titleText(screen, 120, adjustment=50)
+    display.titleText(screen, 100, adjustment=50)
 
     start_ticks = pygame.time.get_ticks()
     splash = True
@@ -56,9 +57,9 @@ def menuScreen():
             display.checkQuit(event)
             if event.type == pygame.MOUSEBUTTONUP:
                 if not popUpActive:
+                    clicked = True
                     for idx in range(4):
                         buttonActive[idx] = display.checkButtonClick(buttons[idx])
-                        clicked = True
                     if buttonActive[3]:
                         display.checkQuit(event, specific=True)
                 elif display.checkButtonClick(inputRect[1]):
@@ -104,13 +105,13 @@ def menuScreen():
 
 
 def optionScreen(variableAccess=True):
-    global variables, colours
+    global variables, colours, colourSelected
     # background image
     display.backgroundImageBlit(screen, constants.OPTION_IMG)
 
     backButton, backActive = display.genBackButton()
 
-    colourSettings = display.genSelectoionBox(colours)
+    colourSettings = display.genSelectoionBox(colours, colourSelected)
 
     sliderLength = constants.SLIDER_LENGTH
     sound = pygame.mixer.music.get_volume()
@@ -134,8 +135,7 @@ def optionScreen(variableAccess=True):
                         defaultModelCheckBox, mousePosition, varSettings, variables
                     )
                     for idx, colourSetting in enumerate(colourSettings):
-                        if colourSetting.getMenuActive():
-                            colours[idx] = colourSetting.update(mousePosition)
+                        colours[idx], colourSelected[idx] = colourSetting.update(mousePosition)
 
         backButton.draw(screen)
 
