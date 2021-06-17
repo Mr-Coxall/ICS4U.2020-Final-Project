@@ -123,6 +123,9 @@ class SelectionBox(Button):
     def getSelected(self):
         return self.__selected
 
+    def getMenuActive(self):
+        return self.__menuActive
+
     def setMenuActive(self, menuActive):
         self.__menuActive = menuActive
 

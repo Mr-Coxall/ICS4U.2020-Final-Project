@@ -47,6 +47,7 @@ CREDITS_TEXT = [
 ]
 
 # File paths
+ICON_IMG = "images\\virusSimulator_icon.png"
 MENU_IMG = "images\\virusSimulator_mainMemu.png"
 SPLASH_IMG = "images\\virusSimulator_splash.png"
 OPTION_IMG = "images\\virusSimulator_options.png"
@@ -58,6 +59,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (219, 20, 20)
 GREY = (100, 100, 100)
+DARK_GREY = (60, 60, 60)
 GREEN = (50, 240, 100)
 PURPLE = (210, 0, 250)
 BLUE = (66, 135, 245)
