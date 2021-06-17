@@ -45,7 +45,8 @@ class Slider:
     def getRect(self):
         return self.__rect
 
-    def setDefault(self):
+    def setDefault(self, default):
+        self.__default = int(default)
         self.__pointPos = (self.getX() + self.__default, self.getY())
 
     def setPoint(self, xPos):
