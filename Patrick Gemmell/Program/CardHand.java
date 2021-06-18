@@ -10,20 +10,28 @@
  * This class creates an object that acts like a hand of playing card.
  */
 public class CardHand {
+  /**
+  * the number six.
+  */
+  public static final int SIX = 6;
   // Initializing fields
+  /**
+  * setting array.
+  */
   private PlayingCard[] cardsInHand;
 
   /**
    * Setting field values with a constructor.
    */
   public CardHand() {
-    this.cardsInHand = new PlayingCard[6];
+    this.cardsInHand = new PlayingCard[SIX];
   }
 
   /**
    * This method adds a card to the hand.
+   * @param newCard
    */
-  public void addCard(PlayingCard newCard) {
+  public void addCard(final PlayingCard newCard) {
     // Adding the new card to the end of the hand
     for (int addCounter = 0; addCounter < this.cardsInHand.length;
          addCounter++) {
@@ -38,24 +46,33 @@ public class CardHand {
 
   /**
    * This getter finds and returns the value of a specific card in the hand.
+   * @param cardValueIndex
+   * @return
+   * returns cards in hand
    */
-  public int showCardValue(int cardValueIndex) {
+  public int showCardValue(final int cardValueIndex) {
     // Returning the value of the card at the index passed in
     return this.cardsInHand[cardValueIndex].getCardValue();
   }
 
   /**
    * This getter finds and returns the card face of a specific card in the hand.
+   * @param cardFaceIndex
+   * @return
+   * returns card face
    */
-  public String showCardFace(int cardFaceIndex) {
+  public String showCardFace(final int cardFaceIndex) {
     // Returning the face of the card at the index passed in
     return this.cardsInHand[cardFaceIndex].getCardFace();
   }
 
   /**
    * This getter finds and returns the card suit of a specific card in the hand.
+   * @param cardSuitIndex
+   * @return
+   * returns card suit
    */
-  public String showCardSuit(int cardSuitIndex) {
+  public String showCardSuit(final int cardSuitIndex) {
     // Returning the suit of the card at the index passed in
     return this.cardsInHand[cardSuitIndex].getCardSuit();
   }
@@ -65,11 +82,13 @@ public class CardHand {
    */
   public void emptyHand() {
     // Setting the player's hand to a new array to clear cards
-    this.cardsInHand = new PlayingCard[6];
+    this.cardsInHand = new PlayingCard[SIX];
   }
 
   /**
    * This method finds and returns the value of the hand.
+   * @return
+   * returns hand value
    */
   public int getHandValue() {
     // Setting up the hand amount variable
@@ -92,6 +111,8 @@ public class CardHand {
 
   /**
    * This method finds and returns the number of cards in the hand.
+   * @return
+   * returns hand length
    */
   public int amountOfCards() {
     // Searching for the amount of cards in a hand

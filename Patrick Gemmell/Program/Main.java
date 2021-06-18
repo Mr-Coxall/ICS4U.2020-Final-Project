@@ -65,10 +65,9 @@ public final class Main {
     if (bustHand.getHandValue() > TWENTYONE) {
       // Returning the player's hand is valid
       return true;
-    } else {
+    }
       // Returning the player's hand is valid
       return false;
-    }
   }
 
   /**
@@ -102,11 +101,12 @@ public final class Main {
    * @return
    * returns money
    */
-  static int stand(final CardHand userSet, CardHand cpuSet,
-                   final DeckOfCards standDeck, int money) {
+  static int stand(final CardHand userSet, final CardHand cpuSet,
+                   final DeckOfCards standDeck, final int money) {
+    int newMoney = 0;
     // Drawing cards for the dealer
     while (cpuSet.getHandValue() < SEVENTEEN) {
-      cpuSet = hit(cpuSet, standDeck, cpuSet.amountOfCards());
+      hit(cpuSet, standDeck, cpuSet.amountOfCards());
     }
 
     try {
@@ -160,8 +160,8 @@ public final class Main {
                            + "Dealer Went Bust. You Won! You gained $10."
                            + "\u001B[0m");
         Thread.sleep(THREETHOUSAND);
-        money = money + TEN;
-        return money;
+        newMoney = money + TEN;
+        return newMoney;
       } else {
         // Figuring out which player won the game
         int winValue = findWinner(userSet, cpuSet);
@@ -174,7 +174,7 @@ public final class Main {
             System.out.println("");
             System.out.println("\u001B[32m" + "You Won! You gained $10."
                                + "\u001B[0m");
-            money = money + TEN;
+            newMoney = money + TEN;
             break;
 
           case 1:
@@ -183,7 +183,7 @@ public final class Main {
             System.out.println("");
             System.out.println("\u001B[31m" + "You Lost! You lost $10."
                                + "\u001B[0m");
-            money = money - TEN;
+            newMoney = money - TEN;
             break;
 
           case 2:
@@ -221,15 +221,13 @@ public final class Main {
    * @param drawHand
    * @param drawDeck
    * @param handSize
-   * @return
-   * returns card drawn
    */
-  static CardHand hit(final CardHand drawHand,
+  static void hit(final CardHand drawHand,
                       final DeckOfCards drawDeck, final int handSize) {
     // Checking if the hand size is too large to draw a card
     if (handSize > SIX) {
       // Returning the current hand
-      return drawHand;
+      return;
 
     } else {
       // Drawing a new card
@@ -240,7 +238,7 @@ public final class Main {
       drawHand.addCard(newCard);
 
       // Returning the card hand
-      return drawHand;
+      return;
     }
   }
 
@@ -390,39 +388,28 @@ public final class Main {
     // Returning the user's answer
     return mainAnswer;
   }
-
   /**
-   * This function runs a game of black jack.
-   * @param args
+   * this functions print message.
+   * @param msg
    */
-  public static void main(final String[] args) {
-    try {
-      // Creating scanners to accept the starting user input
-      final Scanner beginInput = new Scanner(System.in);
-      final Scanner gameInput = new Scanner(System.in);
-      // Printing title text
-      System.out.println("Gemmell's Casino Black Jack!");
-      System.out.println("");
-      // Input that starts the game
-      System.out.print("Press 'ENTER' to Play: ");
-      String startInput = beginInput.nextLine();
-      System.out.println("");
-      System.out.println("");
-      // Instantiating a deck of cards
-      DeckOfCards deck = new DeckOfCards();
-      // Dealing each player a hand of cards
-      CardHand[] handInfo = dealCards(deck);
-      CardHand playerHand = handInfo[0];
-      CardHand dealerHand = handInfo[1];
-      // Clearing the screen
-      clearScreen();
-      // Setting up the player's initial monetary amount
-      int playerMoney = FIFTY;
-      // Setting up the variable containing the number of rounds played
-      int roundsPlayed = 0;
-      // Game loop
-      while (true) {
-        // Printing info about the dealer's hand and the card deck
+  public static void printMessage(final String msg)
+                     throws InterruptedException {
+    System.out.println("");
+    System.out.println(msg);
+    Thread.sleep(THREETHOUSAND);
+  }
+  /**
+   * printhands.
+   * @param dealerHand
+   * @param deck
+   * @param playerHand
+   * @param playerMoney
+   */
+  public static void printHands(final CardHand dealerHand,
+                                final DeckOfCards deck,
+                                final CardHand playerHand,
+                                final int playerMoney) {
+            // Printing info about the dealer's hand and the card deck
         System.out.print("\u001B[35m" + "Dealer's Hand" + "\u001B[0m");
         System.out.print("\u001B[35m" + "       Total: " + "\u001B[0m");
         // Checking to see if the card displayed is an ace
@@ -460,13 +447,43 @@ public final class Main {
         }
         System.out.println("");
         System.out.println("");
+  }
+  /**
+   * This function runs a game of black jack.
+   * @param args
+   */
+  public static void main(final String[] args) {
+    try {
+      // Creating scanners to accept the starting user input
+      final Scanner beginInput = new Scanner(System.in);
+      final Scanner gameInput = new Scanner(System.in);
+      // Printing title text and input to start the game
+      System.out.println("Gemmell's Casino Black Jack!");
+      System.out.println("");
+      System.out.print("Press 'ENTER' to Play: ");
+      String startInput = beginInput.nextLine();
+      System.out.println("\n\n");
+      // Instantiating a deck of cards
+      DeckOfCards deck = new DeckOfCards();
+      // Dealing each player a hand of cards
+      CardHand[] handInfo = dealCards(deck);
+      CardHand playerHand = handInfo[0];
+      CardHand dealerHand = handInfo[1];
+      // Clearing the screen
+      clearScreen();
+      // Setting up the player's initial monetary amount
+      int playerMoney = FIFTY;
+      // Setting up the variable containing the number of rounds played
+      int roundsPlayed = 0;
+      // Game loop
+      while (true) {
+        printHands(dealerHand, deck, playerHand, playerMoney);
         // Checking to see if the player went bust
         if (isBust(playerHand)) {
           // Printing that the player went bust and removing appropriate money
-          System.out.println("\u001B[31m" + "You Went Bust! You lose $10"
+          printMessage("\u001B[31m" + "You Went Bust! You lose $10"
                              + "\u001B[0m");
           playerMoney = playerMoney - TEN;
-          Thread.sleep(THREETHOUSAND);
           // Reshuffling the deck
           deck.recallDeck();
           // Dealing each player a new hand
@@ -475,9 +492,7 @@ public final class Main {
           playerHand = newHands[0];
           dealerHand = newHands[1];
           // Printing that the computer is reshuffling the cards
-          System.out.println("");
-          System.out.println("Reshuffling...");
-          Thread.sleep(THOUSAND);
+          printMessage("Reshuffling...");
           // Increasing the number of rounds played
           roundsPlayed += 1;
           // Clearing the screen
@@ -489,9 +504,7 @@ public final class Main {
           // Figuring out whether or not the user wants the game to end
           if (bankrupt) {
             // Printing that the program will start a new game
-            System.out.println("");
-            System.out.println("Please wait while we shuffle a new deck...");
-            Thread.sleep(THREETHOUSAND);
+            printMessage("Please wait while we shuffle a new deck...");
             // Reshuffling the deck
             deck.recallDeck();
             // Dealing each player a new hand
@@ -507,9 +520,7 @@ public final class Main {
             clearScreen();
           } else if (!bankrupt) {
             // Printing a farewell message to the user
-            System.out.println("");
-            System.out.println("♠♥♦♣ Thanks for Playing! ♣♦♥♠");
-            Thread.sleep(THREETHOUSAND);
+            printMessage("♠♥♦♣ Thanks for Playing! ♣♦♥♠");
             break;
           }
         } else {
@@ -526,12 +537,10 @@ public final class Main {
             // Checking to see if the player can draw another card
             if (playerHand.amountOfCards() > FIVE) {
               // Printing that the user cannot draw anymore cards
-              System.out.println("");
-              System.out.println("You cannot draw anymore cards");
-              Thread.sleep(THREETHOUSAND);
+              printMessage("You cannot draw anymore cards");
             } else {
               // Drawing a card
-              playerHand = hit(playerHand, deck, playerHand.amountOfCards());
+              hit(playerHand, deck, playerHand.amountOfCards());
               clearScreen();
             }
           } else if (userInput.equals("STAND")) {
@@ -539,9 +548,7 @@ public final class Main {
             clearScreen();
             playerMoney = stand(playerHand, dealerHand, deck, playerMoney);
             // Printing that the computer is reshuffling the cards
-            System.out.println("");
-            System.out.println("Reshuffling...");
-            Thread.sleep(THOUSAND);
+            printMessage("Reshuffling...");
             // Reshuffling the deck
             deck.recallDeck();
             // Dealing each player a new hand
@@ -557,9 +564,7 @@ public final class Main {
             // Figuring out whether or not the user wants the game to end
             if (endGame) {
               // Printing that the program will start a new game
-              System.out.println("");
-              System.out.println("Please wait while we shuffle a new deck...");
-              Thread.sleep(THREETHOUSAND);
+              printMessage("Please wait while we shuffle a new deck...");
               // Reshuffling the deck
               deck.recallDeck();
               // Dealing each player a new hand
@@ -573,9 +578,7 @@ public final class Main {
               playerMoney = FIFTY;
             } else if (!endGame) {
               // Printing a farewell message to the user
-              System.out.println("");
-              System.out.println("♠♥♦♣ Thanks for Playing! ♣♦♥♠");
-              Thread.sleep(THREETHOUSAND);
+              printMessage("♠♥♦♣ Thanks for Playing! ♣♦♥♠");
               break;
             } else {
               // Printing that an error occurred in determining the choice made
@@ -584,9 +587,7 @@ public final class Main {
             }
           } else {
             // Printing that the user entered an invalid input
-            System.out.println("");
-            System.out.println("Your input is not valid. Try again!");
-            Thread.sleep(THREETHOUSAND);
+            printMessage("Your input is not valid. Try again!");
           }
           // Clearing the screen again
           clearScreen();
