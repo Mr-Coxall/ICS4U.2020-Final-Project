@@ -42,10 +42,7 @@ class Sprites:
         self._rect.size = self._sprite.get_size()
 
     def check_collision(self, sprite1, sprite2):
-        if sprite1.colliderect(sprite2):
-            return True
-        else:
-            return False
+        return bool(sprite1.colliderect(sprite2))
 
     def sprite_move(self, x_change, y_change):
         self._rect.x += x_change
@@ -58,15 +55,15 @@ class Sprites:
 
     def keep_inside_screen(self):
         if (
-            self._rect.x >= constants.SCREEN_WIDTH - self._sprite.get_width()
-            or self._rect.x <= 0
-            or self._rect.y >= constants.SCREEN_HEIGHT - self._sprite.get_width()
-            or self._rect.y <= 0
+            self._rect.x < constants.SCREEN_WIDTH - self._sprite.get_width()
+            and self._rect.x > 0
+            and self._rect.y < constants.SCREEN_HEIGHT - self._sprite.get_width()
+            and self._rect.y > 0
         ):
-            self._rect.clamp_ip(self._screen.get_rect())
-            return True
-        else:
             return False
+
+        self._rect.clamp_ip(self._screen.get_rect())
+        return True
 
     def get_rect(self):
         return self._rect

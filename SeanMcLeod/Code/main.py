@@ -302,9 +302,10 @@ def start_screen():
                     my_button.color = constants.BLACK
                 else:
                     my_button.color = constants.WHITE
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if my_button.is_over(mouse_position):
-                    running = False
+            if event.type == pygame.MOUSEBUTTONDOWN and my_button.is_over(
+                mouse_position
+            ):
+                running = False
             if event.type == pygame.QUIT:
                 running = False
                 sys.exit()
