@@ -453,7 +453,7 @@ public class RenderPancakes extends HitBoxes {
      public void getBurnt() {
          for (int counter = 0; counter != burnt.length; counter++) {
              if (burnt[counter]) {
-                 Game.setState(Game.STATE.END);
+                 Main.setState(Main.STATE.END);
              }
          }
      }
