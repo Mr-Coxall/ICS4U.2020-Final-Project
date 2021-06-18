@@ -15,8 +15,8 @@ import java.awt.Point;
 import java.awt.PointerInfo;
 import java.awt.image.BufferStrategy;
 
-/** Game class. */
-public class Game extends Canvas implements Runnable {
+/** Main class. */
+public class Main extends Canvas implements Runnable {
 
   /** SerialVersion UID (Will need for later). */
   private static final long serialVersionUID = 5102725995743094780L;
@@ -81,9 +81,9 @@ public class Game extends Canvas implements Runnable {
   private Help help = new Help();
 
   /** Constructor. */
-  public Game() {
+  public Main() {
     this.addMouseListener(new MyMouseListener());
-    new Window(WIDTH, HEIGHT, "Breakfast: The Game", this);
+    new Window(WIDTH, HEIGHT, "Breakfast: The Main", this);
   }
 
   /** initializing. */
@@ -160,7 +160,6 @@ public class Game extends Canvas implements Runnable {
     Point b = a.getLocation();
     int y = (int) b.getY();
     int x = (int) b.getX();
-    System.out.println(x + ", " + y);
 
     // Renders all the sprites.
     render.renderPlates(g2d);
@@ -236,7 +235,7 @@ public class Game extends Canvas implements Runnable {
   * @param state1
   */
  public static void setState(final STATE state1) {
-     Game.state = state1;
+     Main.state = state1;
  }
 
 /**
@@ -245,6 +244,6 @@ public class Game extends Canvas implements Runnable {
    * @param args
    */
   public static void main(final String[] args) {
-    new Game();
+    new Main();
   }
 }
