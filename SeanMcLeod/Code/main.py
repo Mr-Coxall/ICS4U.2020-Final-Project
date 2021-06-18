@@ -16,6 +16,8 @@ from set_up_display import SetUpDisplay
 def third_game_scene():
     # create clock
     clock = pygame.time.Clock()
+    single_laser = 1
+    lasers = []
 
     print("THIRD!!")
     # create background
@@ -26,10 +28,18 @@ def third_game_scene():
     my_prisoner, my_ship = my_setup.set_up_game_scene_three()
     my_prisoner_event = CheckPrisonerEvents()
 
+    # sprite group
+    bullet_group = pygame.sprite.Group()
+
     running = True
     while running:
+        single_laser += 1
+
         # upload image
         screen.blit(background, (0, 0))
+
+        # get rect
+        prisoner_rect = my_prisoner.get_rect()
 
         # move prisoner
         (
@@ -46,16 +56,36 @@ def third_game_scene():
 
         # choose what image the prisoner should be(there are 10 images for animation)
         my_prisoner.prisoner_animation()
-        # flip prisoner
+        # # flip prisoner
         my_prisoner.prisoner_flip()
         # keep prisoner inside of screen
         my_prisoner.keep_inside_screen()
         # increase prisoner size
         my_prisoner.modify_sprite_size(constants.DOUBLE_SIZE)
 
+        # fire a laser, if we have enough power (have not used up all the lasers)
+        for laser_number in range(len(lasers)):
+            if lasers[laser_number].x < 0:
+                lasers[laser_number].move(
+                    my_ship.get_sprite_x(), my_ship.get_sprite_y()
+                )
+                break
+
+        if single_laser >= constants.BULLET_SHOOT_RATE:
+            single_laser = 0
+            bullet_group.add(my_ship.create_bullet())
+
+        # move ship
+        my_ship.ship_move()
+
+        # check collisions
+        my_ship.attack(prisoner_rect)
+
         # upload sprites
         my_prisoner.sprite_upload()
         my_ship.sprite_upload()
+        bullet_group.draw(screen)
+        bullet_group.update(prisoner_rect)
 
         # refresh the screen every frame
         pygame.display.update()
