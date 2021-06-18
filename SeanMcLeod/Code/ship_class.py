@@ -2,15 +2,11 @@
 
 # Created by Sean McLeod
 # Created on June 2021
-# This is the monster class
+# This is the ship class
 
-from sprites import Sprites
+from monsters import Monsters
 
 
-class Monsters(Sprites):
+class ShipClass(Monsters):
     def __init__(self, sprite, sprite_x, sprite_y, x_speed, y_speed, screen):
         super().__init__(sprite, sprite_x, sprite_y, x_speed, y_speed, screen)
-
-    def attack(self, prey):
-        if super().check_collision(super().get_rect(), prey):
-            print("attacked!")
