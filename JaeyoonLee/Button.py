@@ -26,6 +26,7 @@ class Button:
         self.__height = height
         self.__rect = pygame.Rect(x, y, width, height)
         self.__colour = colour
+        self.__strText = text
         self.__textColour = textColour
         self.__font = pygame.font.SysFont(constants.FONT, height)
         self.__text = self.__font.render(text, True, textColour)
@@ -55,6 +56,9 @@ class Button:
     def getText(self):
         return self.__text
 
+    def getStrText(self):
+        return self.__strText
+
     def getTextColour(self):
         return self.__textColour
 
@@ -62,6 +66,7 @@ class Button:
         return self.__colour
 
     def setText(self, text):
+        self.__strText = text
         self.__text = self.__font.render(text, True, self.__textColour)
 
     def setTextColour(self, textColour):
@@ -84,7 +89,13 @@ class SelectionBox(Button):
         selected=0,
     ):
         super().__init__(
-            x, y, width, height, optionList[0], colour=colour, textColour=textColour[0]
+            x,
+            y,
+            width,
+            height,
+            optionList[selected],
+            colour=colour,
+            textColour=textColour[0],
         )
         self.__optionList = optionList
         self.__textColour = textColour
@@ -111,11 +122,12 @@ class SelectionBox(Button):
             self.__menuActive = not self.__menuActive
         for idx in range(len(self.__optionList)):
             rect = self.__optionRects[idx]
-            if rect.collidepoint(mousePosition):
+            if self.__menuActive and rect.collidepoint(mousePosition):
                 self.setTextColour(self.__textColour[idx])
                 self.setText(self.__optionList[idx])
+                self.setSelected(idx)
                 self.__menuActive = not self.__menuActive
-        return self.getTextColour()
+        return self.getTextColour(), self.getSelected()
 
     def getOptionList(self):
         return self.__optionList

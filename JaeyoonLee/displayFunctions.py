@@ -78,7 +78,7 @@ def genMenuButtons():
     ]
 
 
-def genSelectoionBox(options):
+def genSelectoionBox(options, selected):
     return [
         SelectionBox(
             450,
@@ -88,6 +88,7 @@ def genSelectoionBox(options):
             constants.OPTION_BOX,
             constants.PEOPLE_OPTIONS[idx],
             [options[idx]] + constants.PEOPLE_COLOURS[idx][1:],
+            selected=selected[idx],
         )
         for idx in range(len(options))
     ]
