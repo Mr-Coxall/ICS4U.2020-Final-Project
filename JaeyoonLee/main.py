@@ -14,7 +14,7 @@ from Setting import CheckBox, Slider
 variables: list = [100, 25, 4, 6]
 colours: list = [constants.WHITE, constants.RED, constants.BLACK]
 colourSelected: list = [0, 0, 0]
-virus_name = constants.VIRUS_NAME
+virus_name: str = constants.VIRUS_NAME
 
 
 def splashScreen():
