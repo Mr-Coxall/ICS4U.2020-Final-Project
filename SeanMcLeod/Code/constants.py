@@ -66,5 +66,8 @@ SHIP_Y = 100
 SHADOW_NUMBER = 10
 
 # rate
+
+# other
+
 CLOCK_TICK = 10
 WAIT = 1000

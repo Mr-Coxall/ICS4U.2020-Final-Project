@@ -13,60 +13,79 @@ from Person import Infectious, Person
 
 
 class Manager:
-    def __init__(self):
+    def __init__(self, variables, colours):
+        # variables
+        self.N_people = int(variables[0])
+        self.radius = 10 if variables[0] < 75 else 5
+        self.infectionRate = variables[1]
+        self.deathRate = variables[2]
+        self.activity = int(variables[3])
+        # colours
+        self.healthColour = colours[0]
+        self.infectiousColour = colours[1]
+        self.deathColour = colours[2]
+        # objects
         self.healthPeople = self.generatePeople(
-            constants.N_PEOPLE - 1, [100, 1300], [100, 700], constants.WHITE
+            self.N_people - 1, [100, 1300], [100, 700], self.healthColour
         )
         self.infectedPeople = self.generatePeople(
-            1, [650, 750], [350, 450], constants.RED, infected=True
+            1, [650, 750], [350, 450], self.infectiousColour, infected=True
         )
         self.deadPeople = []
 
     def movePerson(self, screen):
-        for personIndex in range(self.getNumberOfLivingPeople()):
-            person = self.separatePeople(personIndex)
+        for personIndex in range(self.N_people):
+            person = self.separatePeople(personIndex, death=True)
             person.draw(screen)
             if person.getVelocity() != 0:
                 person.move()
-                if random.randint(1, constants.FPS) == constants.FPS:
+                if (
+                    random.randint(0, 360 // (self.activity * person.getVelocity()))
+                    == 0
+                ):
                     person.setDirection(random.uniform(0, 2 * math.pi))
                 if self.hitWall(
                     person.getX(),
                     person.getY(),
                     person.getDirection(),
-                    constants.RADIUS,
+                    self.radius,
                 ):
                     person.setDirection(person.getDirection() + math.pi)
 
     def checkInfected(self):
         for infectious in self.infectedPeople:
-            healthCount = 0
-            for health in self.healthPeople:
-                distance = math.sqrt(
-                    (infectious.getX() - health.getX()) ** 2
-                    + (infectious.getY() - health.getY()) ** 2
+            for healthCount, health in enumerate(self.healthPeople):
+                healthPos = [health.getX(), health.getY()]
+                infectiousPos = [infectious.getX(), infectious.getY()]
+                distance = self.getDistance(healthPos, infectiousPos)
+                chance = (
+                    random.randint(1, 100) <= infectious.getInfectionRate()
+                    and distance < self.radius * 3
                 )
-                if distance < constants.RADIUS * 2:
-                    # Collide
-                    newInfectious = Infectious(
-                        health.getX(),
-                        health.getY(),
-                        health.getVelocity(),
-                        health.getDirection(),
-                        constants.RED,
-                        infectious.getInfectionRate(),
-                        infectious.getDeathRate(),
+                if distance < self.radius * 2 or chance:
+                    # infection
+                    newInfectious = self.genNewCondition(
+                        health, infectious, infected=True
                     )
                     self.infectedPeople.append(newInfectious)
                     del self.healthPeople[healthCount]
 
-                healthCount += 1
-
     def checkDeath(self):
-        pass
+        for infectionIdx, infectious in enumerate(self.infectedPeople):
+            if (
+                infectious.getVelocity() != 0
+                and infectious.getDeathCount()
+                == random.randint(2, 4) * constants.FPS // infectious.getVelocity()
+            ) and random.randint(1, 100) <= infectious.getDeathRate():
+                newDeath = self.genNewCondition(infectious, infectious, death=True)
+                self.deadPeople.append(newDeath)
+                del self.infectedPeople[infectionIdx]
+            infectious.setDeathCount(infectious.getDeathCount() + 1)
 
     def mutateVirus(self):
-        pass
+        for infectious in self.infectedPeople:
+            if random.randint(0, constants.MUTATE) == 0:
+                infectious.mutate()
 
     def setSpeed(self, speed):
         for personIndex in range(self.getNumberOfLivingPeople()):
@@ -80,43 +99,78 @@ class Manager:
         for _ in range(N_People):
             x = random.randint(creationDomain[0], creationDomain[1])
             y = random.randint(creationRange[0], creationRange[1])
-            velocity = 1
+            velocity = self.radius // 5
             if not infected:
                 person = Person(
-                    x, y, velocity, random.uniform(-math.pi, math.pi), colour
+                    x,
+                    y,
+                    velocity,
+                    random.uniform(-math.pi, math.pi),
+                    colour,
+                    self.radius,
                 )
             else:
                 person = Infectious(
-                    x, y, velocity, random.uniform(-math.pi, math.pi), colour, 10, 10
+                    x,
+                    y,
+                    velocity,
+                    random.uniform(-math.pi, math.pi),
+                    colour,
+                    self.radius,
+                    self.infectionRate,
+                    self.deathRate,
                 )
             people.append(person)
         return people
 
-    def separatePeople(self, personIndex):
+    def genNewCondition(self, itself, opponent, infected=False, death=False):
+        if infected:
+            return Infectious(
+                itself.getX(),
+                itself.getY(),
+                itself.getVelocity(),
+                itself.getDirection(),
+                self.infectiousColour,
+                self.radius,
+                opponent.getInfectionRate(),
+                opponent.getDeathRate(),
+            )
+        elif death:
+            return Person(
+                itself.getX(),
+                itself.getY(),
+                0,
+                0,
+                self.deathColour,
+                self.radius,
+            )
+
+    def separatePeople(self, personIndex, death=False):
         if personIndex < len(self.healthPeople):
             return self.healthPeople[personIndex]
-        else:
-            return self.infectedPeople[personIndex - len(self.healthPeople)]
+        elif death and (personIndex >= self.getNumberOfLivingPeople()):
+            return self.deadPeople[personIndex - self.getNumberOfLivingPeople()]
+        return self.infectedPeople[personIndex - len(self.healthPeople)]
 
-    def neg_or_pos(self, n):
-        if random.randint(0, 1) == 0:
-            n *= -1
-        return n
+    def getDistance(self, pos1, pos2):
+        return math.sqrt((pos2[0] - pos1[0]) ** 2 + (pos2[1] - pos1[1]) ** 2)
 
     def hitWall(self, pos_x, pos_y, direction, radius):
-        if pos_x - radius < 0:
-            if math.cos(direction) < 0:
-                return True
-        elif pos_x + radius > constants.MAX_WIDTH:
-            if math.cos(direction) > 0:
-                return True
-        if pos_y - radius < 0:
-            if math.sin(direction) < 0:
-                return True
-        elif pos_y + radius > constants.MAX_HEIGHT:
-            if math.sin(direction) > 0:
-                return True
-        return False
+        if (
+            pos_x - radius < 0
+            and math.cos(direction) < 0
+            or pos_x - radius >= 0
+            and pos_x + radius > constants.WIDTH
+            and math.cos(direction) > 0
+        ):
+            return True
+        return (
+            pos_y - radius < 0
+            and math.sin(direction) < 0
+            or pos_y - radius >= 0
+            and pos_y + radius > constants.HEIGHT
+            and math.sin(direction) > 0
+        )
 
     def getHealthPeople(self):
         return self.healthPeople
@@ -137,4 +191,4 @@ class Manager:
         return len(self.deadPeople)
 
     def getNumberOfLivingPeople(self):
-        return constants.N_PEOPLE - len(self.deadPeople)
+        return self.N_people - len(self.deadPeople)

@@ -166,6 +166,12 @@ def second_game_scene():
         # slow down to see the animations move
         clock.tick(constants.CLOCK_TICK)
 
+from ButtonClass import ButtonClass
+from CheckPrisonerEvents import CheckPrisonerEvents
+from PrisonerClass import PrisonerClass
+
+# from Maps import Maps
+
 
 def first_game_scene():
     # create clock
@@ -191,14 +197,32 @@ def first_game_scene():
     # modify dragon size
     my_dragon.modify_sprite_size(constants.DOUBLE_SIZE)
 
+    # create sprites
+    prisoner = pygame.image.load("Sprites/prisoners/prisoner.png")
+    # tile = pygame.image.load("Sprites/cell.png")
+
+    # objects
+    my_prisoner = PrisonerClass(
+        prisoner,
+        prisoner_x,
+        prisoner_y,
+        constants.PRISONER_X_SPEED,
+        constants.PRISONER_Y_SPEED,
+        screen,
+    )
+    # my_cell_map = Maps(tile, 60, 50, screen, 1)
+    my_check_event = CheckPrisonerEvents()
+
     running = True
     while running:
         # upload image
         screen.blit(background, (0, 0))
 
         # get rect
-        prisoner_rect = my_prisoner.get_rect()
-        door_rect = my_door.get_rect()
+        # prisoner_rect = my_prisoner.get_rect()
+
+        # build map
+        # my_cell_map.build_map(prisoner_rect)
 
         # build map
         my_cell_map.build_map(prisoner_rect)
@@ -222,32 +246,8 @@ def first_game_scene():
         my_prisoner.modify_sprite_size(constants.DOUBLE_SIZE)
         # flip prisoner
         my_prisoner.prisoner_flip()
-        # restrict movement to inside of screen
-        my_prisoner.keep_inside_screen()
         # upload prisoner image
         my_prisoner.sprite_upload()
-
-        # move golem one
-        my_golem.golem_move()
-        # upload golem one
-        my_golem.sprite_upload()
-
-        # move golem two
-        my_golem_two.golem_move()
-        # upload golem two
-        my_golem_two.sprite_upload()
-
-        # check collision
-        my_dragon.attack(prisoner_rect)
-        my_golem.attack(prisoner_rect)
-        my_golem_two.attack(prisoner_rect)
-        # when prisoner gets to the door, end loop and move scene
-        if my_door.check_collision(door_rect, prisoner_rect):
-            running = False
-
-        # upload dragon and door
-        my_dragon.sprite_upload()
-        my_door.sprite_upload()
 
         # refresh the screen every frame
         pygame.display.update()
