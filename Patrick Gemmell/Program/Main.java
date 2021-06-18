@@ -454,6 +454,8 @@ public final class Main {
    */
   public static void main(final String[] args) {
     try {
+      Boolean restartGame = false;
+      Boolean continueGame = true;
       // Creating scanners to accept the starting user input
       final Scanner beginInput = new Scanner(System.in);
       final Scanner gameInput = new Scanner(System.in);
@@ -500,29 +502,9 @@ public final class Main {
           // Checking if the player went bankrupt
         } else if (playerMoney == 0) {
           // Variable for finding if the player would like to play again
-          Boolean bankrupt = gameOver(playerMoney, roundsPlayed);
+          restartGame = gameOver(playerMoney, roundsPlayed);
+          continueGame = false;
           // Figuring out whether or not the user wants the game to end
-          if (bankrupt) {
-            // Printing that the program will start a new game
-            printMessage("Please wait while we shuffle a new deck...");
-            // Reshuffling the deck
-            deck.recallDeck();
-            // Dealing each player a new hand
-            CardHand[] redealHands = dealCards(deck);
-            // Giving the players their new hands
-            playerHand = redealHands[0];
-            dealerHand = redealHands[1];
-            // Setting the rounds played to 0
-            roundsPlayed = 0;
-            // Setting player money to $50
-            playerMoney = FIFTY;
-            // Clearing the screen
-            clearScreen();
-          } else if (!bankrupt) {
-            // Printing a farewell message to the user
-            printMessage("♠♥♦♣ Thanks for Playing! ♣♦♥♠");
-            break;
-          }
         } else {
           // Receiving input for the move the player would like to make
           System.out.print("What would you like to do "
@@ -560,9 +542,16 @@ public final class Main {
             roundsPlayed += 1;
           } else if (userInput.equals("CASHOUT")) {
             // Calling the function that ends the game
-            Boolean endGame = gameOver(playerMoney, roundsPlayed);
+            restartGame = gameOver(playerMoney, roundsPlayed);
+            continueGame = false;
             // Figuring out whether or not the user wants the game to end
-            if (endGame) {
+          } else {
+            // Printing that the user entered an invalid input
+            printMessage("Your input is not valid. Try again!");
+          }
+        }
+          if (!continueGame) {
+            if (restartGame) {
               // Printing that the program will start a new game
               printMessage("Please wait while we shuffle a new deck...");
               // Reshuffling the deck
@@ -576,23 +565,18 @@ public final class Main {
               roundsPlayed = 0;
               // Setting player money to $50
               playerMoney = FIFTY;
-            } else if (!endGame) {
+              // Clearing the screen
+              clearScreen();
+              continueGame = true;
+            } else {
               // Printing a farewell message to the user
               printMessage("♠♥♦♣ Thanks for Playing! ♣♦♥♠");
               break;
-            } else {
-              // Printing that an error occurred in determining the choice made
-              System.out.println("ERROR: Unable to determine continuation");
-              break;
             }
-          } else {
-            // Printing that the user entered an invalid input
-            printMessage("Your input is not valid. Try again!");
           }
           // Clearing the screen again
           clearScreen();
         }
-      }
       // Catches and tells the user what error occured
     } catch (NullPointerException e) {
       System.out.println("");

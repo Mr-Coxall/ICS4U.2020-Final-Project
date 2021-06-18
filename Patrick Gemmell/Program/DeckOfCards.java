@@ -18,12 +18,10 @@ public class DeckOfCards {
   * the number fifty two.
   */
   public static final int FIFTYTWO = 52;
-
-  // Initializing fields
   /**
-   * Setting the array of cards.
+   * array of cards.
    */
-  private static String[] possibleCards = {"2♥", "3♥", "4♥", "5♥", "6♥", "7♥",
+  public static final String[] DECKCARDS = {"2♥", "3♥", "4♥", "5♥", "6♥", "7♥",
                                            "8♥", "9♥", "10♥", "J♥", "Q♥", "K♥",
                                            "A♥", "2♦", "3♦", "4♦", "5♦", "6♦",
                                            "7♦", "8♦", "9♦", "10♦", "J♦", "Q♦",
@@ -32,6 +30,11 @@ public class DeckOfCards {
                                            "Q♣", "K♣", "A♣", "2♠", "3♠", "4♠",
                                            "5♠", "6♠", "7♠", "8♠", "9♠", "10♠",
                                            "J♠", "Q♠", "K♠", "A♠"};
+  // Initializing fields
+  /**
+   * Setting the array of cards.
+   */
+  private static String[] possibleCards = DECKCARDS;
 
   /**
    * Setting field values with a constructor.
@@ -112,13 +115,7 @@ public class DeckOfCards {
    */
   public void recallDeck() {
     // Setting up a brand new full deck of cards
-    String[] recalledValues = {"2♥", "3♥", "4♥", "5♥", "6♥", "7♥", "8♥", "9♥",
-                               "10♥", "J♥", "Q♥", "K♥", "A♥", "2♦", "3♦", "4♦",
-                               "5♦", "6♦", "7♦", "8♦", "9♦", "10♦", "J♦", "Q♦",
-                               "K♦", "A♦", "2♣", "3♣", "4♣", "5♣", "6♣", "7♣",
-                               "8♣", "9♣", "10♣", "J♣", "Q♣", "K♣", "A♣", "2♠",
-                               "3♠", "4♠", "5♠", "6♠", "7♠", "8♠", "9♠", "10♠",
-                               "J♠", "Q♠", "K♠", "A♠"};
+    String[] recalledValues = DECKCARDS;
 
     // Setting the current deck to be the deck with all its cards
     this.possibleCards = recalledValues;
