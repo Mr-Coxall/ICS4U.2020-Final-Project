@@ -37,7 +37,7 @@ public class Help extends HitBoxes {
         background.loadBackground5(g);
         if (isClicked(x, y, param1, param2, param3, param4)) {
             g.clearRect(0, 0, width, height);
-            Game.setState(Game.STATE.MENU);
+            Main.setState(Main.STATE.MENU);
         }
     }
 }

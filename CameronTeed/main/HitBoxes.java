@@ -8,7 +8,7 @@ package com.breakfast.main;
  */
 import java.awt.Rectangle;
 
-import com.breakfast.main.Game.STATE;
+import com.breakfast.main.Main.STATE;
 
 abstract class HitBoxes {
  // This is the HitBox Class.
@@ -35,7 +35,7 @@ abstract class HitBoxes {
         if (eggBound.contains(x, y) && MyMouseListener.getState2()) {
             // System.out.println("click");
             if (clickCount == 0 && MyMouseListener.getState2()
-                                && Game.getState() == STATE.GAME) {
+                                && Main.getState() == STATE.GAME) {
                 music.load2("C:\\Users\\super\\git\\ICS4U.2020-Final-Project\\"
                                         + "\\CameronTeed\\Breakfast\\Musi"
                                         + "c\\Sizzling-sound-effect.wav");
@@ -105,7 +105,7 @@ abstract class HitBoxes {
         Rectangle eggBound = new Rectangle(param1, param2, param3, param4);
         if (eggBound.contains(x, y) && MyMouseListener.getState()) {
             if (clickCount == 0 && MyMouseListener.getState4()
-                    && Game.getState() == STATE.GAME) {
+                    && Main.getState() == STATE.GAME) {
                 music.load2("C:\\Users\\super\\git\\ICS4U.2020-Final-Project\\"
                                     + "\\CameronTeed\\Breakfast\\Music"
                                     + "\\Sizzling-sound-effect.wav");
