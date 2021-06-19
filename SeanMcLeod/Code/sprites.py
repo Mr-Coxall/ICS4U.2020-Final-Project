@@ -1,3 +1,10 @@
+# !/usr/bin/env python3
+
+# Created by Sean McLeod
+# Created on June 2021
+# This is the sprites class
+
+import constants
 import pygame
 
 
@@ -9,30 +16,30 @@ class Sprites:
         self._x_speed = x_speed
         self._y_speed = y_speed
         self._screen = screen
-        self.width = self._sprite.get_width()
-        self.height = self._sprite.get_height()
-        self.moving_rect = pygame.Rect(
-            self._sprite_x, self._sprite_y, self.width, self.height
+        self._width = self._sprite.get_width()
+        self._height = self._sprite.get_height()
+        self._rect = pygame.Rect(
+            self._sprite_x, self._sprite_y, self._width, self._height
         )
-        self.current_sprite = 0
+        self._current_sprite = 0
 
     def sprite_upload(self):
-        self._screen.blit(self._sprite, (self.moving_rect.x, self.moving_rect.y))
+        self._screen.blit(self._sprite, (self._rect.x, self._rect.y))
 
     def flip_sprite(self):
         self._sprite = pygame.transform.flip(self._sprite, True, False)
 
-    def set_moving_rect(self, new_rect):
-        self.moving_rect = new_rect
+    def set_rect(self, new_rect):
+        self._rect = new_rect
 
     def modify_sprite_size(self, multiplier):
         # get sprite's size
         sprite_size = self._sprite.get_size()
-        # increase size of sprite and rect
+        # increase size of sprite and _rect
         self._sprite = pygame.transform.scale(
             self._sprite, (sprite_size[0] * multiplier, sprite_size[1] * multiplier)
         )
-        self.moving_rect.size = self._sprite.get_size()
+        self._rect.size = self._sprite.get_size()
 
     def check_collision(self, sprite1, sprite2):
         if sprite1.colliderect(sprite2):
@@ -41,16 +48,28 @@ class Sprites:
             return False
 
     def sprite_move(self, x_change, y_change):
-        self.moving_rect.x += x_change
-        self.moving_rect.y += y_change
+        self._rect.x += x_change
+        self._rect.y += y_change
 
     def sprite_animation(self, sprite_list):
-        self.current_sprite += 1
-        if self.current_sprite >= len(sprite_list):
-            self.current_sprite = 0
+        self._current_sprite += 1
+        if self._current_sprite >= len(sprite_list):
+            self._current_sprite = 0
+
+    def keep_inside_screen(self):
+        if (
+            self._rect.x >= constants.SCREEN_WIDTH - self._sprite.get_width()
+            or self._rect.x <= 0
+            or self._rect.y >= constants.SCREEN_HEIGHT - self._sprite.get_height()
+            or self._rect.y <= 0
+        ):
+            self._rect.clamp_ip(self._screen.get_rect())
+            return True
+        else:
+            return False
 
     def get_rect(self):
-        return self.moving_rect
+        return self._rect
 
     def get_sprite_x(self):
         return self._sprite_x
@@ -82,5 +101,23 @@ class Sprites:
     def set_sprite(self, new_sprite):
         self._sprite = new_sprite
 
+    def get_width(self):
+        return self._sprite.get_width()
+
+    def set_width(self, new_width):
+        self._width = new_width
+
+    def get_height(self):
+        return self._sprite.get_height()
+
+    def set_height(self, new_height):
+        self._height = new_height
+
+    def get_current_sprite(self):
+        return self._current_sprite
+
+    def set_current_sprite(self, new_current_sprite):
+        self._current_sprite = new_current_sprite
+
     def draw_rect(self):
-        pygame.draw.rect(self._screen, (255, 0, 0), self.moving_rect)
+        pygame.draw.rect(self._screen, (255, 0, 0), self._rect)
