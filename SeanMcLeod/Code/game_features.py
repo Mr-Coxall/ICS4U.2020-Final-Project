@@ -56,11 +56,10 @@ class ButtonClass:
 
     def is_over(self, mouse_pos):
         # check if the mouse is over the button
-        if self.position_x < mouse_pos[0] < self.position_x + self.width:
-            if self.position_y < mouse_pos[1] < self.position_y + self.height:
-                return True
-
-        return False
+        return (
+            self.position_x < mouse_pos[0] < self.position_x + self.width
+            and self.position_y < mouse_pos[1] < self.position_y + self.height
+        )
 
     def get_rect(self):
         return self.rect
@@ -74,7 +73,7 @@ class GetModifiedButton:
         self._button_middle_position = constants.MIDDLE_X - self._big_button_width / 2
 
     def get_back_button(self):
-        back_button = ButtonClass(
+        return ButtonClass(
             constants.LIGHT_GREEN,
             constants.BACK_BUTTON_X,
             constants.BACK_BUTTON_Y,
@@ -82,10 +81,9 @@ class GetModifiedButton:
             constants.BACK_BUTTON_HEIGHT,
             constants.BACK_BUTTON_TEXT,
         )
-        return back_button
 
     def get_re_button(self):
-        re_button = ButtonClass(
+        return ButtonClass(
             constants.LIGHT_GRAY,
             constants.BACK_BUTTON_X,
             constants.BACK_BUTTON_Y,
@@ -93,7 +91,6 @@ class GetModifiedButton:
             constants.BACK_BUTTON_HEIGHT,
             constants.RE_BUTTON_TEXT,
         )
-        return re_button
 
     def get_start_scene_buttons(self):
         start_button = ButtonClass(constants.WHITE, 100, 100, 320, 130, "START")

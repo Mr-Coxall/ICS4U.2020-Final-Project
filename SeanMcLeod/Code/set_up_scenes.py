@@ -190,6 +190,7 @@ class SetUpScenes:
 
             if event.type == pygame.QUIT:
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if back_button.is_over(mouse_position):
-                    return True
+            if event.type == pygame.MOUSEBUTTONDOWN and back_button.is_over(
+                mouse_position
+            ):
+                return True

@@ -19,10 +19,7 @@ from set_up_scenes import SetUpScenes
 def did_you_win(is_win):
     # font
     main_font = pygame.font.SysFont(constants.FONT_COMIC, constants.TITLE_SIZE)
-    if is_win:
-        text = "You Win!"
-    else:
-        text = "You Lose!"
+    text = "You Win!" if is_win else "You Lose!"
     # text
     main_text = main_font.render(text, False, constants.BLACK)
 
@@ -53,9 +50,10 @@ def did_you_win(is_win):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if re_button.is_over(mouse_position):
-                    start_screen()
+            if event.type == pygame.MOUSEBUTTONDOWN and re_button.is_over(
+                mouse_position
+            ):
+                start_screen()
 
         # refresh the screen every frame
         pygame.display.update()
@@ -123,11 +121,9 @@ def third_game_scene():
         my_prisoner.modify_sprite_size(constants.DOUBLE_SIZE)
 
         # fire a laser, if we have enough power (have not used up all the lasers)
-        for laser_number in range(len(lasers)):
-            if lasers[laser_number].x < 0:
-                lasers[laser_number].move(
-                    my_ship.get_sprite_x(), my_ship.get_sprite_y()
-                )
+        for laser in lasers:
+            if laser.x < 0:
+                laser.move(my_ship.get_sprite_x(), my_ship.get_sprite_y())
                 break
 
         if single_laser >= constants.BULLET_SHOOT_RATE:
@@ -573,15 +569,14 @@ def second_game_scene():
             my_chest.set_sprite(chest_opened)
             my_chest.modify_sprite_size(constants.DOUBLE_SIZE)
 
-        if chest_open:
-            if key_appear:
-                my_key.sprite_upload()
-                if my_prisoner.check_collision(prisoner_rect, key_rect):
-                    key_sound = mixer.Sound(constants.KEY_SOUND)
-                    key_sound.play()
-                    door_open = True
-                    key_appear = False
-                    shadow_appear = True
+        if chest_open and key_appear:
+            my_key.sprite_upload()
+            if my_prisoner.check_collision(prisoner_rect, key_rect):
+                key_sound = mixer.Sound(constants.KEY_SOUND)
+                key_sound.play()
+                door_open = True
+                key_appear = False
+                shadow_appear = True
 
         if shadow_appear:
             # upload shadows
