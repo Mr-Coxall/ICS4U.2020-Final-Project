@@ -232,7 +232,7 @@ def first_game_scene():
     # create sprites
     prisoner = pygame.image.load("Sprites/prisoners/prisoner.png")
     # tile = pygame.image.load("Sprites/cell.png")
-    
+
     # linting errors, so I needed to define the variables before you used them
     # Mr Coxall
     prisoner_x = None
