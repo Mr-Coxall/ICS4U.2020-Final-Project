@@ -24,10 +24,10 @@ public class Window extends Canvas {
    * @param width
    * @param height
    * @param title
-   * @param game
+   * @param main
    */
   public Window(final int width, final int height, final String title,
-          final Game game) {
+          final Main main) {
     JFrame frame = new JFrame(title);
 
     frame.setPreferredSize(new Dimension(width, height));
@@ -37,8 +37,8 @@ public class Window extends Canvas {
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     frame.setResizable(false);
     frame.setLocationRelativeTo(null);
-    frame.add(game);
+    frame.add(main);
     frame.setVisible(true);
-    game.start();
+    main.start();
   }
 }

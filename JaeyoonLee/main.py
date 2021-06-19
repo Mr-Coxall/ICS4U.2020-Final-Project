@@ -5,201 +5,278 @@
 # This program simulates a virus spreading.
 
 
-import os
-import sys
-
 import constants
+import displayFunctions as display
 import pygame
-from Button import Button
 from Manager import Manager
+from Setting import CheckBox, Slider
+
+variables: list = [100, 25, 4, 6]
+colours: list = [constants.WHITE, constants.RED, constants.BLACK]
+colourSelected: list = [0, 0, 0]
+virus_name: str = constants.VIRUS_NAME
 
 
-def splashScreen(fps, screen):
-    start_ticks = pygame.time.get_ticks()
-    backgroundFilePath = os.path.join(
-        sourceFileDir, "images\\virusSimulator_splash.png"
-    )
-
+def splashScreen():
     # background image
-    background = resizeImage(
-        pygame.image.load(backgroundFilePath),
-        (constants.MAX_WIDTH, constants.MAX_HEIGHT),
-    )
-    screen.blit(background, (0, 0))
+    display.backgroundImageBlit(screen, constants.SPLASH_IMG)
 
     # splash screen title
-    displayText(
-        screen,
-        "Splash Screen",
-        60,
-        (constants.CENTER_X, constants.CENTER_Y),
-        constants.WHITE,
-        centre=True,
-    )
+    display.titleText(screen, 100, adjustment=50)
 
-    while True:
-        for event in pygame.event.get():
-            checkQuit(event)
+    start_ticks = pygame.time.get_ticks()
+    splash = True
+
+    while splash:
+        splash_ticks = pygame.time.get_ticks() - start_ticks
+
+        display.drawBar(screen, (550, 600), (300, 32), splash_ticks / 2000)
+
+        splash = splash_ticks < 2000
 
         pygame.display.update()
-        fps.tick(constants.FPS)
-
-        count = (pygame.time.get_ticks() - start_ticks) / 1000
-        if count > constants.SPLASH_TIME:  # break after 3 seconds
-            break
 
 
-def menuScreen(fps, screen):
-    backgroundFilePath = os.path.join(
-        sourceFileDir, "images\\virusSimulator_mainMemu.png"
-    )
+def menuScreen():
+    global virus_name
+    display.drawBackground(screen)
 
-    buttons = []
-    buttonText = ["Start", "Option", "Help", "Quit"]
-    for index in range(4):
-        buttons.append(
-            Button(
-                constants.CENTER_X - 100,
-                constants.CENTER_Y + (60 * index),
-                200,
-                50,
-                constants.WHITE,
-                buttonText[index],
-                constants.RED,
-            )
-        )
-
-    # background image
-    background = resizeImage(
-        pygame.image.load(backgroundFilePath),
-        (constants.MAX_WIDTH, constants.MAX_HEIGHT),
-    )
-    screen.blit(background, (0, 0))
-
-    # main menu screen title
-    displayText(
-        screen,
-        "Virus Simulator",
-        100,
-        (constants.CENTER_X, constants.CENTER_Y - 100),
-        constants.WHITE,
-        centre=True,
-    )
+    buttons = display.genMenuButtons()
+    inputBox, startButton, inputBack = display.genInputBox()
+    inputRect = [inputBox, startButton, inputBack]
+    inputActive, popUpActive = False, False
 
     while True:
         buttonActive = [False for _ in range(4)]
+        clicked, start = False, False
+
         # event check
         for event in pygame.event.get():
-            checkQuit(event)
+            display.checkQuit(event)
             if event.type == pygame.MOUSEBUTTONUP:
-                mousePosition = pygame.mouse.get_pos()
-                for idx in range(4):
-                    button = buttons[idx].getRect()
-                    buttonActive[idx] = button.collidepoint(mousePosition)
-                if buttonActive[3]:
-                    pygame.quit()
-                    sys.exit()
+                if not popUpActive:
+                    clicked = True
+                    for idx in range(4):
+                        buttonActive[idx] = display.checkButtonClick(buttons[idx])
+                    if buttonActive[3]:
+                        display.checkQuit(event, specific=True)
+                elif display.checkButtonClick(inputRect[1]):
+                    clicked, start = True, True
+                elif not display.checkButtonClick(inputRect[2]):
+                    clicked, popUpActive = True, False
+                inputActive = display.checkButtonClick(inputRect[0])
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    popUpActive = False
+                    display.drawBackground(screen)
+                if inputActive:
+                    if event.key == pygame.K_RETURN:
+                        clicked, start = True, True
+                    else:
+                        virus_name = display.checkVirusName(
+                            event, virus_name, buttonSound
+                        )
+
+        # button active
+        if clicked:
+            buttonSound.play()
+            if buttonActive[0]:
+                popUpActive = True
+                virus_name = constants.VIRUS_NAME
+            elif start:
+                simulateScreen()
+                inputActive, popUpActive = False, False
+            elif buttonActive[1]:
+                optionScreen()
+            elif buttonActive[2]:
+                helpScreen()
+            display.drawBackground(screen)
+            pygame.time.wait(100)
 
         for button in buttons:
             button.draw(screen)
 
-        # button active
-        if buttonActive[0]:
-            simulateScreen(fps, screen)
-        elif buttonActive[1]:
-            print("Option")
-        elif buttonActive[2]:
-            print("Help")
+        if popUpActive:
+            display.drawInputBox(screen, virus_name, inputRect, inputActive)
 
-        pygame.display.update()
-        fps.tick(constants.FPS)
+        display.update()
 
 
-def simulateScreen(fps, screen):
-    manager = Manager()
+def optionScreen(variableAccess=True):
+    global variables, colours, colourSelected
+    # background image
+    display.backgroundImageBlit(screen, constants.OPTION_IMG)
 
-    timeImages = []
-    imageNames = ["pause", "play", "fast"]
-    for index in range(len(imageNames)):
-        path = os.path.join(sourceFileDir, "images\\" + imageNames[index] + ".png")
-        image = pygame.image.load(path)
-        timeImages.append(image)
+    backButton, backActive = display.genBackButton()
+
+    colourSettings = display.genSelectoionBox(colours, colourSelected)
+
+    sliderLength = constants.SLIDER_LENGTH
+    sound = pygame.mixer.music.get_volume()
+    soundSlider = Slider((40, 240), sliderLength, sound * sliderLength)
+    varSettings = display.genSliders(variables)
+
+    defaultModelCheckBox = CheckBox((1320, 120), 40)
+
+    while not backActive:
+        display.backgroundImageBlit(screen, constants.OPTION_IMG)
+        for event in pygame.event.get():
+            display.checkQuit(event)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                buttonSound.play()
+            elif event.type == pygame.MOUSEBUTTONUP:
+                mousePosition = pygame.mouse.get_pos()
+                backActive = display.checkButtonClick(backButton)
+                display.checkVolumeSlider(soundSlider, mousePosition, buttonSound)
+                if variableAccess:
+                    variables = display.checkSlider(
+                        defaultModelCheckBox, mousePosition, varSettings, variables
+                    )
+                    for idx, colourSetting in enumerate(colourSettings):
+                        colours[idx], colourSelected[idx] = colourSetting.update(
+                            mousePosition
+                        )
+
+        backButton.draw(screen)
+
+        for colourSetting in colourSettings:
+            colourSetting.draw(screen)
+
+        soundSlider.draw(screen)
+        defaultModelCheckBox.draw(screen)
+        variables = display.drawSliders(
+            screen, variables, varSettings, defaultModelCheckBox
+        )
+
+        # set texts and lines on screen
+        display.settingText(screen)
+
+        display.displayVariables(screen, variables)
+
+        display.update()
+
+
+def helpScreen():
+    # background image
+    display.backgroundImageBlit(screen, constants.OPTION_IMG)
+
+    backButton, backActive = display.genBackButton()
+
+    # help screen title
+    display.titleText(screen, 80, title="About Virus Simulator", adjustment=250)
+
+    while not backActive:
+        backActive = display.checkBackButton(screen, backButton)
+
+        for idx in range(len(constants.HELPS)):
+            display.displayText(
+                screen, constants.HELPS[idx], 48, (700, 300 + (72 * idx)), centre=True
+            )
+        display.displayText(screen, "Create by Jay Lee", 48, (700, 750), centre=True)
+
+        display.update()
+    buttonSound.play()
+
+
+def simulateScreen():
+    manager = Manager(variables, colours)
+
+    optionBox, settingButton, quitButton = display.genPopUP()
+    simEndBox, quitSimButton, creditButton = display.genPopUP(
+        btnText1="Menu", btnText2="Credits"
+    )
+    optionActive = False
+    quitGame = False
+    credit = False
+
+    timeImages = display.loadImages(constants.TIME_TEXTS)
 
     speed = 1
 
-    while True:
-        screen.fill(constants.GREY)
-
-        # event check
-        for event in pygame.event.get():
-            checkQuit(event)
-            if event.type == pygame.MOUSEBUTTONUP:
-                mousePosition = pygame.mouse.get_pos()
-                for idx in range(len(timeImages)):
-                    image = timeImages[idx].get_rect(center=(17 + (32 * idx), 108))
-                    if image.collidepoint(mousePosition):
-                        if idx == 0:  # pause
-                            speed = 0
-                        elif idx == 1:  # play
-                            speed = 1
-                        elif idx == 2 and speed < 8:  # max time speed: x8
-                            speed *= 2
-                        manager.setSpeed(speed)
-
-        manager.movePerson(screen)
-        manager.checkInfected()
+    while not (quitGame or credit):
+        backgroundColour = display.getBackgroundColour(colours)
+        screen.fill(backgroundColour)
 
         health = manager.getNumberOfHealthPeople()
         infectious = manager.getNumberOfInfectedPeople()
         death = manager.getNumberOfDeadPeople()
-        displayText(screen, "Healthy: " + str(health), 30, (5, 5), constants.GREEN)
-        displayText(
-            screen, "Infectious: " + str(infectious), 30, (5, 35), constants.RED
+
+        simEnd = health == 0 or infectious == 0
+
+        # event check
+        for event in pygame.event.get():
+            display.checkQuit(event)
+            if event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
+                manager.setSpeed(1 if optionActive else 0)
+                optionActive = not optionActive
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                buttonSound.play()
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if optionActive:
+                    if display.checkButtonClick(settingButton):
+                        optionScreen(variableAccess=False)
+                    quitGame = display.checkButtonClick(quitButton)
+                elif simEnd:
+                    quitGame = display.checkButtonClick(quitSimButton)
+                    credit = display.checkButtonClick(creditButton)
+                else:
+                    speed = display.timeSetting(manager, timeImages, speed)
+
+        manager.movePerson(screen)
+        manager.checkInfected()
+        manager.checkDeath()
+
+        display.simText(screen, health, infectious, death)
+        display.TimeText(screen, timeImages, speed)
+        display.displayText(
+            screen, virus_name, 48, (700, 27), colour=constants.RED, centre=True
         )
-        displayText(screen, "Death: " + str(death), 30, (5, 65), constants.BLACK)
 
-        for index in range(len(timeImages)):
-            screen.blit(timeImages[index], (5 + (32 * index), 84))
+        if optionActive:
+            display.popUp(screen, optionBox, settingButton, quitButton)
+        elif simEnd:
+            display.simEndPopUP(
+                screen, simEndBox, quitSimButton, creditButton, infectious
+            )
+        display.update()
 
-        pygame.display.update()
-        fps.tick(constants.FPS)
-
-
-def main():
-    pygame.init()
-    pygame.display.set_caption("Virus Simulator")
-    fps = pygame.time.Clock()
-    screen = pygame.display.set_mode((constants.MAX_WIDTH, constants.MAX_HEIGHT))
-
-    splashScreen(fps, screen)
-    menuScreen(fps, screen)
+    if simEnd and credit:
+        creditScreen()
 
 
-def displayText(screen, strText, fontSize, position, colour, centre=False):
-    font = getFont(fontSize)
-    text = font.render(strText, True, colour)
-    if centre:
-        screen.blit(text, text.get_rect(center=position))
-    else:
-        screen.blit(text, position)
+def creditScreen():
+    # background image
+    display.backgroundImageBlit(screen, constants.OPTION_IMG)
 
+    backButton, backActive = display.genBackButton(text="Menu")
 
-def checkQuit(event):
-    if event.type == pygame.QUIT:
-        pygame.quit()
-        sys.exit()
+    # help screen title
+    display.titleText(screen, 80, title="Credits", adjustment=250)
 
+    while not backActive:
+        backActive = display.checkBackButton(screen, backButton)
 
-def resizeImage(image, newSize):
-    image = pygame.transform.scale(image, newSize)
-    return image
+        for idx in range(len(constants.CREDITS_TEXT)):
+            display.displayText(
+                screen, constants.CREDITS_TEXT[idx], 48, (180, 300 + (120 * idx))
+            )
+        display.displayText(screen, "Since June 2021", 32, (180, 750), centre=True)
+        display.displayText(
+            screen, "Thank you for using Virus Simulator", 32, (700, 750), centre=True
+        )
 
-
-def getFont(fontSize):
-    return pygame.font.SysFont("notosanscjkkrblack", fontSize)
+        display.update()
+    buttonSound.play()
 
 
 if __name__ == "__main__":
-    sourceFileDir = os.path.dirname(os.path.abspath(__file__))
-    os.chdir(sourceFileDir)
-    main()
+    # initialize pygame
+    pygame.init()
+    pygame.display.set_caption(constants.TITLE)
+    screen = pygame.display.set_mode((constants.WIDTH, constants.HEIGHT))
+    icon = pygame.image.load(display.getFilePath(constants.ICON_IMG))
+    pygame.display.set_icon(icon)
+    buttonSound = display.musicInit()
+
+    splashScreen()
+    menuScreen()

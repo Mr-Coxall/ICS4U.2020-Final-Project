@@ -53,6 +53,20 @@ RED = (255, 0, 0)
 LIGHT_GREEN = (153, 255, 153)
 YELLOW = (255, 255, 102)
 
+# images
+PRISONER_IMAGE = "Sprites/prisoners/prisoner.png"
+GOLEM_IMAGE = "Sprites/golems/golem-walk.png"
+DRAGON_IMAGE = "Sprites/Dragon.png"
+CELL_IMAGE = "Sprites/cell.png"
+DOOR_IMAGE = "Doors/Door.png"
+WIRE_IMAGE = "Sprites/barbed-wire.png"
+CASTLE_DOOR_IMAGE = "Doors/castledoors.png"
+CHEST_IMAGE = "Sprites/chest-closed.png"
+KEY_IMAGE = "Sprites/goldenkey.png"
+SHADOW_IMAGE = "Sprites/Shadows/shadow(14).png"
+SHIP_IMAGE = "Sprites/ship.png"
+BULLET_IMAGE = "Sprites/laser.png"
+
 # speed
 PRISONER_X_SPEED = 20
 PRISONER_Y_SPEED = 20

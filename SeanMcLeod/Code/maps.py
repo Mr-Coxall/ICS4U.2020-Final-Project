@@ -64,9 +64,12 @@ wwwww wwww
                         self._width,
                         self._height,
                     )
+                    
+                    # pygame.draw.rect(self._screen, (0, 0, 255), self.new_rect)
                     # check collision
                     if new_rect.colliderect(sprite2):
-                        return True
+                        print("collided with map")
+
                 elif character == "r":
                     rotated_rect = pygame.Rect(
                         nth_character * self._tile_x_distance,
@@ -83,4 +86,4 @@ wwwww wwww
                     )
                     # check collision
                     if rotated_rect.colliderect(sprite2):
-                        return True
+                        print("collided with map")

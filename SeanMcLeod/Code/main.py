@@ -8,6 +8,7 @@ import sys
 
 import constants
 import pygame
+
 from bullets import BulletClass
 from check_prisoner_events import CheckPrisonerEvents
 from game_features import GetModifiedButton, SoundOnOff, TextClass
@@ -64,6 +65,199 @@ def credits_page():
     # text
     title_font = pygame.font.SysFont(constants.TITLE_FONT, constants.TITLE_SIZE)
     title_text = title_font.render("Credits", False, constants.BLACK)
+
+
+from button_class import ButtonClass
+from check_prisoner_events import CheckPrisonerEvents
+from set_up_display import SetUpDisplay
+
+
+def third_game_scene():
+    # create clock
+    clock = pygame.time.Clock()
+    single_laser = 1
+    lasers = []
+
+    print("THIRD!!")
+    # create background
+    background = pygame.image.load("Backgrounds/Game Scene 3.jpg")
+
+    # create object
+    my_setup = SetUpDisplay(screen)
+    my_prisoner, my_ship = my_setup.set_up_game_scene_three()
+    my_prisoner_event = CheckPrisonerEvents()
+
+    # sprite group
+    bullet_group = pygame.sprite.Group()
+
+    running = True
+    while running:
+        single_laser += 1
+
+        # upload image
+        screen.blit(background, (0, 0))
+
+        # get rect
+        prisoner_rect = my_prisoner.get_rect()
+
+        # move prisoner
+        (
+            key_is_down,
+            key_left,
+            key_right,
+            key_up,
+            key_down,
+            key_is_up,
+        ) = my_prisoner_event.check_events()
+        my_prisoner.prisoner_move(
+            key_is_down, key_left, key_right, key_up, key_down, key_is_up
+        )
+
+        # choose what image the prisoner should be(there are 10 images for animation)
+        my_prisoner.prisoner_animation()
+        # # flip prisoner
+        my_prisoner.prisoner_flip()
+        # keep prisoner inside of screen
+        my_prisoner.keep_inside_screen()
+        # increase prisoner size
+        my_prisoner.modify_sprite_size(constants.DOUBLE_SIZE)
+
+        # fire a laser, if we have enough power (have not used up all the lasers)
+        for laser_number in range(len(lasers)):
+            if lasers[laser_number].x < 0:
+                lasers[laser_number].move(
+                    my_ship.get_sprite_x(), my_ship.get_sprite_y()
+                )
+                break
+
+        if single_laser >= constants.BULLET_SHOOT_RATE:
+            single_laser = 0
+            bullet_group.add(my_ship.create_bullet())
+
+        # move ship
+        my_ship.ship_move()
+
+        # check collisions
+        my_ship.attack(prisoner_rect)
+
+        # upload sprites
+        my_prisoner.sprite_upload()
+        my_ship.sprite_upload()
+        bullet_group.draw(screen)
+        bullet_group.update(prisoner_rect)
+
+        # refresh the screen every frame
+        pygame.display.update()
+        # slow down to see the animations move
+        clock.tick(constants.CLOCK_TICK)
+
+
+def second_game_scene():
+    clock = pygame.time.Clock()
+    chest_open = False
+    door_open = False
+    key_appear = True
+    shadow_appear = False
+
+    print("welcome!")
+    # create background
+    background = pygame.image.load("Backgrounds/Game Scene 2.png")
+    # upload image
+    chest_opened = pygame.image.load("Sprites/chest-open.png")
+
+    # set up objects
+    my_setup = SetUpDisplay(screen)
+    (
+        my_prisoner,
+        my_door,
+        my_cell_map,
+        my_chest,
+        my_key,
+        my_shadow,
+    ) = my_setup.set_up_game_scene_two()
+
+    # get ready to check prisoner events
+    my_prisoner_event = CheckPrisonerEvents()
+
+    # increase chest size
+    my_chest.modify_sprite_size(constants.DOUBLE_SIZE)
+
+    running = True
+    while running:
+
+        # upload image
+        screen.blit(background, (0, 0))
+
+        # get rect
+        prisoner_rect = my_prisoner.get_rect()
+        door_rect = my_door.get_rect()
+        chest_rect = my_chest.get_rect()
+        key_rect = my_key.get_rect()
+
+        # build map
+        my_cell_map.build_map(prisoner_rect)
+
+        # move prisoner
+        (
+            key_is_down,
+            key_left,
+            key_right,
+            key_up,
+            key_down,
+            key_is_up,
+        ) = my_prisoner_event.check_events()
+        my_prisoner.prisoner_move(
+            key_is_down, key_left, key_right, key_up, key_down, key_is_up
+        )
+
+        # prisoner animation
+        my_prisoner.prisoner_animation()
+        # flip prisoner
+        my_prisoner.prisoner_flip()
+        # choose what image the prisoner should be(there are 10 images for animation)
+        my_prisoner.keep_inside_screen()
+        # upload prisoner image
+        my_prisoner.sprite_upload()
+
+        if my_chest.check_collision(chest_rect, prisoner_rect):
+            chest_open = True
+            my_chest.set_sprite(chest_opened)
+            my_chest.modify_sprite_size(constants.DOUBLE_SIZE)
+
+        if chest_open:
+            if key_appear:
+                my_key.sprite_upload()
+            if my_prisoner.check_collision(prisoner_rect, key_rect):
+                # chest_open = False
+                door_open = True
+                key_appear = False
+                shadow_appear = True
+
+        if shadow_appear:
+            # upload shadows
+            my_shadow.upload()
+        # collision detection
+        my_shadow.attack(prisoner_rect)
+
+        # collision detection
+        if my_door.check_collision(door_rect, prisoner_rect):
+            if door_open:
+                running = False
+            else:
+                print("Cant open!!")
+
+        # upload sprites
+        my_chest.sprite_upload()
+        my_door.sprite_upload()
+
+        # refresh the screen every frame
+        pygame.display.update()
+        # slow down to see the animations move
+        clock.tick(constants.CLOCK_TICK)
+
+from ButtonClass import ButtonClass
+from CheckPrisonerEvents import CheckPrisonerEvents
+from PrisonerClass import PrisonerClass
 
     main_font = pygame.font.SysFont(constants.FONT_COMIC, 16)
 
@@ -432,6 +626,7 @@ def first_game_scene():
 
     # create objects
     my_setup = SetUpScenes(screen)
+
     (
         my_prisoner,
         my_golem,
@@ -447,6 +642,23 @@ def first_game_scene():
     # modify dragon size
     my_dragon.modify_sprite_size(constants.DOUBLE_SIZE)
 
+    # create sprites
+    prisoner = pygame.image.load("Sprites/prisoners/prisoner.png")
+    # tile = pygame.image.load("Sprites/cell.png")
+
+    # objects
+    my_prisoner = PrisonerClass(
+        prisoner,
+        prisoner_x,
+        prisoner_y,
+        constants.PRISONER_X_SPEED,
+        constants.PRISONER_Y_SPEED,
+        screen,
+    )
+    # my_cell_map = Maps(tile, 60, 50, screen, 1)
+
+    my_check_event = CheckPrisonerEvents()
+
     running = True
     while running:
         # upload image
@@ -458,6 +670,9 @@ def first_game_scene():
 
         # build map
         did_map_collide = my_cell_map.build_map(prisoner_rect)
+
+        # build map
+        my_cell_map.build_map(prisoner_rect)
 
         # get events
         (
@@ -519,7 +734,7 @@ def first_game_scene():
         # refresh the screen every frame
         pygame.display.update()
         # slow down to see the animations move
-        clock.tick(constants.CLOCK_TICK)
+        clock.tick(10)
 
 
 def splash_screen():

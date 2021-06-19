@@ -3,6 +3,8 @@
 # Created by Sean McLeod
 # Created on June 2021
 # This is the monster class
+
+
 from sprites import Sprites
 
 
@@ -12,4 +14,4 @@ class Monsters(Sprites):
 
     def attack(self, prey):
         if super().check_collision(super().get_rect(), prey):
-            return True
+            print("attacked!")
