@@ -258,13 +258,12 @@ def first_game_scene():
         my_cell_map.build_map(prisoner_rect)
 
         # get events
-        (
-            key_is_down,
-            key_left,
-            key_right,
-            key_up,
-            key_down,
-            key_is_up,
+        (key_is_down,
+         key_left,
+         key_right,
+         key_up,
+         key_down,
+         key_is_up,
         ) = my_check_event.check_events()
         # move prisoner
         my_prisoner.prisoner_move(
