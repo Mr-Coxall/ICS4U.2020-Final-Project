@@ -11,6 +11,7 @@ import pygame
 from button_class import ButtonClass
 from check_prisoner_events import CheckPrisonerEvents
 from set_up_display import SetUpDisplay
+from PrisonerClass import PrisonerClass
 
 
 def third_game_scene():
@@ -196,9 +197,10 @@ def second_game_scene():
         # slow down to see the animations move
         clock.tick(constants.CLOCK_TICK)
 
-from ButtonClass import ButtonClass
-from CheckPrisonerEvents import CheckPrisonerEvents
-from PrisonerClass import PrisonerClass
+
+# from ButtonClass import ButtonClass
+# from CheckPrisonerEvents import CheckPrisonerEvents
+# from PrisonerClass import PrisonerClass
 
 # from Maps import Maps
 
@@ -258,12 +260,13 @@ def first_game_scene():
         my_cell_map.build_map(prisoner_rect)
 
         # get events
-        (key_is_down,
-         key_left,
-         key_right,
-         key_up,
-         key_down,
-         key_is_up,
+        (
+            key_is_down,
+            key_left,
+            key_right,
+            key_up,
+            key_down,
+            key_is_up,
         ) = my_check_event.check_events()
         # move prisoner
         my_prisoner.prisoner_move(
