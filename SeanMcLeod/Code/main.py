@@ -232,6 +232,11 @@ def first_game_scene():
     # create sprites
     prisoner = pygame.image.load("Sprites/prisoners/prisoner.png")
     # tile = pygame.image.load("Sprites/cell.png")
+    
+    # linting errors, so I needed to define the variables before you used them
+    # Mr Coxall
+    prisoner_x = None
+    prisoner_y = None
 
     # objects
     my_prisoner = PrisonerClass(
@@ -256,6 +261,9 @@ def first_game_scene():
         # build map
         # my_cell_map.build_map(prisoner_rect)
 
+        # linting errors, so I needed to define the variables before you used them
+        # Mr Coxall
+        prisoner_rect = None
         # build map
         my_cell_map.build_map(prisoner_rect)
 
