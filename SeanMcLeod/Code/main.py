@@ -11,6 +11,7 @@ import pygame
 from button_class import ButtonClass
 from check_prisoner_events import CheckPrisonerEvents
 from set_up_display import SetUpDisplay
+from PrisonerClass import PrisonerClass
 
 
 def third_game_scene():
@@ -196,9 +197,10 @@ def second_game_scene():
         # slow down to see the animations move
         clock.tick(constants.CLOCK_TICK)
 
-from ButtonClass import ButtonClass
-from CheckPrisonerEvents import CheckPrisonerEvents
-from PrisonerClass import PrisonerClass
+
+# from ButtonClass import ButtonClass
+# from CheckPrisonerEvents import CheckPrisonerEvents
+# from PrisonerClass import PrisonerClass
 
 # from Maps import Maps
 
@@ -231,6 +233,11 @@ def first_game_scene():
     prisoner = pygame.image.load("Sprites/prisoners/prisoner.png")
     # tile = pygame.image.load("Sprites/cell.png")
 
+    # linting errors, so I needed to define the variables before you used them
+    # Mr Coxall
+    prisoner_x = None
+    prisoner_y = None
+
     # objects
     my_prisoner = PrisonerClass(
         prisoner,
@@ -254,6 +261,9 @@ def first_game_scene():
         # build map
         # my_cell_map.build_map(prisoner_rect)
 
+        # linting errors, so I needed to define the variables before you used them
+        # Mr Coxall
+        prisoner_rect = None
         # build map
         my_cell_map.build_map(prisoner_rect)
 
